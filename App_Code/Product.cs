@@ -19,6 +19,11 @@ public class Product
 
     }
 
+    public Product(int id)
+    {
+
+    }
+
     #region Model
 
     private int _prodid;
@@ -112,11 +117,6 @@ public class Product
         get { return _ctime; }
     }
     #endregion Model
-
-    public Product(int id)
-    {
-
-    }
 
     public string GetJson()
     {
