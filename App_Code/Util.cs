@@ -10,7 +10,7 @@ public class Util
 {
 
     public static string ConnectionString = System.Configuration.ConfigurationSettings.AppSettings["constr"].Trim();
-
+    public static string ApiDomainString = System.Configuration.ConfigurationSettings.AppSettings["apiDomain"].Trim();
 
 	public Util()
 	{
@@ -18,4 +18,6 @@ public class Util
 		// TODO: Add constructor logic here
 		//
 	}
+
+    
 }

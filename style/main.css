@@ -1,0 +1,22 @@
+﻿body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
+body{ font-family:微软雅黑; font-size:14px; min-height:100%; max-width:650px; background: #f0f0f0; color:#333; margin:0 auto; }
+.left { float:left; }
+.right { float:right; }
+.rel { position:relative; }
+.pd5 { padding:5px;}
+.red { color:Red;}
+.clear { clear:both;}
+
+.m-wrap { padding:20px 10px 0 10px; background:#e3e2e2}
+.m-ul{ display:block; margin-left:-5px; }
+.m-li { width:50%; margin-bottom:5px; border-left:5px solid transparent; box-sizing:border-box; }
+.m-li a { background-color: #fff; display: block; padding: 5px; position: relative;}
+.m-li img { width:100%; display:block; border:1px solid #ccc;}
+.m-txt { height:36px; line-height:18px; margin:5px; overflow:hidden; color: #323232; }
+.m-price { height:22px; line-height:22px; margin:8px 5px; font-size:16px;}
+
+.m-bottom { bottom: 0; font-size: 14px; height: 46px; left: 0; position: fixed; width: 100%; z-index: 998;}
+#footermenu { background-color: #f2f2f2; border-top: 1px solid #e3e3e3; height: 45px; line-height: 45px; margin: 0 auto; max-width: 650px; text-align: center; width: 100%;}
+#ftm-type, #ftm-user, #ftm-cart { border-right: 1px solid #e3e3e3; box-sizing: border-box; color: #4c4c4c; float: left; position: relative; width: 33%;}
+#ftm-user { width:34%;}
+#ftm-cart { border-right:none;}
