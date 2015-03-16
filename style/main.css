@@ -1,22 +1,38 @@
 ﻿body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
-body{ font-family:微软雅黑; font-size:14px; min-height:100%; max-width:650px; background: #f0f0f0; color:#333; margin:0 auto; }
+html { background: #f0f0f0; height:100%; }
+body{ font-family:微软雅黑; font-size:14px; min-height:100%; max-width:650px; background: #e3e2e2; color:#333; margin:0 auto; }
+a { color: #323232; outline-style: none; text-decoration: none; }
+a:hover { text-decoration:none;}
 .left { float:left; }
 .right { float:right; }
 .rel { position:relative; }
 .pd5 { padding:5px;}
+.pd10 { padding:10px;}
 .red { color:Red;}
 .clear { clear:both;}
 
-.m-wrap { padding:20px 10px 0 10px; background:#e3e2e2}
+.mainpage {  }
+.m-wrap { padding:10px 10px 0 10px; background:#e3e2e2}
 .m-ul{ display:block; margin-left:-5px; }
 .m-li { width:50%; margin-bottom:5px; border-left:5px solid transparent; box-sizing:border-box; }
 .m-li a { background-color: #fff; display: block; padding: 5px; position: relative;}
 .m-li img { width:100%; display:block; border:1px solid #ccc;}
 .m-txt { height:36px; line-height:18px; margin:5px; overflow:hidden; color: #323232; }
 .m-price { height:22px; line-height:22px; margin:8px 5px; font-size:16px;}
+.m-express { color:#919191; line-height:22px; height:22px;}
 
 .m-bottom { bottom: 0; font-size: 14px; height: 46px; left: 0; position: fixed; width: 100%; z-index: 998;}
 #footermenu { background-color: #f2f2f2; border-top: 1px solid #e3e3e3; height: 45px; line-height: 45px; margin: 0 auto; max-width: 650px; text-align: center; width: 100%;}
-#ftm-type, #ftm-user, #ftm-cart { border-right: 1px solid #e3e3e3; box-sizing: border-box; color: #4c4c4c; float: left; position: relative; width: 33%;}
+#footermenu li { float:left;}
+#ftm-type, #ftm-user, #ftm-cart { border-right: 1px solid #e3e3e3; box-sizing: border-box; color: #4c4c4c; position: relative; width: 33%;}
 #ftm-user { width:34%;}
 #ftm-cart { border-right:none;}
+.m-dcontent { padding:10px; background:#fff}
+.m-dprice { height:22px; line-height:22px; font-size:16px;}
+.m-ddescription { margin-top:10px; background:#fff; padding:10px;}
+
+.red-em { background-color: #c60a1e; border-radius: 9px; display: block; height: 18px;  position: relative; text-align: center; width: 18px;}
+.red-em i { border-bottom: 1px solid #fff; border-left: 1px solid #fff; display: block; height: 6px; left: 4px; position: absolute; top: 3px; transform: rotate(-45deg); width: 10px;}
+
+.add_upd { background:url(../image/addressset.png) no-repeat 0px -77px; display: block; height: 2.1875rem; width: 2.8125rem;}
+.add_del { background:url(../image/addressset.png) no-repeat 19px 3px; display: block; height: 2.1875rem; width: 2.8125rem;}

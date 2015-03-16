@@ -21,7 +21,7 @@ public class HTTPHelper
             hwr.Timeout = 19600;
             HttpWebResponse hwrs = (HttpWebResponse)hwr.GetResponse();
             Stream myStream = hwrs.GetResponseStream();
-            StreamReader sr = new StreamReader(myStream, Encoding.Default);
+            StreamReader sr = new StreamReader(myStream, Encoding.UTF8);
             StringBuilder sb = new StringBuilder();
             while (-1 != sr.Peek())
             {

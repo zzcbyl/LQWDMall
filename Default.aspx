@@ -11,7 +11,7 @@
         <asp:Repeater ID="Repeater1" runat="server">
             <ItemTemplate>
                 <li class="m-li left rel">
-                    <a>
+                    <a href="Detail.aspx">
                         <div class="pd5"><img src='<%# Util.ApiDomainString + Eval("imgsrc").ToString() %>' /></div>
                         <div class="m-txt"><%# Eval("prodname") %></div>
                         <div class="m-price"><span class="red">¥<%# Math.Round(decimal.Parse(Eval("price").ToString()),2) %></span></div>
