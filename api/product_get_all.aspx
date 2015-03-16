@@ -5,6 +5,8 @@
     {
         int pageSize = 0;
         int currentPage = 0;
+        
+        
 
         pageSize = ((Request["pagesize"] == null) ? 0 : int.Parse(Request["pagesize"].Trim()));
 

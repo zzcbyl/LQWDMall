@@ -157,6 +157,7 @@ public class Product
         subJsonStr = subJsonStr.Remove(0, 1);
         jsonStr = jsonStr + subJsonStr + "]}";
         return jsonStr.Trim();
+
     }
 
     public static string ConvertProductArrayToJson(Product[] productArray, int pageSize, int currentPage)
