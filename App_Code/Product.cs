@@ -158,4 +158,26 @@ public class Product
         jsonStr = jsonStr + subJsonStr + "]}";
         return jsonStr.Trim();
     }
+
+    public static string ConvertProductArrayToJson(Product[] productArray, int pageSize, int currentPage)
+    {
+        int productArrayLength = productArray.Length;
+        int pageCount = productArrayLength / pageSize;
+        if (pageCount * pageSize < productArrayLength)
+            pageCount++;
+        int startIndex = currentPage * pageSize;
+        int endIndex = startIndex + pageSize;
+
+        string subJsonStr = "";
+
+        for (int i = startIndex; i < endIndex && i < productArrayLength; i++)
+        {
+            subJsonStr = subJsonStr + "," + productArray[i].GetJson();
+        }
+        subJsonStr = subJsonStr.Remove(0, 1);
+        string jsonStr = "{ \"type\":\"Product\" , \"count\":\"" + productArray.Length + "\" , \"PageSize\":\"" + pageSize.ToString()
+            + "\" , \"PageCount\" : \"" + pageCount.ToString() + "\" , \"CurrentPage\" : \"" + currentPage.ToString() + "\"  , \"data\" : ["
+            + subJsonStr.Trim() + "]}";
+        return jsonStr;
+    }
 }
