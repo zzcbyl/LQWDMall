@@ -21,7 +21,24 @@ public class Product
 
     public Product(int id)
     {
+        SqlDataAdapter da = new SqlDataAdapter(" select * from m_product where prodid = " + id.ToString(), Util.ConnectionString);
+        DataTable dt = new DataTable();
+        da.Fill(dt);
+        if (dt.Rows.Count > 0)
+            _fields = dt.Rows[0];
+        da.Dispose();
+    }
 
+    public DataTable ImageTable
+    {
+        get
+        {
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(" select * from m_image where prodid = " + _fields["prodid"].ToString().Trim(), Util.ConnectionString);
+            da.Fill(dt);
+            da.Dispose();
+            return dt;
+        }
     }
 
     #region Model
@@ -119,6 +136,18 @@ public class Product
     #endregion Model
 
     public string GetJson()
+    { 
+        string jsonStr = "";
+        foreach (DataColumn c in _fields.Table.Columns)
+        {
+            jsonStr = jsonStr + ", \"" + c.Caption.Trim() + "\":\"" + _fields[c].ToString().Trim() + "\"";
+        }
+        jsonStr = jsonStr.Remove(0, 1);
+        jsonStr = "{" + jsonStr  + "}";
+        return jsonStr.Trim();
+    }
+
+    public string GetJsonWithImages()
     {
         string jsonStr = "";
         foreach (DataColumn c in _fields.Table.Columns)
@@ -126,7 +155,24 @@ public class Product
             jsonStr = jsonStr + ", \"" + c.Caption.Trim() + "\":\"" + _fields[c].ToString().Trim() + "\"";
         }
         jsonStr = jsonStr.Remove(0, 1);
-        jsonStr = "{" + jsonStr + "}";
+
+        string imageJson = "";
+
+        DataTable dtImage = ImageTable;
+
+        for (int i = 0; i < dtImage.Rows.Count; i++)
+        {
+            imageJson = imageJson + ",{";
+            string imageRowJson = "";
+            for (int j = 0; j < dtImage.Columns.Count; j++)
+            {
+                imageRowJson = imageRowJson + ", \"" + dtImage.Columns[j].Caption.Trim() + "\" : \"" + dtImage.Rows[i][j].ToString() + "\" ";
+            }
+            imageRowJson = imageRowJson.Remove(0, 1);
+            imageJson = imageJson + imageRowJson + "}";
+        }
+        imageJson = imageJson.Remove(0, 1);
+        jsonStr = "{" + jsonStr +  ",\"images\":[" + imageJson + "]}";
         return jsonStr.Trim();
     }
 
