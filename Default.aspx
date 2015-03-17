@@ -3,15 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
-<div style="width:100%; height:100px; background:#ddd;">
+<div style="width:100%;">
+    <img src="images/mall-banner.jpg" width="100%" />
 </div>
 <div class="m-wrap">
     <ul class="m-ul rel">
-
         <asp:Repeater ID="Repeater1" runat="server">
             <ItemTemplate>
                 <li class="m-li left rel">
-                    <a href="Detail.aspx">
+                    <a href='Detail.aspx?productid=<%# Eval("prodid") %>'>
                         <div class="pd5"><img src='<%# Util.ApiDomainString + Eval("imgsrc").ToString() %>' /></div>
                         <div class="m-txt"><%# Eval("prodname") %></div>
                         <div class="m-price"><span class="red">¥<%# Math.Round(decimal.Parse(Eval("price").ToString()),2) %></span></div>
@@ -33,7 +33,7 @@
                 <div>个人中心</div>
             </li>
             <li id="ftm-cart">
-                <div>购物车</div>
+                <div><a href="ShopCart.aspx">购物车</a></div>
             </li>
         </ul>
         <div class="clear"></div>

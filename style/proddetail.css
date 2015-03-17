@@ -1,0 +1,14 @@
+﻿.hdp-box{position:relative;height:200px;margin-bottom:20px;}
+.swipe{width:100%;float:left;overflow: hidden;visibility: visible;position: relative;height:100%;}
+.box01_list{position:relative;-webkit-transition: left 600ms ease-out; width:100%;left:0;}
+.piclist li{text-align:center;}
+.piclist li img{margin:0 auto;max-width:100%;}
+.piclist p{display:none;}
+.title{width:100%;float:left;text-align:center;color:#fff;font-size:14px;padding:10px 0;}
+.count{float:right;padding-right:2%;color:#fff;}
+.b_btn{display:block;height:32px;cursor:pointer;line-height:32px;padding:0 10px;border:1px solid #ccc;float:left;background:#f5f5f5;border-radius:5px;}
+.intro{display:none;color:#fff;width:100%;float:left;padding-top:8px;}
+
+.hdp-box nav { position:absolute; z-index:999; bottom:5px; right:10px;}
+.hdp-box nav #position li { background: none repeat scroll 0 0 #fff; border-radius: 10px; box-shadow: 0 1px 3px black inset, 0 0 1px 1px #202020; display: inline-block; height: 10px; margin: 0 2px; width: 10px;}
+.hdp-box nav #position li.on { background-color: #C22B2B; background-image: -moz-linear-gradient(center top , #C22B2B, #FF0000); box-shadow: 0 1px 3px -1px #28b4ea inset, 0 1px 2px rgba(0, 0, 0, 0.5);}

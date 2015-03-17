@@ -28,5 +28,7 @@ public partial class _Default : System.Web.UI.Page
         catch {
             this.nodata.Visible = true;
         }
+
+        
     }
 }
