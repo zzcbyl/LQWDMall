@@ -36,3 +36,6 @@ a:hover { text-decoration:none;}
 
 .add_upd { background:url(../image/addressset.png) no-repeat 0px -77px; display: block; height: 2.1875rem; width: 2.8125rem;}
 .add_del { background:url(../image/addressset.png) no-repeat 19px 3px; display: block; height: 2.1875rem; width: 2.8125rem;}
+.add_list_p { padding:5px 30px 5px 80px; }
+.add_list_p label { position:absolute; left:10px; top:8px; }
+.add_list_p input,.add_list_p select { width:100%;}

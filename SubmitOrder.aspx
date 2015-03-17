@@ -8,7 +8,7 @@
         <a href="Default.aspx"><<返回</a>
         <span style="margin-left:100px;">确认下单</span>
     </div>
-    <div style="background:#fff; margin:10px; padding:10px; line-height:22px;" class="rel">
+    <div style="background:#fff; margin:10px; padding:10px; line-height:22px;" class="rel" onclick="javascript:location.href='sel_address.aspx';">
         <div>张忠诚</div>
         <div>18001292506</div>
         <div>北京 北京 朝阳区 青年路大悦公寓北楼2609</div>

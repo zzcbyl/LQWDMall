@@ -16,7 +16,7 @@
         <div style="padding:10px; line-height:30px; border-top:1px solid #f2f2f2;" class="rel">
             <div class="radio" style="float:left; margin-top:10px;"><label><input type="radio" />默认地址</label></div>
             <div style="float:right;">
-                <a class="add_upd" style="float:left; border-right:1px solid #f2f2f2;"></a>
+                <a href="ud_address.aspx" class="add_upd" style="float:left; border-right:1px solid #f2f2f2;"></a>
                 <a class="add_del" style="float:right;"></a>
             </div>
             <div class="clear"></div>
@@ -41,8 +41,7 @@
     <div class="m-bottom">
         <ul id="footermenu">
             <li style="width:100%; height:50px; padding-top:8px; text-align:right;">
-                <a><button type="button" class="btn btn-default" style="width:40%;">修改收货地址</button></a>
-                <a style="margin:0 10px;"><button type="button" class="btn btn-danger" style="width:40%;">添加新地址</button></a>
+                <a href="ad_address.aspx" style="margin:0 10px;"><button type="button" class="btn btn-danger" style="width:40%;">添加新地址</button></a>
             </li>
         </ul>
         <div class="clear"></div>
