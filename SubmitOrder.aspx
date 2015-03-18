@@ -4,9 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;">
-        <a href="Default.aspx"><<返回</a>
-        <span style="margin-left:100px;">确认下单</span>
+    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;position:relative;">
+        <a href="Default.aspx" class="returnA"> </a>
+        <span class="titleSpan">确认下单</span>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;" class="rel" onclick="javascript:location.href='sel_address.aspx';">
         <div>张忠诚</div>
@@ -53,9 +53,9 @@
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
         <ul id="footermenu">
-            <li style="width:100%; height:50px; ">
+            <li style="width:100%; ">
                 <a href="SubmitOrder.aspx" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger">提交订单</button></a>
-                <a style="float:right; margin:13px 10px 0 0;"><strong>应付总额: <span class="red">¥22.55</span></strong></a>
+                <a style="float:right; margin-right:10px;"><strong>应付总额: <span class="red">¥22.55</span></strong></a>
             </li>
         </ul>
         <div class="clear"></div>

@@ -1,1 +1,1 @@
-﻿var domain = 'http://localhost:8001/';
+﻿var domain = 'http://192.168.1.133:8001/';

@@ -4,9 +4,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;">
-        <a href="Default.aspx"><<返回</a>
-        <span style="margin-left:100px;">我的地址</span>
+    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;position:relative;">
+        <a href="Default.aspx" class="returnA"> </a>
+        <span class="titleSpan">我的地址</span>
     </div>
     <div style="background:#fff; margin:10px 0; padding:10px; line-height:22px;">
         <div style="padding:10px; line-height:30px; padding-right:80px;" class="rel">
@@ -27,7 +27,7 @@
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
         <ul id="footermenu">
-            <li style="width:100%; height:50px; padding-top:8px; text-align:right;">
+            <li style="width:100%; text-align:right;">
                 <a href="ls_address.aspx"><button type="button" class="btn btn-default" style="width:40%;">修改收货地址</button></a>
                 <a href="ad_address.aspx" style="margin:0 10px;"><button type="button" class="btn btn-danger" style="width:40%;">添加新地址</button></a>
             </li>

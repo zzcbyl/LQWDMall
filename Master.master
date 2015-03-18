@@ -27,11 +27,9 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
         <asp:ContentPlaceHolder id="MasterContent" runat="server">
         
         </asp:ContentPlaceHolder>
-    </div>
     </form>
 </body>
 </html>

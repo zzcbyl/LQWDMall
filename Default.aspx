@@ -30,10 +30,13 @@
                 <div>商品分类</div>
             </li>
             <li id="ftm-user">
-                <div>个人中心</div>
+                <div><a href="userIndex.aspx">个人中心</a></div>
             </li>
             <li id="ftm-cart">
-                <div><a href="ShopCart.aspx">购物车</a></div>
+                <div>
+                    <a id="my-cart" href="ShopCart.aspx">购物车
+                    <em id="my_cart_em" class="abs" style="display: block; right:30%;">3</em>
+                </a></div>
             </li>
         </ul>
         <div class="clear"></div>

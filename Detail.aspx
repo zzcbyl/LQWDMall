@@ -48,10 +48,13 @@
 
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
-        <div class="d-footermenu">
+        <div id="footermenu">
             <div style="float:left; width:30%;">
                 <a href="Default.aspx" style="width:45%; display:inline-block;">首页</a>
-                <a href="ShopCart.aspx" style="width:45%; display:inline-block;">购物车</a>
+                <a id="my-cart" class="rel" href="ShopCart.aspx" style="width:45%; display:inline-block;">
+                    购物车
+                    <em id="my_cart_em" class="abs" style="display: block;">3</em>
+                </a>
             </div>
             <div style="float:left; width:70%;">
                 <a class="btn btn-default" style="width:45%; padding-left:0; padding-right:0;" href="ShopCart.aspx">加入购物车</a>
