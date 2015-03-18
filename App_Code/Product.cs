@@ -140,7 +140,8 @@ public class Product
         string jsonStr = "";
         foreach (DataColumn c in _fields.Table.Columns)
         {
-            jsonStr = jsonStr + ", \"" + c.Caption.Trim() + "\":\"" + _fields[c].ToString().Trim() + "\"";
+            jsonStr = jsonStr + ", \"" + c.Caption.Trim() + "\":\"" 
+                + _fields[c].ToString().Trim().Replace("\"","\\\"") + "\"";
         }
         jsonStr = jsonStr.Remove(0, 1);
         jsonStr = "{" + jsonStr  + "}";
