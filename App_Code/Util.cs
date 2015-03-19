@@ -11,6 +11,7 @@ public class Util
 {
 
     public static string ConnectionString = System.Configuration.ConfigurationSettings.AppSettings["constr"].Trim();
+    
     public static string ApiDomainString = System.Configuration.ConfigurationSettings.AppSettings["apiDomain"].Trim();
 
 	public Util()
@@ -50,9 +51,5 @@ public class Util
     {
         TimeSpan ts = currentDateTime - new DateTime(1970, 1, 1, 0, 0, 0, 0);
         return Convert.ToInt64(ts.TotalMilliseconds).ToString();
-        //TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        //return Convert.ToInt64(ts.TotalSeconds).ToString();
     }
-
-    
 }

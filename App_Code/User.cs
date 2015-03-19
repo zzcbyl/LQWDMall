@@ -145,7 +145,7 @@ public class Users
 
     public static Users GetUser(string type, string userName)
     {
-        string sql = " select * from m_users where  ";
+        string sql = " select * from m_user where  ";
         switch (type.Trim())
         {
             case "username":
