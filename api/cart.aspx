@@ -23,6 +23,7 @@
             }
             else
             {
+                int total = 0;
                 Cart cart = new Cart(uid);
                 if (productId != 0)
                 {
@@ -34,6 +35,8 @@
                 foreach (DataRow dr in dt.Rows)
                 {
                     string columnJson = "";
+                    total = total + int.Parse(dr["product_count"].ToString().Trim())
+                        * int.Parse(dr["price"].ToString().Trim());
                     foreach (DataColumn dc in dt.Columns)
                     {
                         columnJson = columnJson + ", \"" + dc.Caption.Trim() + "\" : \""
@@ -44,7 +47,7 @@
                 }
                 if (!itemJson.Trim().Equals(""))
                     itemJson = itemJson.Remove(0, 1);
-                Response.Write("{\"status\":0,\"count\":" + dt.Rows.Count + ", \"items\":["
+                Response.Write("{\"status\":0,\"count\":" + dt.Rows.Count + ", \"amount_price\" : " + total.ToString()  + ", \"items\":["
                     + itemJson + "]}");
             }
         }

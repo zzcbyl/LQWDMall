@@ -169,10 +169,12 @@ public class Product
             {
                 imageRowJson = imageRowJson + ", \"" + dtImage.Columns[j].Caption.Trim() + "\" : \"" + dtImage.Rows[i][j].ToString() + "\" ";
             }
-            imageRowJson = imageRowJson.Remove(0, 1);
+            if (!imageRowJson.Trim().Equals(""))
+                imageRowJson = imageRowJson.Remove(0, 1);
             imageJson = imageJson + imageRowJson + "}";
         }
-        imageJson = imageJson.Remove(0, 1);
+        if (imageJson.Trim().Equals(""))
+            imageJson = imageJson.Remove(0, 1);
         jsonStr = "{" + jsonStr +  ",\"images\":[" + imageJson + "]}";
         return jsonStr.Trim();
     }
