@@ -5,7 +5,7 @@
     protected void Page_Load(object sender, EventArgs e)
     {
         string token = (Request["token"] == null) ? "cc082d4385e9a53993dfdf5c90905cf529ee03e52115ea284ffec23c4956e636c6e88558" : Request["token"].Trim();
-        int productId = (Request["productid"] == null) ? 4 : int.Parse(Request["productid"].Trim());
+        int productId = (Request["productid"] == null) ? 0 : int.Parse(Request["productid"].Trim());
         int count = (Request["count"] == null) ? 0 : int.Parse(Request["count"].Trim());
         int uid = Users.CheckToken(token);
 
@@ -24,7 +24,10 @@
             else
             {
                 Cart cart = new Cart(uid);
-                cart.ModifyItem(productId, count);
+                if (productId != 0)
+                {
+                    cart.ModifyItem(productId, count);
+                }
                 DataTable dt = new DataTable();
                 dt = cart.GetCartTable();
                 string itemJson = "";
