@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Text;
 using System.Security.Cryptography;
+using System.Data;
+using System.Data.SqlClient;
 /// <summary>
 /// Summary description for Util
 /// </summary>
@@ -51,5 +53,105 @@ public class Util
     {
         TimeSpan ts = currentDateTime - new DateTime(1970, 1, 1, 0, 0, 0, 0);
         return Convert.ToInt64(ts.TotalMilliseconds).ToString();
+    }
+
+    public static int ShipFeeCalculate(string province, int count)
+    {
+        DataTable dtShipFee = new DataTable();
+        dtShipFee.Columns.Add("province");
+        dtShipFee.Columns.Add("start_weight_fee");
+        dtShipFee.Columns.Add("addintional_weight_fee");
+
+        DataRow drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "北京市";
+        drShipFee["start_weight_fee"] = 800;
+        drShipFee["addintional_weight_fee"] = 400;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "宁夏回族自治区";
+        drShipFee["start_weight_fee"] = 1800;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "青海省";
+        drShipFee["start_weight_fee"] = 1800;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "内蒙古自治区";
+        drShipFee["start_weight_fee"] = 1800;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "云南省";
+        drShipFee["start_weight_fee"] = 1800;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "黑龙江省";
+        drShipFee["start_weight_fee"] = 1500;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "吉林省";
+        drShipFee["start_weight_fee"] = 1500;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "辽宁省";
+        drShipFee["start_weight_fee"] = 1500;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "广西壮族自治区";
+        drShipFee["start_weight_fee"] = 1500;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "新疆维吾尔自治区";
+        drShipFee["start_weight_fee"] = 2000;
+        drShipFee["addintional_weight_fee"] = 1500;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "西藏自治区";
+        drShipFee["start_weight_fee"] = 2000;
+        drShipFee["addintional_weight_fee"] = 1500;
+        dtShipFee.Rows.Add(drShipFee);
+
+        int startWeight = 1200;
+        int addintionalWeight = 800;
+        DataRow[] drArr = dtShipFee.Select(" province = '" + province.Trim() + "'  " );
+        if (drArr.Length > 0)
+        {
+            startWeight = int.Parse(drArr[0]["start_weight_fee"].ToString().Trim());
+            addintionalWeight = int.Parse(drArr[0]["addintional_weight_fee"].ToString().Trim());
+        }
+
+        int amount = startWeight;
+
+        if (count > 2)
+        {
+            if ((count / 2) * 2 == count)
+            {
+                amount = amount + addintionalWeight * ((count / 2) - 1);
+            }
+            else
+            {
+                amount = amount + addintionalWeight * (count / 2);
+            }
+        }
+
+        return amount;
+
     }
 }
