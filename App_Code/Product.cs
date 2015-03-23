@@ -155,6 +155,8 @@ public class Product
         {
             jsonStr = jsonStr + ", \"" + c.Caption.Trim() + "\":\"" + _fields[c].ToString().Trim() + "\"";
         }
+        if (!jsonStr.Trim().Equals(""))
+            jsonStr = jsonStr.Remove(0, 1);
         jsonStr = jsonStr.Remove(0, 1);
 
         string imageJson = "";
@@ -173,7 +175,7 @@ public class Product
                 imageRowJson = imageRowJson.Remove(0, 1);
             imageJson = imageJson + imageRowJson + "}";
         }
-        if (imageJson.Trim().Equals(""))
+        if (!imageJson.Trim().Equals(""))
             imageJson = imageJson.Remove(0, 1);
         jsonStr = "{" + jsonStr +  ",\"images\":[" + imageJson + "]}";
         return jsonStr.Trim();
