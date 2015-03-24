@@ -4,7 +4,7 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string token = (Request["token"] == null) ? "cc082d4385e9a53993dfdf5c90905cf529ee03e52115ea284ffec23c4956e636c6e88558" : Request["token"].Trim();
+        string token = (Request["token"] == null) ? "ca72da43b4a6abc65713f4fff4728753c4df3d1765fb3b299837361aa64a47b15d3138ab" : Request["token"].Trim();
         int productId = (Request["productid"] == null) ? 0 : int.Parse(Request["productid"].Trim());
         int count = (Request["count"] == null) ? 0 : int.Parse(Request["count"].Trim());
         int uid = Users.CheckToken(token);

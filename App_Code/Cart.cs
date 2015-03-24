@@ -85,6 +85,62 @@ public class Cart
         return cartTable;
     }
 
-    
+    public int PlaceOrder(string name, string cell, string province, string city, string address,
+        string zip, int[] productIdArray, int[] countArray)
+    {
+        if (productIdArray.Length != countArray.Length)
+            return -1;
+
+        string sqlInsertIntoOrders = " insert into m_order (uid,name,cell,province,city,address,zip) values ("
+            + _userId.ToString() + ",'" + name.Trim().Replace("'", "") + "','" + cell.Trim().Replace("'", "") + "' , '"
+            + province.Replace("'", "").Trim() + "','" + city.Replace("'", "").Trim() + "' , '" + address.Trim().Replace("'", "")
+            + "' , '" + zip.Trim() + "' ) ";
+
+        SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
+        SqlCommand cmdInsertIntoOrder = new SqlCommand(sqlInsertIntoOrders, conn);
+
+        conn.Open();
+
+        cmdInsertIntoOrder.ExecuteNonQuery();
+
+        int orderId = 0;
+
+        cmdInsertIntoOrder.CommandText = " select max(oid) from m_order ";
+
+        SqlDataReader dataReaderMaxOrderId = cmdInsertIntoOrder.ExecuteReader();
+        if (dataReaderMaxOrderId.Read())
+            orderId = dataReaderMaxOrderId.GetInt32(0);
+        dataReaderMaxOrderId.Close();
+
+        SqlCommand cmdInsertOrderDetail = new SqlCommand(" insert into m_order_detail ( "
+            + " order_id , product_name , product_description , imgsrc , price , product_count , product_id )  "
+            + " values ( " + orderId.ToString() + " , @product_name, @product_description , @imgsrc, "
+            + "@price , @count , @productId) ", conn);
+        cmdInsertOrderDetail.Parameters.Add("@product_name", SqlDbType.VarChar);
+        cmdInsertOrderDetail.Parameters.Add("@product_description", SqlDbType.VarChar);
+        cmdInsertOrderDetail.Parameters.Add("@imgsrc", SqlDbType.VarChar);
+        cmdInsertOrderDetail.Parameters.Add("@price", SqlDbType.Int);
+        cmdInsertOrderDetail.Parameters.Add("@count", SqlDbType.Int);
+        cmdInsertOrderDetail.Parameters.Add("@productId", SqlDbType.Int);
+        SqlCommand cmdDeleteCart = new SqlCommand(" delete m_cart where uid = " + _userId.ToString()
+            + "  and product_id = @productId ", conn);
+        cmdDeleteCart.Parameters.Add("@productId", SqlDbType.Int);
+
+        for (int i = 0; i < productIdArray.Length; i++)
+        {
+            Product product = new Product(productIdArray[i]);
+            cmdInsertOrderDetail.Parameters["@product_name"].Value = product._fields["prodname"].ToString().Trim();
+            cmdInsertOrderDetail.Parameters["@product_description"].Value = product._fields["description"].ToString().Trim();
+            cmdInsertOrderDetail.Parameters["@imgsrc"].Value = product._fields["imgsrc"].ToString().Trim();
+            cmdInsertOrderDetail.Parameters["@price"].Value = int.Parse(product._fields["price"].ToString().Trim());
+            cmdInsertOrderDetail.Parameters["@count"].Value = countArray[i];
+            cmdInsertOrderDetail.Parameters["@productId"].Value = productIdArray[i];
+            cmdInsertOrderDetail.ExecuteNonQuery();
+            cmdDeleteCart.Parameters["@productId"].Value = productIdArray[i];
+            cmdDeleteCart.ExecuteNonQuery();
+        }
+
+        return orderId;
+    }
 
 }
