@@ -13,6 +13,8 @@
         string city = ((Request["city"] == null) ? "东城区" : Request["city"].Trim());
         string address = ((Request["address"] == null) ? "金狮子胡同" : Request["address"].Trim());
         string zip = ((Request["zip"] == null) ? "100007" : Request["zip"].Trim());
+        string memo = ((Request["memo"] == null) ? "" : Request["memo"].Trim());
+        string wechatId = ((Request["wechatid"] == null) ? "" : Request["wechatid"].Trim());
         
         if (Request["productid"] != null)
         {
@@ -46,7 +48,7 @@
         }
         int userId = Users.CheckToken(token);
         Cart cart = new Cart(userId);
-        int orderId = cart.PlaceOrder(name, cell, province, city, address, zip, productIdArr, countIdArr);
+        int orderId = cart.PlaceOrder(name, cell, province, city, address, zip, productIdArr, countIdArr,memo,wechatId);
         Response.Write("{\"status\": 0 , \"order_id\" : " + orderId.ToString() + " } ");
     }
 </script>

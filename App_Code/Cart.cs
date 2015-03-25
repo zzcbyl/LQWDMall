@@ -86,15 +86,15 @@ public class Cart
     }
 
     public int PlaceOrder(string name, string cell, string province, string city, string address,
-        string zip, int[] productIdArray, int[] countArray)
+        string zip, int[] productIdArray, int[] countArray, string memo, string wechatId)
     {
         if (productIdArray.Length != countArray.Length)
             return -1;
 
-        string sqlInsertIntoOrders = " insert into m_order (uid,name,cell,province,city,address,zip) values ("
+        string sqlInsertIntoOrders = " insert into m_order (uid,name,cell,province,city,address,zip,memo,wechat_id) values ("
             + _userId.ToString() + ",'" + name.Trim().Replace("'", "") + "','" + cell.Trim().Replace("'", "") + "' , '"
             + province.Replace("'", "").Trim() + "','" + city.Replace("'", "").Trim() + "' , '" + address.Trim().Replace("'", "")
-            + "' , '" + zip.Trim() + "' ) ";
+            + "' , '" + zip.Trim() + "',  '" + memo.Trim().Replace("'","").Trim() + "' , '" + wechatId.Trim().Replace("'","").Trim() + "' ) ";
 
         SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
         SqlCommand cmdInsertIntoOrder = new SqlCommand(sqlInsertIntoOrders, conn);
