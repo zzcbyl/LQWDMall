@@ -103,6 +103,17 @@ public class Cart
 
         cmdInsertIntoOrder.ExecuteNonQuery();
 
+        int countTotal = 0;
+        foreach (int count in countArray)
+        {
+            countTotal = countTotal + count;
+        }
+
+        int shipFee = Util.ShipFeeCalculate(province, countTotal);
+
+        int totalAmount = 0;
+
+
         int orderId = 0;
 
         cmdInsertIntoOrder.CommandText = " select max(oid) from m_order ";
@@ -126,6 +137,8 @@ public class Cart
             + "  and product_id = @productId ", conn);
         cmdDeleteCart.Parameters.Add("@productId", SqlDbType.Int);
 
+        
+
         for (int i = 0; i < productIdArray.Length; i++)
         {
             Product product = new Product(productIdArray[i]);
@@ -134,11 +147,25 @@ public class Cart
             cmdInsertOrderDetail.Parameters["@imgsrc"].Value = product._fields["imgsrc"].ToString().Trim();
             cmdInsertOrderDetail.Parameters["@price"].Value = int.Parse(product._fields["price"].ToString().Trim());
             cmdInsertOrderDetail.Parameters["@count"].Value = countArray[i];
+
             cmdInsertOrderDetail.Parameters["@productId"].Value = productIdArray[i];
             cmdInsertOrderDetail.ExecuteNonQuery();
             cmdDeleteCart.Parameters["@productId"].Value = productIdArray[i];
             cmdDeleteCart.ExecuteNonQuery();
+            totalAmount = totalAmount + int.Parse(product._fields["price"].ToString().Trim()) * countArray[i];
         }
+
+        SqlCommand cmdOrderUpdate = new SqlCommand(" update m_order set orderprice = " + totalAmount.ToString()
+        + " ,   shipfee = " + shipFee.ToString() + "  where oid = " + orderId.ToString(), conn);
+        cmdOrderUpdate.ExecuteNonQuery();
+
+        conn.Close();
+        cmdOrderUpdate.Dispose();
+        cmdDeleteCart.Dispose();
+        cmdInsertOrderDetail.Parameters.Clear();
+        cmdInsertOrderDetail.Dispose();
+        cmdInsertIntoOrder.Dispose();
+        conn.Dispose();
 
         return orderId;
     }
