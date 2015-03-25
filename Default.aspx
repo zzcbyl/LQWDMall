@@ -7,22 +7,8 @@
     <img src="images/mall-banner.jpg" width="100%" />
 </div>
 <div class="m-wrap">
-    <ul class="m-ul rel">
-        <asp:Repeater ID="Repeater1" runat="server">
-            <ItemTemplate>
-                <li class="m-li left rel">
-                    <a href='Detail.aspx?productid=<%# Eval("prodid") %>'>
-                        <div class="pd5"><img src='<%# Util.ApiDomainString + Eval("imgsrc").ToString() %>' /></div>
-                        <div class="m-txt"><%# Eval("prodname") %></div>
-                        <div class="m-price"><span class="red">¥<%# Math.Round(decimal.Parse(Eval("price").ToString()),2) %></span></div>
-                    </a>
-                </li>
-            </ItemTemplate>
-        </asp:Repeater>
+    <ul id="prodlistul" class="m-ul rel">
     </ul>
-    <div id="nodata" runat="server" visible="false" style="text-align:center; margin:40px 0;">
-        暂无数据
-    </div>
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
         <ul id="footermenu">
@@ -35,12 +21,26 @@
             <li id="ftm-cart">
                 <div>
                     <a id="my-cart" href="ShopCart.aspx">购物车
-                    <em id="my_cart_em" class="abs" style="display: block; right:30%;">3</em>
+                    <em id="my_cart_em" class="abs" style="display: none; right:30%;"></em>
                 </a></div>
             </li>
         </ul>
         <div class="clear"></div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.post(domain + 'api/product_get_all.aspx', { random: Math.random() }, function (data) {
+            var prodlist = data.data;
+            var html = "";
+            for (var i = 0; i < prodlist.length; i++) {
+                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price"><span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span></div></a></li>';
+            }
+            $('#prodlistul').html(html);
+        }, 'json');
+
+        totalcart('my_cart_em');
+    });
+</script>
 </asp:Content>
 

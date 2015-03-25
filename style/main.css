@@ -27,7 +27,7 @@ a:hover { text-decoration:none; color: #323232;}
 .titleSpan { display:block; width:100%; text-align:center;}
 
 .m-bottom { bottom: 0; font-size: 14px; left: 0; position: fixed; width: 100%; z-index: 998;}
-#footermenu { background-color: #f2f2f2; border-top: 1px solid #e3e3e3; height: 45px; line-height: 45px; margin: 0 auto; max-width: 650px; text-align: center; width: 100%; padding:5px 0;}
+#footermenu { background-color: #fff; border-top: 1px solid #e3e3e3; height: 45px; line-height: 45px; margin: 0 auto; max-width: 650px; text-align: center; width: 100%; padding:5px 0;}
 #footermenu li { float:left; height:45px; line-height:45px;}
 #ftm-type, #ftm-user, #ftm-cart { border-right: 1px solid #e3e3e3; box-sizing: border-box; color: #4c4c4c; position: relative; width: 33%;}
 #ftm-user { width:34%;}
@@ -43,13 +43,13 @@ a:hover { text-decoration:none; color: #323232;}
 .cart-prod-num input { float:left; margin-left:10px; width:20%; text-align:center;}
 
 .red-em { background-color: #c60a1e; border-radius: 9px; display: block; height: 18px;  position: relative; text-align: center; width: 18px;}
-.red-em i { border-bottom: 1px solid #fff; border-left: 1px solid #fff; display: block; height: 6px; left: 4px; position: absolute; top: 3px; transform: rotate(-45deg); width: 10px;}
+.red-em i { border-bottom: 1px solid #fff; border-right: 1px solid #fff; display: block; height: 10px; left: 6px; position: absolute; top: 1px; transform: rotate(45deg); width: 6px;}
 
 .add_upd { background:url(../images/addressset.png) no-repeat 0px -77px; display: block; height: 2.1875rem; width: 2.8125rem;}
 .add_del { background:url(../images/addressset.png) no-repeat 19px 3px; display: block; height: 2.1875rem; width: 2.8125rem;}
 .add_list_p { padding:5px 30px 5px 80px; }
-.add_list_p label { position:absolute; left:10px; top:8px; }
-.add_list_p input,.add_list_p select { width:100%;}
+.add_list_p label { position:absolute; left:10px; top:10px; margin-bottom:0; }
+.add_list_p input,.add_list_p select { width:100%; margin-bottom:0;}
 
 .u-order-li { width:50%; float:left; height:140px; }
 .u-order-li a { display:block; border-bottom:1px solid #e8eaea; height:100%; text-align:center; }
@@ -78,4 +78,28 @@ a:hover { text-decoration:none; color: #323232;}
 
 
 .o-price, .o-state-close { color:#d93229;}
+
+/*购物车*/
+.sc-item { padding:10px; position:relative; height:90px; border-bottom:1px solid #e3e2e2;}
+.sc-item .cbox { left:8px; top:45px; position:absolute; }
+.sc-item #p-img-block { left:30px; top:13px; position:absolute; }
+.sc-item #p-title { margin-left:80px; display:block; height:36px; line-height:18px; overflow:hidden;}
+.sc-item #p-xinghao { margin-left:80px; display:block; height:18px; line-height:18px; color:#999; font-size:12px; margin-top:5px;}
+.sc-item #p-price-block { float:left; margin-top:5px;}
+.sc-item .sc-p-count { line-height:35px; float:right;}
+.sc-item .sc-p-count a { font-size:22px; font-family:serif; display:block; float:left; margin-top:-3px; margin-left:5px; }
+.sc-item .sc-p-count input[type=text] {  width:30px; float:left; margin-left:8px; text-align:center;}
+
+/*确认订单*/
+.sub-cart-prod { padding:15px; position:relative; height:60px; border-bottom:1px solid #e3e2e2;}
+.sub-cart-prod .prod-img{ left:10px; top:13px; position:absolute; }
+.sub-cart-prod .prod-title{ margin-left:60px; margin-right:70px; display:block; height:36px; line-height:18px; overflow:hidden;}
+.sub-cart-prod .prod-xinghao { margin-left:60px; margin-right:70px; display:block; height:18px; line-height:18px; color:#666; font-size:12px; margin-top:5px;}
+.sub-cart-prod .prod-price { top:13px; right:5px; position:absolute}
+.sub-cart-prod .prod-count { top:40px; right:5px; position:absolute; font-size:12px;}
+.sub-total { padding:15px; position:relative; height:40px;}
+.sub-total #freight_fee { top:13px; right:5px; position:absolute; color:#666; }
+.sub-total #total_count { top:40px; right:5px; position:absolute; color:#666; }
+.sc-address-block { background:#fff; margin:10px; padding:20px 10px 10px; line-height:22px;}
+.sc-address-block input { margin-bottom:0;}
 

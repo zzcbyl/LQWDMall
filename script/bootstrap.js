@@ -1131,6 +1131,8 @@ if (typeof jQuery === 'undefined') {
     this.$backdrop
       .css('height', 0)
       .css('height', this.$element[0].scrollHeight)
+      .css('height', '100%')
+      .css('display', 'none')
   }
 
   Modal.prototype.adjustDialog = function () {
