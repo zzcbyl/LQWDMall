@@ -68,11 +68,11 @@
 
 
         $('#addShopCart').click(function () {
-            detailAddCart(prodid);
+            detailAddCart(prodid, 1);
         });
 
         $('#buyProd').click(function () {
-            location.href = "ShopCart.aspx?prodid=" + prodid;
+            detailAddCart(prodid, 0);
         });
     });
 </script>

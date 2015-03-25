@@ -75,7 +75,7 @@ a:hover { text-decoration:none; color: #323232;}
 .m-dcontent p.ls-order-state { border-bottom: 1px solid #eee; color: #707070; height: 50px; line-height: 50px;}
 .m-dcontent p.ls-order-total { padding: 10px 0 5px;}
 .m-dcontent p.ls-order-total span { display: block; line-height: 30px; text-align: right;}
-
+.m-dcontent .paybtn { position:absolute; right:3px; top:10px;}
 
 .o-price, .o-state-close { color:#d93229;}
 

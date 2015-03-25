@@ -92,7 +92,7 @@ function totalcart(id) {
     }, 'json');
 }
 
-function detailAddCart(pid) {
+function detailAddCart(pid, isshow) {
     $.post(domain + 'api/cart.aspx', { token: token, productid: pid, count: 1, random: Math.random() }, function (data) {
         if (data.status == -1) {
             GetToken();
@@ -104,7 +104,10 @@ function detailAddCart(pid) {
         }
         else
             $('#my_cart_em').html(data.count);
-        $('#myModal').modal('show');
+        if (isshow == 1)
+            $('#myModal').modal('show');
+        else
+            location.href = "ShopCart.aspx";
     }, 'json');
 }
 
@@ -119,15 +122,16 @@ function fillcart() {
         var prodhtml = "";
         if (data.count > 0) {
             for (var i = 0; i < data.items.length; i++) {
-                prodhtml += '<li id="li' + data.items[i].product_id + '" class="sc-item"><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + data.items[i].product_id + '" /></a><a id="p-img-block"><img id="p-img" src="' + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a id="p-title">' + data.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(data.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + data.items[i].product_id + ');">－</a><input id="p-count' + data.items[i].product_id + '" type="text" value="' + data.items[i].product_count + '" onblur="InCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');" /><a href="javascript:AddCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
+                prodhtml += '<li id="li' + data.items[i].product_id + '" class="sc-item"><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + data.items[i].product_id + '" /></a><a id="p-img-block" href="Detail.aspx?productid=' + data.items[i].product_id + '"><img id="p-img" src="' + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a id="p-title" href="Detail.aspx?productid=' + data.items[i].product_id + '">' + data.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(data.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + data.items[i].product_id + ');">－</a><input id="p-count' + data.items[i].product_id + '" type="text" value="' + data.items[i].product_count + '" onblur="InCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');" /><a href="javascript:AddCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
             }
-
-            $('.cbox input').bind("click", function () {
-                alert('aaa');
-            });
+            $("#sc_submit").attr("href", "SubmitOrder.aspx");
         }
-        else
+        else {
             prodhtml = "";
+            $("#sc_submit").attr("href", "javascript:void(0);");
+            $('#sc_del').attr("onclick", "");
+            $('#sc_del').css("color", "#ccc");
+        }
         $('#proditems').html(prodhtml);
         $("#cartTotal").html("￥" + parseInt(data.amount_price) / 100);
     }, 'json');
@@ -145,10 +149,12 @@ function selCbx() {
     if (isall) {
         $('#sc_del').attr("onclick", "delcartprod();");
         $('#sc_del').css("color", "");
+        $("#sc_submit").attr("href", "SubmitOrder.aspx");
     }
     else {
         $('#sc_del').attr("onclick","");
         $('#sc_del').css("color", "#ccc");
+        $("#sc_submit").attr("href", "javascript:void(0);");
     }
 }
 
@@ -171,7 +177,7 @@ function delcartprod() {
                 var pid = $(this).val();
                 dealCartCount(pid, 0);
                 $('#li' + pid).remove();
-                totalcartprice();
+                selCbx();
             }
         });
     }
@@ -186,7 +192,6 @@ function dealCartCount(pid, count) {
     });
 }
 
-
 function so_fillProd() {
     $.post(domain + 'api/cart.aspx', { token: token, random: Math.random() }, function (data) {
         if (data.status == -1) {
@@ -200,7 +205,7 @@ function so_fillProd() {
                     str_productids += data.items[i].prodid + ",";
                     str_counts += data.items[i].product_count + ",";
                     pcount += parseInt(data.items[i].product_count);
-                    prodhtml += '<li class="sub-cart-prod"><a class="prod-img"><img src="' + domain + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title">' + data.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(data.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + data.items[i].product_count + '</a></li>';
+                    prodhtml += '<li class="sub-cart-prod"><a class="prod-img" href="Detail.aspx?productid=' + data.items[i].prodid + '"><img src="' + domain + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail.aspx?productid=' + data.items[i].prodid + '">' + data.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(data.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + data.items[i].product_count + '</a></li>';
                 }
                 if (str_productids.length > 0)
                     str_productids = str_productids.substring(0, str_productids.length - 1);
@@ -230,13 +235,12 @@ function so_fillProvince() {
                 $("#province").append("<option value='" + data.area[i].id + "'>" + data.area[i].name + "</option>");
             }
             totalFeight($("#province option:selected").text(), pcount);
-            so_fillCity($("#province").val());
+            so_fillAddress();
         }
     }, 'json');
 }
 
-
-function so_fillCity(pid) {
+function so_fillCity(pid, city) {
     $.post(domain + 'api/area_get_subarea_by_parentid.aspx', { parentid: pid, random: Math.random() }, function (data) {
         if (data.status == -1) {
             GetToken();
@@ -245,11 +249,41 @@ function so_fillCity(pid) {
         else {
             $("#city").empty();
             //$("#city").append("<option value='-1'>--城市--</option>");
+            var seltxt = "";
             for (var i = 0; i < data.area.length; i++) {
-                $("#city").append("<option value='" + data.area[i].id + "'>" + data.area[i].name + "</option>");
+                if (city != "" && data.area[i].name == city)
+                    seltxt = " selected='true'"
+                else
+                    seltxt = "";
+                $("#city").append("<option value='" + data.area[i].id + "'" + seltxt + ">" + data.area[i].name + "</option>");
             }
         }
     }, 'json');
+}
+
+function so_fillAddress() {
+    $.post(domain + 'api/user_get_address.aspx', { token: token, random: Math.random() }, function (data) {
+        if (data.status == -1) {
+            GetToken();
+            so_fillAddress();
+        }
+        else {
+            var city_js = '';
+            if (data.addresses != null && data.addresses.length > 0) {
+                $("#consignee").val(data.addresses[0].name);
+                $("#mobile").val(data.addresses[0].cell);
+                $("#address").val(data.addresses[0].address);
+                $("#province").find("option").each(function () {
+                    if ($(this).text() == data.addresses[0].province) {
+                        $(this).attr("selected", true);
+                    }
+                });
+                //$("#province").find("option[text='天津市']").attr("selected", "selected");
+                city_js = data.addresses[0].city;
+            }
+            so_fillCity($("#province").val(), city_js);
+        }
+    }, "json");
 }
 
 function totalFeight(province, count) {
@@ -272,6 +306,27 @@ function totalFeight(province, count) {
     });
     $('#freight_fee span').eq(0).html("￥" + (parseInt(freight_fee) / 100).toString());
     $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee)/100).toString());
+}
+
+
+
+function orderState(state, oid) {
+    var str_state = '';
+    switch (state) {
+        case 0:
+            str_state = '<em class="o-state-close">未付款</em> <a onclick="ls_pay(' + oid + ')" class="btn paybtn">立即付款</a>';
+            break;
+        case 1:
+            str_state = "已付款未发货";
+            break;
+        case 2:
+            str_state = "已发货";
+            break;
+        case 3:
+            str_state = "已收货";
+            break;
+    }
+    return str_state;
 }
 
 

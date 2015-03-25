@@ -21,7 +21,7 @@
         </div>
         <ul id="footermenu">
             <li style="width:100%; ">
-                <a href="SubmitOrder.aspx" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger">继续购买</button></a>
+                <a id="sc_submit" href="javascript:void(0);" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger">继续购买</button></a>
             </li>
         </ul>
         <div class="clear"></div>

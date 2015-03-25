@@ -46,9 +46,9 @@
     </div>
     <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
         <div style="padding-right:10px; height:60px;" class="rel">   
-            <textarea style="width:100%; padding:5px; height:40px; line-height:20px;" placeholder="（选填）给我们留言"></textarea></div>
+            <textarea id="memo" name="memo" style="width:100%; padding:5px; height:40px; line-height:20px;" placeholder="（选填）给我们留言"></textarea></div>
         <div style="padding-right:10px;" class="rel">
-            <input type="text" style="width:50%; padding:5px; line-height:20px;"  placeholder="（选填）微信号" />
+            <input id="wechatid" name="wechatid" type="text" style="width:50%; padding:5px; line-height:20px;"  placeholder="（选填）微信号" />
         </div>
     </div>
     <div class="clear" style="height:60px;"></div>
@@ -92,7 +92,7 @@
     {
         string parms = "token=" + Request.Form["myToken"].ToString() + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
                 + "&province=" + Request.Form["myProvince"].ToString() + "&city=" + Request.Form["myCity"].ToString() + "&address=" + Request.Form["address"].ToString()
-                + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString();
+                + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() + "&wechatid=" + Request.Form["wechatid"].ToString();
 
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
         string result = HTTPHelper.Get_Http(getUrl);
@@ -100,8 +100,23 @@
         ReturnOrder order = json.Deserialize<ReturnOrder>(result);
         if (order.status == -1)
         {
+            //getToken
+            
             submitOrder();
-        }        
+        }
+        else
+        {
+            if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() == "1")
+            {
+                //微信支付
+                
+            }
+            else
+            { 
+                //易宝支付
+                
+            }
+        }
     }
 
     public class ReturnOrder
@@ -118,13 +133,14 @@
     var t_prod_price = 0;
     $(document).ready(function () {
         so_fillProd();
-        
+
         $("#province").change(function () {
             totalFeight($("#province option:selected").text(), pcount);
             so_fillCity($(this).val());
         });
 
     });
+
     function SubOrder() {
         if ($("#consignee").val().Trim() == "") {
             $("#ModalContent").html("请输入收件人姓名");
