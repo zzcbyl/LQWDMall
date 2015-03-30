@@ -143,7 +143,7 @@ public class Cart
         {
             Product product = new Product(productIdArray[i]);
             cmdInsertOrderDetail.Parameters["@product_name"].Value = product._fields["prodname"].ToString().Trim();
-            cmdInsertOrderDetail.Parameters["@product_description"].Value = product._fields["description"].ToString().Substring(0, 500).Trim();
+            cmdInsertOrderDetail.Parameters["@product_description"].Value = product._fields["description"].ToString().Substring(0, 300).Trim();
             cmdInsertOrderDetail.Parameters["@imgsrc"].Value = product._fields["imgsrc"].ToString().Trim();
             cmdInsertOrderDetail.Parameters["@price"].Value = int.Parse(product._fields["price"].ToString().Trim());
             cmdInsertOrderDetail.Parameters["@count"].Value = countArray[i];
