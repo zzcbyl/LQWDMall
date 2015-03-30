@@ -58,4 +58,13 @@ public class Order
         return orderArray;
     }
 
+    public int updPayState(int orderid)
+    {
+        string sqlUpdPay = "update m_order set paystate = 1 where oid = " + orderid;
+        SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
+        SqlCommand cmdUpdPayOrder = new SqlCommand(sqlUpdPay, conn);
+        conn.Open();
+        int result = cmdUpdPayOrder.ExecuteNonQuery();
+        return result;
+    }
 }

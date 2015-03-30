@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/Master.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
@@ -8,20 +8,22 @@
 </div>
 <div class="m-wrap">
     <ul id="prodlistul" class="m-ul rel">
+        
     </ul>
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
         <ul id="footermenu">
-            <li id="ftm-type">
+            <%--<li id="ftm-type">
                 <div>商品分类</div>
-            </li>
+            </li>--%>
             <li id="ftm-user">
-                <div><a href="userIndex.aspx">个人中心</a></div>
+                <%--<div><a href="userIndex.aspx">个人中心</a></div>--%>
+                <div><a href="ls_order.aspx">我的订单</a></div>
             </li>
             <li id="ftm-cart">
                 <div>
                     <a id="my-cart" href="ShopCart.aspx">购物车
-                    <em id="my_cart_em" class="abs" style="display: none; right:30%;"></em>
+                    <em id="my_cart_em" class="abs" style="display: none; right:35%;"></em>
                 </a></div>
             </li>
         </ul>
@@ -30,6 +32,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
         $.post(domain + 'api/product_get_all.aspx', { random: Math.random() }, function (data) {
             var prodlist = data.data;
             var html = "";

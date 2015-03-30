@@ -1,6 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" AutoEventWireup="true" CodeFile="Detail.aspx.cs" Inherits="Detail" %>
-
-<%@ Register src="RecommendControl.ascx" tagname="RecommendControl" tagprefix="uc1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
     <%--<link href="style/proddetail.css" rel="stylesheet" type="text/css" />
@@ -9,8 +7,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff; position:relative;">
+    <div class="titleNav">
         <a href="Default.aspx" class="returnA"> </a>
+        <span class="titleSpan">商品详情</span>
     </div>
     <div class="m-dcontent" style="margin-top:10px;">
         <div id="prodimg" style="border:1px solid #ccc;">
@@ -26,14 +25,12 @@
     <div id="proddescription" class="m-ddescription">
     </div>
 
-    <uc1:RecommendControl ID="RecommendControl1" runat="server" />
-
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
         <div id="footermenu">
             <div style="float:left; width:30%;">
                 <a href="Default.aspx" style="width:45%; display:inline-block;">首页</a>
-                <a id="my-cart" class="rel" href="ShopCart.aspx" style="width:45%; display:inline-block;">
+                <a id="my-cart" class="rel" href="ShopCart.aspx?productid=<%=Request["productid"] %>" style="width:45%; display:inline-block;">
                     购物车
                     <em id="my_cart_em" class="abs" style="display: none;"></em>
                 </a>
@@ -45,13 +42,13 @@
             <div class="clear"></div>
         </div>
     </div>
-    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="myModal" class="modal hide fade" style="left:50%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-body">
         <p>已添加购物车</p>
       </div>
       <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">再逛逛</button>
-        <a href="ShopCart.aspx" class="btn btn-primary" >去结算</a>
+        <a href='ShopCart.aspx?productid=<%=Request["productid"] %>' class="btn btn-primary" >去结算</a>
       </div>
     </div>
 </div>

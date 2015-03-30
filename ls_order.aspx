@@ -4,8 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff; position:relative;">
-        <a href="javascript:history.go(-1);" class="returnA"> </a>
+    <div class="titleNav">
+        <a href="Default.aspx" class="returnA"> </a>
         <span class="titleSpan">我的订单</span>
     </div>
     <%--<div style="background:#f0f0f0; margin:10px; padding:10px;">
@@ -38,28 +38,44 @@
     </div>
     <div class="clear" style="height:20px;"></div>
     <input type="hidden" id="hidOID" name="hidOID" />
-
+    <input type="hidden" name="myToken" id="myToken" value="" />
+    <input type="hidden" name="myOpenid" id="myOpenid" value="" />
+    <input type="hidden" name="myFrom" id="myFrom" value="" />
 </div>
 <script runat="server">
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request["hidOID"] != null && Request["hidOID"].ToString().Equals(string.Empty))
+        if (Request["hidOID"] != null && !Request["hidOID"].ToString().Equals(string.Empty))
         {
             GetOrder(Request["hidOID"].ToString());
         }
     }
     private void GetOrder(string orderid)
     {
-        
+        Order order = new Order(int.Parse(orderid));
+        int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+        string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+        string payurl = "";
+        if (Request["myFrom"] != null && Request["myFrom"].ToString() == "1")
+        {
+            //微信支付
+            payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
+        }
+        else
+        {
+            //易宝支付
+            payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
+        }
+        this.Response.Redirect(payurl + param);
     }
 </script>
 <script type="text/javascript">
     $(document).ready(function () {
         loadOrder();
-        
     });
 
     function loadOrder() {
+        $('#orderlist').html('<div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>');
         $.post(domain + 'api/order_get_list.aspx', { token: token, random: Math.random() }, function (data) {
             if (data.status == -1) {
                 GetToken();
@@ -68,7 +84,7 @@
             else {
                 var orderHtml = '';
                 for (var i = 0; i < data.orders.length; i++) {
-                    orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div style="float:left;">订单编号：' + data.orders[i].oid + '</div><div style="float:right;">' + data.orders[i].ctime + '</div><div class="clear"></div></div>';
+                    orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div style="float:left;">订单编号：' + new Date(data.orders[i].ctime).valueOf().toString() + data.orders[i].oid + '</div><div style="float:right;">' + data.orders[i].ctime + '</div><div class="clear"></div></div>';
                     for (var j = 0; j < data.orders[i].details.length; j++) {
                         orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + data.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + data.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + data.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + data.orders[i].details[j].product_count + '</p><p class="lop-price o-price">¥' + parseInt(data.orders[i].details[j].price * data.orders[i].details[j].product_count) / 100 + '</p></a>';
                     }
@@ -80,7 +96,10 @@
     }
 
     function ls_pay(oid) {
-
+        GetOpenidToken();
+        $("#myToken").val(token);
+        $("#myOpenid").val(openid);
+        $("#myFrom").val(from);
         $("#hidOID").val(oid);
         document.forms[0].submit();
     }

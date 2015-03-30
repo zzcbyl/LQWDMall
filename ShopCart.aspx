@@ -1,11 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" AutoEventWireup="true" CodeFile="ShopCart.aspx.cs" Inherits="ShopCart" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;position:relative;">
-        <a href="javascript:history.go(-1);" class="returnA"> </a>
+    <div class="titleNav">
+        <a href="javascript:ReturnA();" class="returnA"> </a>
         <span class="titleSpan">购物车</span>
         <a id="sc_del" onclick="delcartprod();" style="position:absolute; top:0px; right:10px;">删除</a>
     </div>
@@ -31,6 +31,14 @@
     $(document).ready(function () {
         fillcart();
     });
+    function ReturnA() {
+        var prodid = QueryString("productid");
+        if (prodid != null && parseInt(prodid) > 0) {
+            location.href = 'detail.aspx?productid=' + prodid;
+            return;
+        }
+        location.href = 'Default.aspx';
+    }
 </script>
 </asp:Content>
 

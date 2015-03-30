@@ -1,9 +1,10 @@
 ﻿body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
 html { background: #f0f0f0; height:100%; }
 body{ font-family:微软雅黑; font-size:14px; min-height:100%; max-width:650px; background: #e3e2e2; color:#333; margin:0 auto; }
-a { color: #323232; outline-style: none; text-decoration: none; }
+a,a:visited { color: #323232; outline-style: none; text-decoration: none; }
 em { font-style: normal; font-weight: normal; list-style: outside none none; margin: 0; padding: 0;}
 a:hover { text-decoration:none; color: #323232;}
+a:focus { text-decoration:none;}
 .left { float:left; }
 .right { float:right; }
 .rel { position:relative; }
@@ -11,7 +12,10 @@ a:hover { text-decoration:none; color: #323232;}
 .pd10 { padding:10px;}
 .red { color:Red;}
 .clear { clear:both;}
+a.btn-primary { color:#fff;}
 
+.loading { margin:0 auto; padding:30px 0; text-align:center; background:#fff; color:#999; line-height:30px; font-size:12px;}
+.loading img { width:50px; height:50px;}
 .mainpage {  }
 .m-wrap { padding:10px 10px 0 10px; background:#e3e2e2}
 .m-ul{ display:block; margin-left:-5px; }
@@ -21,22 +25,23 @@ a:hover { text-decoration:none; color: #323232;}
 .m-txt { height:36px; line-height:18px; margin:5px; overflow:hidden; color: #323232; }
 .m-price { height:22px; line-height:22px; margin:8px 5px; font-size:16px;}
 .m-express { color:#919191; line-height:22px; height:22px;}
-.returnA { width:30px; position:absolute; left:20px; top:10px;text-indent: -9999px;}
-.returnA:before { position: absolute; display: inline-block; border-top: 9px solid transparent; border-right: 9px solid #fff; border-bottom: 9px solid transparent; border-right-color: #5d5d5d; left: -8px; top: 0px;  content: ''; } 
-.returnA:after { position: absolute; display: inline-block; border-top: 8px solid transparent; border-right: 8px solid #fff; border-bottom: 8px solid transparent; left: -6px; top: 1px; content: ''; } 
+.returnA { width:50px; position:absolute; left:20px; top:10px;text-indent: -9999px;}
+.returnA:before { position: absolute; display: inline-block; border-top: 9px solid transparent; border-right: 9px solid #fff; border-bottom: 9px solid transparent; border-right-color: #5d5d5d; left: -8px; top: 6px;  content: ''; } 
+.returnA:after { position: absolute; display: inline-block; border-top: 8px solid transparent; border-right: 8px solid #fff; border-bottom: 8px solid transparent; left: -6px; top: 7px; content: ''; } 
 .titleSpan { display:block; width:100%; text-align:center;}
+.titleNav { height:50px; line-height:50px; padding:0 10px; background:#fff; position:relative;}
 
 .m-bottom { bottom: 0; font-size: 14px; left: 0; position: fixed; width: 100%; z-index: 998;}
 #footermenu { background-color: #fff; border-top: 1px solid #e3e3e3; height: 45px; line-height: 45px; margin: 0 auto; max-width: 650px; text-align: center; width: 100%; padding:5px 0;}
 #footermenu li { float:left; height:45px; line-height:45px;}
-#ftm-type, #ftm-user, #ftm-cart { border-right: 1px solid #e3e3e3; box-sizing: border-box; color: #4c4c4c; position: relative; width: 33%;}
-#ftm-user { width:34%;}
+ #ftm-user, #ftm-cart { border-right: 1px solid #e3e3e3; box-sizing: border-box; color: #4c4c4c; position: relative; width: 50%;}
+/*#ftm-user { width:34%;}*/
 #ftm-cart { border-right:none;}
 .m-dcontent { padding:10px; background:#fff}
 .m-dprice { height:22px; line-height:22px; font-size:16px;}
 .m-ddescription { margin-top:10px; background:#fff; padding:10px;}
 
-#my-cart .abs {  background-color: #f00; border-radius: 8px; color: #fff; display: none; font-size: 14px; height: 16px; line-height: 16px; right: 8px; text-align: center; top: 1px; width: 16px; position:absolute;}
+#my-cart .abs {  background-color: #f00; border-radius: 8px; color: #fff; display: none; font-size: 14px; height: 16px; line-height: 16px; right: 0px; text-align: center; top: 1px; width: 16px; position:absolute;}
 
 .cart-prod-num { line-height:30px; width:30%;}
 .cart-prod-num a { font-size:20px;font-family: serif; display:block; width:15px; height:15px; float:left; margin-left:5px; } 
@@ -102,4 +107,9 @@ a:hover { text-decoration:none; color: #323232;}
 .sub-total #total_count { top:40px; right:5px; position:absolute; color:#666; }
 .sc-address-block { background:#fff; margin:10px; padding:20px 10px 10px; line-height:22px;}
 .sc-address-block input { margin-bottom:0;}
+
+.payresult { text-align:center; padding:20px 0; font-size:22px; color:Green; line-height:35px; font-weight:bold;}
+.icon-success, .icon-failure { background: url("/images/ico-tips.png") no-repeat; height:38px; width:38px; vertical-align:middle; margin-right:10px; display:inline-block; }
+.icon-success {  background-position: -80px 0; }
+.icon-failure  { background-position: -80px -48px; }
 

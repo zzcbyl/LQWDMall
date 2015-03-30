@@ -6,6 +6,7 @@ function GetOpenidToken() {
     openid = QueryString('openid');
     if (openid != null) {
         setCookie('openid', openid);
+        GetToken();
     }
     else {
         openid = getCookie('openid');
@@ -33,6 +34,7 @@ function GetToken() {
         success: function (data, textStatus) {
             var obj = JSON.parse(data);
             if (obj != null && obj.status == 1) {
+                //alert(obj.token);
                 setCookie('token', obj.token);
                 token = obj.token;
             }
@@ -70,12 +72,13 @@ function InCount(id ,total) {
 }
 
 function filldetail(pid) {
+    $('#prodtitle').html('<div class="loading"><img src="images/loading.gif" /><br />加载中...</div>');
     $.post(domain + 'api/product_get_detail.aspx', { productid: pid, random: Math.random() }, function (data) {
         //alert(data);
         $('#prodtitle').html(data.prodname);
         $('#proddescription').html(data.description);
         $('#prodimg').html('<img src="' + domain + data.images[0].src + '" width="100%" />');
-        $('#prodprice').html('¥' + data.price);
+        $('#prodprice').html('¥' + parseInt(data.price)/100);
     }, 'json');
 }
 
@@ -107,13 +110,14 @@ function detailAddCart(pid, isshow) {
         if (isshow == 1)
             $('#myModal').modal('show');
         else
-            location.href = "ShopCart.aspx";
+            location.href = "ShopCart.aspx?productid=" + pid;
     }, 'json');
 }
 
 
 //填充购物车
 function fillcart() {
+    $('#proditems').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
     $.post(domain + 'api/cart.aspx', { token: token, random: Math.random() }, function (data) {
         if (data.status == -1) {
             GetToken();
@@ -121,10 +125,14 @@ function fillcart() {
         }
         var prodhtml = "";
         if (data.count > 0) {
+            var prodids = "";
             for (var i = 0; i < data.items.length; i++) {
+                prodids += data.items[i].product_id + ",";
                 prodhtml += '<li id="li' + data.items[i].product_id + '" class="sc-item"><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + data.items[i].product_id + '" /></a><a id="p-img-block" href="Detail.aspx?productid=' + data.items[i].product_id + '"><img id="p-img" src="' + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a id="p-title" href="Detail.aspx?productid=' + data.items[i].product_id + '">' + data.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(data.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + data.items[i].product_id + ');">－</a><input id="p-count' + data.items[i].product_id + '" type="text" value="' + data.items[i].product_count + '" onblur="InCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');" /><a href="javascript:AddCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
             }
-            $("#sc_submit").attr("href", "SubmitOrder.aspx");
+            if (prodids.length > 0)
+                prodids = prodids.substring(0, prodids.length - 1);
+            $("#sc_submit").attr("href", "SubmitOrder.aspx?prodids=" + prodids);
         }
         else {
             prodhtml = "";
@@ -139,17 +147,21 @@ function fillcart() {
 
 function selCbx() {
     var isall = false;
+    var prodids = "";
     $('.cbox input[type=checkbox]').each(function () {
         if (this.checked) {
+            prodids += $(this).val() + ",";
             isall = true;
         }
     });
+    if (prodids.length > 0)
+        prodids = prodids.substring(0, prodids.length - 1);
     totalcartprice();
 
     if (isall) {
         $('#sc_del').attr("onclick", "delcartprod();");
         $('#sc_del').css("color", "");
-        $("#sc_submit").attr("href", "SubmitOrder.aspx");
+        $("#sc_submit").attr("href", "SubmitOrder.aspx?prodids=" + prodids);
     }
     else {
         $('#sc_del').attr("onclick","");
@@ -193,6 +205,7 @@ function dealCartCount(pid, count) {
 }
 
 function so_fillProd() {
+    $('#prodlist').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
     $.post(domain + 'api/cart.aspx', { token: token, random: Math.random() }, function (data) {
         if (data.status == -1) {
             GetToken();
@@ -201,7 +214,12 @@ function so_fillProd() {
         else {
             var prodhtml = "";
             if (data.count > 0) {
+                var str_prodids = QueryString("prodids");
+                if (str_prodids.length <= 0) return;
+                var prodidsArr = str_prodids.split(',');
                 for (var i = 0; i < data.items.length; i++) {
+                    //if (prodidsArr.indexOf(data.items[i].prodid) == -1)
+                    //    continue;
                     str_productids += data.items[i].prodid + ",";
                     str_counts += data.items[i].product_count + ",";
                     pcount += parseInt(data.items[i].product_count);

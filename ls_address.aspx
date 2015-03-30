@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" AutoEventWireup="true" CodeFile="ls_address.aspx.cs" Inherits="ls_address" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;position:relative;">
+    <div class="titleNav">
         <a href="Default.aspx" class="returnA"> </a>
         <span class="titleSpan">我的地址</span>
     </div>

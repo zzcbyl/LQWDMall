@@ -4,8 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
-    <div style="height:40px; line-height:40px; padding:0 10px; background:#fff;position:relative;">
-        <a href="javascript:history.go(-1);" class="returnA"> </a>
+    <div class="titleNav">
+        <a href="ShopCart.aspx" class="returnA"> </a>
         <span class="titleSpan">确认下单</span>
     </div>
     <div class="sc-address-block rel">
@@ -92,13 +92,14 @@
     {
         string parms = "token=" + Request.Form["myToken"].ToString() + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
                 + "&province=" + Request.Form["myProvince"].ToString() + "&city=" + Request.Form["myCity"].ToString() + "&address=" + Request.Form["address"].ToString()
-                + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() + "&wechatid=" + Request.Form["wechatid"].ToString();
+                + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() 
+                + "&wechatid=" + Request.Form["wechatid"].ToString();
 
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
         string result = HTTPHelper.Get_Http(getUrl);
         JavaScriptSerializer json = new JavaScriptSerializer();
-        ReturnOrder order = json.Deserialize<ReturnOrder>(result);
-        if (order.status == -1)
+        ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
+        if (jsonorder.status == -1)
         {
             //getToken
             
@@ -106,16 +107,21 @@
         }
         else
         {
+            Order order = new Order(int.Parse(jsonorder.order_id));
+            int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+            string payurl = "";
             if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() == "1")
             {
                 //微信支付
-                
+                payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
             }
             else
-            { 
+            {
                 //易宝支付
-                
+                payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
             }
+            this.Response.Redirect(payurl + param);
         }
     }
 
