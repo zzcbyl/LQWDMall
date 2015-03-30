@@ -70,7 +70,7 @@ a.btn-primary { color:#fff;}
 .ls-order-ul li a { width:100%; display:block; }
 .ls-order-ul li a.ok { color:#c60a1e; }
 
-.m-dcontent .ls-order-title { height:40px; line-height:40px; border-bottom:1px solid #eee; }
+.m-dcontent .ls-order-title { height:55px; line-height:25px; border-bottom:1px solid #eee; }
 .m-dcontent .ls-order-prod { border-bottom: 1px solid #eee; display: block; height: 6.5rem; overflow: auto; padding-left: 6.5rem; padding-top: 1rem; }
 .m-dcontent .ls-order-prod p.lop-img { height: 5.5rem; left: 0; overflow: hidden; position: absolute; width: 5.5rem; }
 .m-dcontent .ls-order-prod p.lop-name { color: #707070; font-size: 14px; height: 2rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}

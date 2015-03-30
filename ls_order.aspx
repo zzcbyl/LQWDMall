@@ -21,7 +21,7 @@
         <%--<div class="m-dcontent" style="margin:10px; padding:10px 20px;">
             <div class="ls-order-title">
                 <div style="float:left;">订单编号</div>
-                <div style="float:right;">2015-03-16 17:17:41</div>
+                <div style="float:left;">2015-03-16 17:17:41</div>
                 <div class="clear"></div>
             </div>
             <a class="ls-order-prod rel">
@@ -84,7 +84,8 @@
             else {
                 var orderHtml = '';
                 for (var i = 0; i < data.orders.length; i++) {
-                    orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div style="float:left;">订单编号：' + new Date(data.orders[i].ctime).valueOf().toString() + data.orders[i].oid + '</div><div style="float:right;">' + data.orders[i].ctime + '</div><div class="clear"></div></div>';
+                    var ct = new Date(data.orders[i].ctime);
+                    orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div>订单编号：' + new Date(data.orders[i].ctime).valueOf().toString() + data.orders[i].oid + '</div><div>订单日期：' + ct.Format("yyyy-MM-dd hh:mm:ss") + '</div><div class="clear"></div></div>';
                     for (var j = 0; j < data.orders[i].details.length; j++) {
                         orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + data.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + data.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + data.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + data.orders[i].details[j].product_count + '</p><p class="lop-price o-price">¥' + parseInt(data.orders[i].details[j].price * data.orders[i].details[j].product_count) / 100 + '</p></a>';
                     }
