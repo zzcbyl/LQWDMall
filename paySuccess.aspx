@@ -13,7 +13,7 @@
             <i class="icon-success"></i><span>支付成功</span>
         </div>
         <div style="text-align:center; margin-top:20px;">
-            首页　　　查看订单
+            <a href="Default.aspx">首页</a>　　　<a href="ls_order.aspx">查看订单</a>
         </div>
     </div>
 </div>

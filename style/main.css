@@ -108,7 +108,7 @@ a.btn-primary { color:#fff;}
 .sc-address-block { background:#fff; margin:10px; padding:20px 10px 10px; line-height:22px;}
 .sc-address-block input { margin-bottom:0;}
 
-.payresult { text-align:center; padding:20px 0; font-size:22px; color:Green; line-height:35px; font-weight:bold;}
+.payresult { text-align:center; padding:50px 0 20px 0; font-size:22px; color:Green; line-height:35px; font-weight:bold;}
 .icon-success, .icon-failure { background: url("/images/ico-tips.png") no-repeat; height:38px; width:38px; vertical-align:middle; margin-right:10px; display:inline-block; }
 .icon-success {  background-position: -80px 0; }
 .icon-failure  { background-position: -80px -48px; }
