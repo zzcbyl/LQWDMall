@@ -1,5 +1,4 @@
-﻿var domain = 'http://192.168.1.133:8001/';
-var token = '';
+﻿var token = '';
 var openid = '';
 var from = '';
 function GetOpenidToken() {
@@ -133,6 +132,8 @@ function fillcart() {
             if (prodids.length > 0)
                 prodids = prodids.substring(0, prodids.length - 1);
             $("#sc_submit").attr("href", "SubmitOrder.aspx?prodids=" + prodids);
+            $('#sc_del').attr("onclick", "delcartprod();");
+            $('#sc_del').css("color", "");
         }
         else {
             prodhtml = "";
@@ -341,7 +342,7 @@ function orderState(state, oid) {
             str_state = '<em class="o-state-close">未付款</em> <a onclick="ls_pay(' + oid + ')" class="btn paybtn">立即付款</a>';
             break;
         case 1:
-            str_state = "已付款未发货";
+            str_state = "已付款 未发货";
             break;
         case 2:
             str_state = "已发货";

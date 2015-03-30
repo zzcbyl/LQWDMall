@@ -3,8 +3,6 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        
-        
         string type = (Request["type"]==null)? "username" :  Request["type"].Trim();
         string userName = Request["username"]==null? "abce" : Request["username"].Trim();
         DateTime expireDate = DateTime.Now.AddHours(2);

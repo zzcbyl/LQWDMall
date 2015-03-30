@@ -85,12 +85,12 @@
     {
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
-            submitOrder();
+            submitOrder(Request.Form["myToken"].ToString());
         }
     }
-    private void submitOrder()
+    private void submitOrder(string token)
     {
-        string parms = "token=" + Request.Form["myToken"].ToString() + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
+        string parms = "token=" + token + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
                 + "&province=" + Request.Form["myProvince"].ToString() + "&city=" + Request.Form["myCity"].ToString() + "&address=" + Request.Form["address"].ToString()
                 + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() 
                 + "&wechatid=" + Request.Form["wechatid"].ToString();
@@ -101,15 +101,15 @@
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == -1)
         {
-            //getToken
-            
-            submitOrder();
+            //理论不可能过期，提交之前已获取最新token
+            submitOrder(token);
         }
         else
         {
+            int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
-            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
             if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() == "1")
             {
@@ -170,6 +170,7 @@
         }
 
         GetOpenidToken();
+        GetToken();
         $("#myToken").val(token);
         $("#myOpenid").val(openid);
         $("#myFrom").val(from);

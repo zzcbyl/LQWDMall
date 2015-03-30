@@ -52,9 +52,10 @@
     }
     private void GetOrder(string orderid)
     {
+        int userid = Users.CheckToken(Request["myToken"].ToString());
         Order order = new Order(int.Parse(orderid));
         int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
-        string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+        string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
         string payurl = "";
         if (Request["myFrom"] != null && Request["myFrom"].ToString() == "1")
         {
@@ -98,6 +99,7 @@
 
     function ls_pay(oid) {
         GetOpenidToken();
+        GetToken();
         $("#myToken").val(token);
         $("#myOpenid").val(openid);
         $("#myFrom").val(from);

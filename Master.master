@@ -10,7 +10,8 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title></title>
+    <title>卢勤问答平台官方书城</title>
+    <script src="script/config.js" type="text/javascript"></script>
     <%--<link href="style/bootstrap.css" rel="stylesheet" type="text/css" />--%>
     <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <%--<link href="style/font-awesome.css" rel="stylesheet" type="text/css" />--%>
