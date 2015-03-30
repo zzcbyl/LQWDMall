@@ -128,7 +128,7 @@ function fillcart() {
             var prodids = "";
             for (var i = 0; i < data.items.length; i++) {
                 prodids += data.items[i].product_id + ",";
-                prodhtml += '<li id="li' + data.items[i].product_id + '" class="sc-item"><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + data.items[i].product_id + '" /></a><a id="p-img-block" href="Detail.aspx?productid=' + data.items[i].product_id + '"><img id="p-img" src="' + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a id="p-title" href="Detail.aspx?productid=' + data.items[i].product_id + '">' + data.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(data.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + data.items[i].product_id + ');">－</a><input id="p-count' + data.items[i].product_id + '" type="text" value="' + data.items[i].product_count + '" onblur="InCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');" /><a href="javascript:AddCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
+                prodhtml += '<li id="li' + data.items[i].product_id + '" class="sc-item"><a class="sc-p-del" onclick="delcartprodsingle(' + data.items[i].product_id + ');">x</a><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + data.items[i].product_id + '" /></a><a id="p-img-block" href="Detail.aspx?productid=' + data.items[i].product_id + '"><img id="p-img" src="' + data.items[i].imgsrc + '" width="50px" height="50px" /></a><a id="p-title" href="Detail.aspx?productid=' + data.items[i].product_id + '">' + data.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(data.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + data.items[i].product_id + ');">－</a><input id="p-count' + data.items[i].product_id + '" type="text" value="' + data.items[i].product_count + '" onblur="InCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');" /><a href="javascript:AddCount(' + data.items[i].product_id + ',' + data.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
             }
             if (prodids.length > 0)
                 prodids = prodids.substring(0, prodids.length - 1);
@@ -192,6 +192,12 @@ function delcartprod() {
                 selCbx();
             }
         });
+    }
+}
+function delcartprodsingle(pid) {
+    if (confirm("确定删除选中的商品吗?")) {
+        dealCartCount(pid, 0);
+        $('#li' + pid).remove();
     }
 }
 

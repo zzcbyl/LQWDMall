@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/Master.master" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" AutoEventWireup="true" CodeFile="Default_xly.aspx.cs" Inherits="Default_xly" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
@@ -8,13 +8,6 @@
 </div>
 <div style="background:#fff; padding:10px;">
     1、本店为卢勤问答平台官方书城，所有图书均有现货。2、本店的运费遵循市场规则，您可以自行拍下。3、如果有任何疑问，或者其他要求，可以在线咨询客服。
-</div>
-<div style="background:#fff; width:100%; margin-top:10px; ">
-    <ul class="nav-default">
-        <li id="type-suit">套装</li>
-        <li id="type-single">单品</li>
-    </ul>
-    <div class="clear"></div>
 </div>
 <div class="m-wrap">
     <ul id="prodlistul" class="m-ul rel">
@@ -50,27 +43,11 @@
     </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        filllist(2);
+        filllist(3);
         totalcart('my_cart_em');
-
-        $("#type-single").click(function () {
-            filllist(1);
-        });
-
-        $("#type-suit").click(function () {
-            filllist(2);
-        });
     });
 
     function filllist(typeid) {
-        if (typeid == 1) {
-            $("#type-single").css("color", "#d93229");
-            $("#type-suit").css("color", "");
-        }
-        else if (typeid == 2) {
-            $("#type-suit").css("color", "#d93229");
-            $("#type-single").css("color", "");
-        }
         $('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
         $.post(domain + 'api/product_get_all.aspx', { random: Math.random() }, function (data) {
             var prodlist = data.data;

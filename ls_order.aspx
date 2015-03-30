@@ -89,7 +89,7 @@
                     for (var j = 0; j < data.orders[i].details.length; j++) {
                         orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + data.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + data.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + data.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + data.orders[i].details[j].product_count + '</p><p class="lop-price o-price">¥' + parseInt(data.orders[i].details[j].price * data.orders[i].details[j].product_count) / 100 + '</p></a>';
                     }
-                    orderHtml += '<!--<p class="ls-order-num">数量：' + data.orders[i].details.length + '</p>--><p class="ls-order-state rel">订单状态：' + orderState(parseInt(data.orders[i].state), data.orders[i].oid) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(data.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(data.orders[i].orderprice) + parseInt(data.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
+                    orderHtml += '<!--<p class="ls-order-num">数量：' + data.orders[i].details.length + '</p>--><p class="ls-order-state rel">订单状态：' + orderState(parseInt(data.orders[i].paystate), data.orders[i].oid) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(data.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(data.orders[i].orderprice) + parseInt(data.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
                 }
                 $("#orderlist").html(orderHtml);
             }
