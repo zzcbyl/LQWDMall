@@ -40,7 +40,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             location.href = "ls_order.aspx";
-        }, 1000);
+        }, 2000);
     });
 </script>
 </asp:Content>
