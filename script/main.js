@@ -10,6 +10,11 @@ function GetOpenidToken() {
     else {
         openid = getCookie('openid');
     }
+    if (openid == null || openid == '') {
+        var encodeDomain = encodeURIComponent(domain);
+        location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+        return;
+    }
 
     from = QueryString('from');
     if (from != null) {

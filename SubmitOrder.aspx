@@ -44,9 +44,10 @@
             
         </ul>
     </div>
-    <div style="background:#fff; margin:10px; padding:10px; height:80px; position:relative;">
-        <div style="padding-right:10px; height:40px;" class="rel">   
-            <input id="memo" name="memo" type="text" style="width:100%; padding:5px; height:20px; line-height:20px;" maxlength="50" placeholder="（选填）留言：如果您需要卢勤老师亲笔签名，请留下需要被签名者姓名以及签名要求。" /></div>
+    <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
+        <div style="padding-right:10px; height:60px;" class="rel">   
+            <textarea id="memo" name="memo" style="width:100%; padding:5px; height:40px; line-height:20px;" placeholder="（选填）留言：如果您需要卢勤老师亲笔签名，请留下需要被签名者姓名以及签名要求。"></textarea>
+            </div>
         <div style="padding-right:10px;" class="rel">
             <input id="wechatid" name="wechatid" type="text" style="width:50%; padding:5px; line-height:20px;" placeholder="（选填）微信号" maxlength="50" />
         </div>
@@ -102,7 +103,11 @@
         if (jsonorder.status == -1)
         {
             //理论不可能过期，提交之前已获取最新token
-            submitOrder(token);
+            string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + Request.Form["myOpenid"].ToString();
+            string tokenResult = HTTPHelper.Get_Http(tokenUrl);
+            ReturnToken jsontoken = json.Deserialize<ReturnToken>(tokenResult);
+            if (jsontoken.status != -1)
+                submitOrder(jsontoken.token);
         }
         else
         {
@@ -129,6 +134,12 @@
     {
         public int status { get; set; }
         public string order_id { get; set; }
+    }
+    public class ReturnToken
+    {
+        public int status { get; set; }
+        public string token { get; set; }
+        public string expire_date { get; set; }
     }
 </script>
 
@@ -168,9 +179,13 @@
             $('#myModal').modal('show');
             return;
         }
+        if ($("#memo").val().length > 300) {
+            $("#ModalContent").html("留言太长，请简要填写");
+            $('#myModal').modal('show');
+            return;
+        }
 
         GetOpenidToken();
-        GetToken();
         $("#myToken").val(token);
         $("#myOpenid").val(openid);
         $("#myFrom").val(from);
