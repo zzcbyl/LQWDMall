@@ -14,6 +14,9 @@ a:focus { text-decoration:none;}
 .clear { clear:both;}
 a.btn-primary { color:#fff;}
 
+.wap-index-left { float:left; width:50%; height:100%;}
+.wap-index-right { float:left; width:50%; height:100%;}
+.wap-index-left a,.wap-index-right a { width:100%; height:100%; display:block;}
 .loading { margin:0 auto; padding:30px 0; text-align:center; background:#fff; color:#999; line-height:30px; font-size:12px;}
 .loading img { width:50px; height:50px;}
 .mainpage {  }

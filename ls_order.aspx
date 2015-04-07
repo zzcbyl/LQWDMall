@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
     <div class="titleNav">
-        <a href="Default.aspx" class="returnA"> </a>
+        <a href="javascript:Previous();" class="returnA"> </a>
         <span class="titleSpan">我的订单</span>
     </div>
     <%--<div style="background:#f0f0f0; margin:10px; padding:10px;">
@@ -105,6 +105,14 @@
         $("#myFrom").val(from);
         $("#hidOID").val(oid);
         document.forms[0].submit();
+    }
+    function Previous() {
+        if (getCookie('source') == "3") {
+            location.href = 'Default_xly.aspx';
+        }
+        else {
+            location.href = 'Default.aspx';
+        }
     }
 </script>
 </asp:Content>

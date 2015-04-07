@@ -5,7 +5,7 @@
     {
         string token = ((Request["token"] == null) ? "ca72da43b4a6abc65713f4fff4728753c4df3d1765fb3b299837361aa64a47b15d3138ab" : Request["token"].Trim());
         string[] productIdStrArr = new string[]{"4","5"};
-        string[] countIdStrArr = new string[] {"2","1"};
+        string[] countIdStrArr = new string[] {"2|1","1|1"};
 
         string name = ((Request["name"] == null) ? "aaa" : Request["name"].Trim());
         string cell = ((Request["cell"] == null) ? "13501177897" : Request["cell"].Trim());
@@ -41,14 +41,18 @@
 
         int[] productIdArr = new int[productIdStrArr.Length];
         int[] countIdArr = new int[countIdStrArr.Length];
+        int[] countPreArr = new int[countIdStrArr.Length];
+        string[] countAndPreArr = new string[] { "1", "2" };
         for (int i = 0; i < productIdArr.Length; i++)
         {
             productIdArr[i] = int.Parse(productIdStrArr[i].Trim());
-            countIdArr[i] = int.Parse(countIdStrArr[i].Trim());
+            countAndPreArr = countIdStrArr[i].Trim().Split('|');
+            countIdArr[i] = int.Parse(countAndPreArr[0].Trim());
+            countPreArr[i] = int.Parse(countAndPreArr[1].Trim());
         }
         int userId = Users.CheckToken(token);
         Cart cart = new Cart(userId);
-        int orderId = cart.PlaceOrder(name, cell, province, city, address, zip, productIdArr, countIdArr,memo,wechatId);
+        int orderId = cart.PlaceOrder(name, cell, province, city, address, zip, productIdArr, countIdArr, countPreArr, memo, wechatId);
         Response.Write("{\"status\": 0 , \"order_id\" : " + orderId.ToString() + " } ");
     }
 </script>

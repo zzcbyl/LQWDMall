@@ -95,6 +95,7 @@
                 + "&province=" + Request.Form["myProvince"].ToString() + "&city=" + Request.Form["myCity"].ToString() + "&address=" + Request.Form["address"].ToString()
                 + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() 
                 + "&wechatid=" + Request.Form["wechatid"].ToString();
+
         
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
         string result = HTTPHelper.Get_Http(getUrl);

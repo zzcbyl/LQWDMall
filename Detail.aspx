@@ -8,7 +8,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
     <div class="titleNav">
-        <a href="Default.aspx" class="returnA"> </a>
+        <a onclick="Previous();" class="returnA"> </a>
         <span class="titleSpan">商品详情</span>
     </div>
     <div class="m-dcontent" style="margin-top:10px;">
@@ -29,7 +29,7 @@
     <div class="m-bottom">
         <div id="footermenu">
             <div style="float:left; width:30%;">
-                <a href="Default.aspx" style="width:45%; display:inline-block;">首页</a>
+                <a href="javascript:Previous();" style="width:45%; display:inline-block;">首页</a>
                 <a id="my-cart" class="rel" href="ShopCart.aspx?productid=<%=Request["productid"] %>" style="width:45%; display:inline-block;">
                     购物车
                     <em id="my_cart_em" class="abs" style="display: none;"></em>
@@ -72,6 +72,15 @@
             detailAddCart(prodid, 0);
         });
     });
+
+    function Previous() {
+        if (getCookie('source') == "3") {
+            location.href = 'Default_xly.aspx';
+        }
+        else {
+            location.href = 'Default.aspx';
+        }
+    }
 </script>
 </asp:Content>
 

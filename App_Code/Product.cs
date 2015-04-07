@@ -52,6 +52,7 @@ public class Product
     private int _freightid;
     private string _imgsrc = "";
     private int _isrecommend = 0;
+    private int _precount = 0;
     private DateTime _ctime = DateTime.Now;
     /// <summary>
     /// 
@@ -124,6 +125,14 @@ public class Product
     {
         set { _isrecommend = value; }
         get { return _isrecommend; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public int precount
+    {
+        set { _precount = value; }
+        get { return _precount; }
     }
     /// <summary>
     /// 

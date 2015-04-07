@@ -86,7 +86,7 @@ public class Cart
     }
 
     public int PlaceOrder(string name, string cell, string province, string city, string address,
-        string zip, int[] productIdArray, int[] countArray, string memo, string wechatId)
+        string zip, int[] productIdArray, int[] countArray, int[] countPreArray, string memo, string wechatId)
     {
         if (productIdArray.Length != countArray.Length)
             return -1;
@@ -104,15 +104,14 @@ public class Cart
         cmdInsertIntoOrder.ExecuteNonQuery();
 
         int countTotal = 0;
-        foreach (int count in countArray)
+        for (int i = 0; i < countArray.Length; i++)
         {
-            countTotal = countTotal + count;
+            countTotal = countTotal + countArray[i] * countPreArray[i];
         }
 
         int shipFee = Util.ShipFeeCalculate(province, countTotal);
 
         int totalAmount = 0;
-
 
         int orderId = 0;
 
