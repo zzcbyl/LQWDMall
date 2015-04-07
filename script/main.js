@@ -370,16 +370,16 @@ function so_fillAddress() {
         else {
             var city_js = '';
             if (data.addresses != null && data.addresses.length > 0) {
-                $("#consignee").val(data.addresses[0].name);
-                $("#mobile").val(data.addresses[0].cell);
-                $("#address").val(data.addresses[0].address);
+                $("#consignee").val(data.addresses[data.addresses.length - 1].name);
+                $("#mobile").val(data.addresses[data.addresses.length - 1].cell);
+                $("#address").val(data.addresses[data.addresses.length - 1].address);
                 $("#province").find("option").each(function () {
-                    if ($(this).text() == data.addresses[0].province) {
+                    if ($(this).text() == data.addresses[data.addresses.length - 1].province) {
                         $(this).attr("selected", true);
                     }
                 });
                 //$("#province").find("option[text='天津市']").attr("selected", "selected");
-                city_js = data.addresses[0].city;
+                city_js = data.addresses[data.addresses.length - 1].city;
             }
             so_fillCity($("#province").val(), city_js);
         }
