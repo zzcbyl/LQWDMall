@@ -245,6 +245,7 @@ function delcartprodsingle(pid) {
     if (confirm("确定删除选中的商品吗?")) {
         dealCartCount(pid, 0);
         $('#li' + pid).remove();
+        selCbx();
     }
 }
 
@@ -404,7 +405,10 @@ function totalFeight(province, count) {
             }
         }
     });
-    $('#freight_fee span').eq(0).html("￥" + (parseInt(freight_fee) / 100).toString());
+    if (parseInt(freight_fee) == 0)
+        $('#freight_fee span').eq(0).html("-");
+    else
+        $('#freight_fee span').eq(0).html("￥" + (parseInt(freight_fee) / 100).toString());
     $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee)/100).toString());
 }
 

@@ -150,6 +150,8 @@ public class Util
                 amount = amount + addintionalWeight * (count / 2);
             }
         }
+        else if (count == 0)
+            amount = 0;
 
         return amount;
 
