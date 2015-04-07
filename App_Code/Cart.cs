@@ -106,13 +106,7 @@ public class Cart
 
         /*
         int countTotal = 0;
-<<<<<<< HEAD
         for (int i = 0; i < countArray.Length; i++)
-=======
-
-
-        foreach (int count in countArray)
->>>>>>> 4a95a73b05d014dbef9d23fa0f7d9d1ba029b957
         {
             countTotal = countTotal + countArray[i] * countPreArray[i];
         }
