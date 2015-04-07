@@ -3,7 +3,7 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string token = ((Request["token"] == null) ? "ca72da43b4a6abc65713f4fff4728753c4df3d1765fb3b299837361aa64a47b15d3138ab" : Request["token"].Trim());
+        string token = ((Request["token"] == null) ? "" : Request["token"].Trim());
         string[] productIdStrArr = new string[]{"4","5"};
         string[] countIdStrArr = new string[] {"2","1"};
 
