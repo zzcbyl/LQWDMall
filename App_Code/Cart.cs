@@ -103,13 +103,27 @@ public class Cart
 
         cmdInsertIntoOrder.ExecuteNonQuery();
 
+
+        /*
         int countTotal = 0;
+<<<<<<< HEAD
         for (int i = 0; i < countArray.Length; i++)
+=======
+
+
+        foreach (int count in countArray)
+>>>>>>> 4a95a73b05d014dbef9d23fa0f7d9d1ba029b957
         {
             countTotal = countTotal + countArray[i] * countPreArray[i];
         }
 
         int shipFee = Util.ShipFeeCalculate(province, countTotal);
+
+         * 
+         */
+
+        int countTotal = 0;
+        int shipFee = 0;
 
         int totalAmount = 0;
 
@@ -152,10 +166,17 @@ public class Cart
             cmdDeleteCart.Parameters["@productId"].Value = productIdArray[i];
             cmdDeleteCart.ExecuteNonQuery();
             totalAmount = totalAmount + int.Parse(product._fields["price"].ToString().Trim()) * countArray[i];
+
+            countTotal = countTotal + int.Parse(product._fields["precount"].ToString().Trim()) * countArray[i];
+
         }
 
+        if (countTotal > 0)
+            shipFee = Util.ShipFeeCalculate(province, countTotal);
+
         SqlCommand cmdOrderUpdate = new SqlCommand(" update m_order set orderprice = " + totalAmount.ToString()
-        + " ,   shipfee = " + shipFee.ToString() + "  where oid = " + orderId.ToString(), conn);
+            + " ,   shipfee = " + shipFee.ToString() + "  where oid = " + orderId.ToString(), conn);
+
         cmdOrderUpdate.ExecuteNonQuery();
 
         conn.Close();
