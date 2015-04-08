@@ -10,11 +10,6 @@ function GetOpenidToken() {
     else {
         openid = getCookie('openid');
     }
-    if (openid == null || openid == '') {
-        var encodeDomain = encodeURIComponent(domain);
-        location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
-        return;
-    }
 
     from = QueryString('from');
     if (from != null) {
@@ -23,6 +18,13 @@ function GetOpenidToken() {
     else {
         from = getCookie('from');
     }
+
+    if (openid == null || openid == '') {
+        var encodeDomain = encodeURIComponent(domain);
+        location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+        return;
+    }
+
 
     token = getCookie('token');
     if (token == null || token == 'undefined') {
@@ -89,6 +91,12 @@ function filldetail(pid) {
                 $('#prodtitle').html(obj.prodname);
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
+                if (obj.originalprice != null && obj.originalprice != '') {
+                    $('#originalprice').show();
+                    $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
+                }
+                else
+                    $('#originalprice').hide();
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
             }
         }

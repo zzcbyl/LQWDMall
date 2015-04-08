@@ -17,7 +17,7 @@
         </div>
         <div id="prodtitle" style="line-height:22px; font-size:16px; padding:10px 0;">
         </div>
-        <div class="m-dprice"><span class="red" id="prodprice"></span></div>
+        <div class="m-dprice"><s class="gray" id="originalprice" style="margin-right:10px;"></s><span class="red" id="prodprice"></span></div>
         <%--<div class="m-express" style="display: block;">
             <span>运费: ¥12.00</span>
         </div>--%>

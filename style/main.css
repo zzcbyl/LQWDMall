@@ -11,7 +11,10 @@ a:focus { text-decoration:none;}
 .pd5 { padding:5px;}
 .pd10 { padding:10px;}
 .red { color:Red;}
+.gray { color:Gray;}
 .clear { clear:both;}
+.mgleft{ margin-left:10px;}
+.font14{ font-size:14px;}
 a.btn-primary { color:#fff;}
 
 .wap-index-left { float:left; width:50%; height:100%;}
@@ -25,8 +28,10 @@ a.btn-primary { color:#fff;}
 .m-li { width:50%; margin-bottom:5px; border-left:5px solid transparent; box-sizing:border-box; }
 .m-li a { background-color: #fff; display: block; padding: 5px; position: relative;}
 .m-li img { width:100%; display:block; border:1px solid #ccc;}
+.m-li .pd5{ padding:5px; position: relative;}
+.m-li .icon-jiu{ display:block; width:50px; height:50px; background:url(../images/jiuzhe.png) no-repeat; position: absolute; right:4px; bottom:5px;}
 .m-txt { height:18px; line-height:18px; margin:5px; overflow:hidden; color: #323232; }
-.m-price { height:22px; line-height:22px; margin:8px 5px; font-size:16px;}
+.m-price { height:22px; line-height:22px; margin:8px 5px; font-size:12px;}
 .m-express { color:#919191; line-height:22px; height:22px;}
 .returnA { width:50px; position:absolute; left:20px; top:10px;text-indent: -9999px;}
 .returnA:before { position: absolute; display: inline-block; border-top: 9px solid transparent; border-right: 9px solid #fff; border-bottom: 9px solid transparent; border-right-color: #5d5d5d; left: -8px; top: 6px;  content: ''; } 
@@ -119,9 +124,11 @@ a.btn-primary { color:#fff;}
 
 .prod-list-btn { width:100%; position:absolute; right:5px; bottom:8px;}
 .prod-list-btn #addShopCart { width:25%; float:right; font-size:75%; min-width:65px; padding-left:0; padding-right:0;} 
-.prod-list-btn #buyProd { width:25%; float:right; font-size:75%; min-width:60px; padding-left:0; padding-right:0; margin-right:5px;}
+.prod-list-btn #buyProd { width:15%; float:right; font-size:75%; min-width:30px; padding-left:0; padding-right:0; margin-right:5px;}
+.prod-list-btn #buyProd_xly { width:25%; float:right; font-size:75%; min-width:60px; padding-left:0; padding-right:0; margin-right:5px;}
 
 .nav-default { text-align:center; font-size:16px; }
-.nav-default li { float:left; line-height:40px; height:40px; text-align:center; }
-.nav-default #type-single { width:49%; }
-.nav-default #type-suit  { width:50%; border-right:1px solid #e3e3e3;}
+.nav-default li { float:left; height:40px; text-align:center; background:#FDF8D2; }
+.nav-default li img{ height:40px;}
+.nav-default #type-single { width:50%; }
+.nav-default #type-suit  { width:50%;}
