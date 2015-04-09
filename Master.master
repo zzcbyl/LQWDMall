@@ -35,5 +35,84 @@
         
         </asp:ContentPlaceHolder>
     </form>
+    <script type="text/javascript">
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '<%=appId%>', // 必填，公众号的唯一标识
+            timestamp: '<%=timeStamp%>', // 必填，生成签名的时间戳
+            nonceStr: '<%=nonceStr%>', // 必填，生成签名的随机串
+            signature: '<%=shaParam %>', // 必填，签名，见附录1
+            jsApiList: [
+		    'onMenuShareTimeline',
+		    'onMenuShareAppMessage',
+		    'onMenuShareQQ',
+		    'onMenuShareWeibo'
+	    ]
+        });
+        wx.ready(function () {
+            var shareTitle = "卢勤问答平台官方商城"; //标题
+            var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
+            var descContent = "卢勤问答平台官方商城"; //简介
+            var lineLink = "http://mall.luqinwenda.com/?from=1"; //链接
+
+            //分享到朋友圈
+            wx.onMenuShareTimeline({
+                title: shareTitle, // 分享标题
+                link: lineLink, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+
+                }
+            });
+
+            //分享给朋友
+            wx.onMenuShareAppMessage({
+                title: shareTitle, // 分享标题
+                desc: descContent, // 分享描述
+                link: lineLink, // 分享链接
+                imgUrl: imgUrl, // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+
+                }
+            });
+
+            //分享到QQ
+            wx.onMenuShareQQ({
+                title: shareTitle, // 分享标题
+                desc: descContent, // 分享描述
+                link: lineLink, // 分享链接
+                imgUrl: imgUrl // 分享图标
+            });
+
+            //分享到腾讯微博
+            wx.onMenuShareWeibo({
+                title: shareTitle, // 分享标题
+                desc: descContent, // 分享描述
+                link: lineLink, // 分享链接
+                imgUrl: imgUrl // 分享图标
+            });
+        });
+</script>
+<script runat="server">
+    public string timeStamp = "";
+    public string nonceStr = "e4b6e00dd1f0bf0fcab93b165ae8f";
+    public string ticket = "";
+    public string shaParam = "";
+    public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
+    
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        timeStamp = Util.GetTimeStamp();
+        //appId = "wx6776682e62b9a524";
+        string jsonStrForTicket = Util.GetWebContent("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="
+            + Util.GetToken() + "&type=jsapi", "get", "", "form-data");
+        ticket = Util.GetSimpleJsonValueByKey(jsonStrForTicket, "ticket");
+        string shaString = "jsapi_ticket=" + ticket.Trim() + "&noncestr=" + nonceStr.Trim()
+            + "&timestamp=" + timeStamp.Trim() + "&url=" + Request.Url.ToString().Trim();
+        shaParam = Util.GetSHA1(shaString);
+    }
+</script>
 </body>
 </html>

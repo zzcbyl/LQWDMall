@@ -33,14 +33,14 @@
     </div>
 </div>
 <div id="myModal" class="modal hide fade" style="left:50%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-body">
-        <p>已添加购物车</p>
-      </div>
-      <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">再逛逛</button>
-        <a href='ShopCart.aspx' class="btn btn-primary" >去结算</a>
-      </div>
+    <div class="modal-body">
+    <p>已添加购物车</p>
     </div>
+    <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">再逛逛</button>
+    <a href='ShopCart.aspx' class="btn btn-primary" >去结算</a>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
         filllist(3);

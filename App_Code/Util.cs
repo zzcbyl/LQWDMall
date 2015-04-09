@@ -6,6 +6,9 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Data;
 using System.Data.SqlClient;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
 /// <summary>
 /// Summary description for Util
 /// </summary>
@@ -15,6 +18,13 @@ public class Util
     public static string ConnectionString = System.Configuration.ConfigurationSettings.AppSettings["constr"].Trim();
     
     public static string ApiDomainString = System.Configuration.ConfigurationSettings.AppSettings["apiDomain"].Trim();
+
+
+    protected static string token = "";
+
+    protected static DateTime tokenTime = DateTime.MinValue;
+
+    public static string conStr = "";
 
 	public Util()
 	{
@@ -155,5 +165,82 @@ public class Util
 
         return amount;
 
+    }
+
+    public static string GetTimeStamp()
+    {
+        TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+        return Convert.ToInt64(ts.TotalSeconds).ToString();
+    }
+    public static string GetWebContent(string url, string method, string content, string contentType)
+    {
+        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+        req.Method = method.Trim();
+        req.ContentType = contentType;
+        if (!content.Trim().Equals(""))
+        {
+            StreamWriter sw = new StreamWriter(req.GetRequestStream());
+            sw.Write(content);
+            sw.Close();
+        }
+        HttpWebResponse res = (HttpWebResponse)req.GetResponse();
+        Stream s = res.GetResponseStream();
+        StreamReader sr = new StreamReader(s);
+        string str = sr.ReadToEnd();
+        sr.Close();
+        s.Close();
+        res.Close();
+        req.Abort();
+        return str;
+    }
+
+    public static string GetToken()
+    {
+        DateTime nowDate = DateTime.Now;
+        if (nowDate - tokenTime > new TimeSpan(0, 10, 0))
+        {
+            token = ForceGetToken();
+        }
+        return token;
+    }
+
+    public static string ForceGetToken()
+    {
+        DateTime nowDate = DateTime.Now;
+        token = GetAccessToken(System.Configuration.ConfigurationSettings.AppSettings["wxappid"].Trim(),
+                System.Configuration.ConfigurationSettings.AppSettings["wxappsecret"].Trim());
+        tokenTime = nowDate;
+        return token;
+
+    }
+
+    public static string GetAccessToken(string appId, string appSecret)
+    {
+        string token = "";
+        string url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appId.Trim() + "&secret=" + appSecret.Trim();
+        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+        HttpWebResponse res = (HttpWebResponse)req.GetResponse();
+        Stream s = res.GetResponseStream();
+        string ret = (new StreamReader(s)).ReadToEnd();
+        s.Close();
+        res.Close();
+        req.Abort();
+
+        JavaScriptSerializer serializer = new JavaScriptSerializer();
+        Dictionary<string, object> json = (Dictionary<string, object>)serializer.DeserializeObject(ret);
+        object v;
+        json.TryGetValue("access_token", out v);
+        token = v.ToString();
+
+        return token;
+    }
+
+    public static string GetSimpleJsonValueByKey(string jsonStr, string key)
+    {
+        JavaScriptSerializer serializer = new JavaScriptSerializer();
+        Dictionary<string, object> json = (Dictionary<string, object>)serializer.DeserializeObject(jsonStr);
+        object v;
+        json.TryGetValue(key, out v);
+        return v.ToString();
     }
 }
