@@ -63,14 +63,19 @@
         filldetail(prodid);
         totalcart('my_cart_em');
 
+        if (prodid == '24') {
+            $('#addShopCart').attr({ "disabled": "disabled" });
+            $('#buyProd').attr({ "disabled": "disabled" });
+        }
+        else {
+            $('#addShopCart').click(function () {
+                detailAddCart(prodid, 1);
+            });
 
-        $('#addShopCart').click(function () {
-            detailAddCart(prodid, 1);
-        });
-
-        $('#buyProd').click(function () {
-            detailAddCart(prodid, 0);
-        });
+            $('#buyProd').click(function () {
+                detailAddCart(prodid, 0);
+            });
+        }
     });
 
     function Previous() {
