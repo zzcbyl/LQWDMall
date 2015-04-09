@@ -11,7 +11,7 @@ function GetOpenidToken() {
         openid = getCookie('openid');
     }
 
-    from = QueryString('from');
+    from = QueryString('source');
     if (from != null) {
         setCookie('from', from);
     }

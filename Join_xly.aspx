@@ -1,69 +1,57 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" %>
 <%@ Import Namespace="System.Web.Script.Serialization" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
     <div class="titleNav">
-        <a href="ShopCart.aspx" class="returnA"> </a>
-        <span class="titleSpan">确认下单</span>
+        <a onclick="returnxly();" class="returnA"> </a>
+        <span class="titleSpan">报名表</span>
     </div>
     <div class="sc-address-block rel">
-        <p class="add_list_p rel">
-            <label>收货人</label>
-            <input type="text" id="consignee" name="consignee" placeholder="请输入收货人姓名" />
+        <p class="add_list_p rel list_pdl">
+            <label>孩子姓名</label>
+            <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
         </p>
-        <p class="add_list_p rel">
+        <p class="add_list_p rel list_pdl">
+            <label>孩子身份证</label>
+            <input type="text" id="childIDcard" maxlength="50" name="childIDcard" placeholder="请输入孩子身份证" />
+        </p>
+        <p class="add_list_p rel list_pdl">
+            <label>家长姓名</label>
+            <input type="text" id="parentName" maxlength="50" name="parentName" placeholder="请输入家长姓名" />
+        </p>
+        <p class="add_list_p rel list_pdl">
             <label>手机号码</label>
-            <input type="text" id="mobile" name="mobile" placeholder="请输入手机号" />
+            <input type="text" id="parentMobile" maxlength="11" name="parentMobile" placeholder="请输入手机号码" />
         </p>
-        <p class="add_list_p rel">
-            <label>所在地区</label>
-            <select id="province" name="province"></select>
-        </p>
-        <p class="add_list_p rel">
-            <select id="city" name="city"></select>
-        </p>
-        <%--<p class="add_list_p rel">
-            <select></select>
-        </p>--%>
-        <p class="add_list_p rel">
-            <label>详细地址</label>
-            <input type="text" id="address" name="address" placeholder="请输入详细地址" />
+        <p class="add_list_p rel list_pdl">
+            <label>电子邮箱</label>
+            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="（选填）请输入电子邮箱" />
         </p>
     </div>
-    <%--<div style="background:#fff; margin:10px; padding:10px; line-height:22px; margin-bottom:0;">
-        在线支付
-    </div>
-    <div style="background:#f0f0f0; margin:10px; padding:10px; line-height:30px; margin-top:0;">
-        <div class="radio"><label><input type="radio"> 微信支付</label></div>
-        <div class="radio"><label><input type="radio"> 银行卡支付</label></div>
-    </div>--%>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
         <ul id="prodlist">
             
         </ul>
     </div>
-    <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
+    <%--<div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
         <div style="padding-right:10px; height:60px;" class="rel">   
             <textarea id="memo" name="memo" style="width:100%; padding:5px; height:40px; line-height:20px;" placeholder="（选填）留言：如果您需要卢勤老师亲笔签名，请留下需要被签名者姓名以及签名要求。"></textarea>
             </div>
         <div style="padding-right:10px;" class="rel">
             <input id="wechatid" name="wechatid" type="text" style="width:50%; padding:5px; line-height:20px;" placeholder="（选填）微信号" maxlength="50" />
         </div>
-    </div>
+    </div>--%>
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
         <ul id="footermenu">
             <li style="width:100%;">
                 <input type="hidden" name="hidIndex" id="hidIndex" value="1" />
-                <input type="hidden" name="myProvince" id="myProvince" value="" />
-                <input type="hidden" name="myCity" id="myCity" value="" />
                 <input type="hidden" name="myToken" id="myToken" value="" />
                 <input type="hidden" name="myOpenid" id="myOpenid" value="" />
                 <input type="hidden" name="myFrom" id="myFrom" value="" />
-                <input type="hidden" name="prodids" id="prodids" value="" />
-                <input type="hidden" name="counts" id="counts" value="" />
                 <a href="javascript:SubOrder();" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger" onclick="SubOrder();">提交订单</button></a>
                 <a style="float:right; margin-right:10px;"><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
             </li>
@@ -72,7 +60,7 @@
     </div>
 </div>
 
-<div id="myModal" class="modal hide fade"  >
+<div id="myModal" class="modal hide fade" style="left:50%;" >
     <div class="modal-body">
         <p id="ModalContent"></p>
     </div>
@@ -91,12 +79,11 @@
     }
     private void submitOrder(string token)
     {
-        string parms = "token=" + token + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
-                + "&province=" + Request.Form["myProvince"].ToString() + "&city=" + Request.Form["myCity"].ToString() + "&address=" + Request.Form["address"].ToString()
-                + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() 
-                + "&wechatid=" + Request.Form["wechatid"].ToString();
+        string memo = "孩子姓名：" + Request.Form["childName"].ToString() + "，孩子身份证：" + Request.Form["childIDcard"].ToString()
+                    + "，家长姓名：" + Request.Form["parentName"].ToString() + "，手机号码：" + Request.Form["parentMobile"].ToString()
+                    + "，电子邮箱：" + Request.Form["parentEmail"].ToString();
+        string parms = "token=" + token + "&name=&cell=&province=&city=&address=&zip=&productid=" + Request["productid"].ToString() + "&count=1|1&memo=" + memo + "&wechatid=";
 
-        
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
         string result = HTTPHelper.Get_Http(getUrl);
         JavaScriptSerializer json = new JavaScriptSerializer();
@@ -112,6 +99,11 @@
         }
         else
         {
+            if (Request["productid"].ToString() == "24")
+            {
+                Response.Redirect("JoinSuccess.aspx");
+                return;
+            }
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
@@ -145,59 +137,92 @@
 </script>
 
 <script type="text/javascript">
-    var str_productids = "";
-    var str_counts = "";
-    var pcount = 0;
-    var t_prod_price = 0;
-    $(document).ready(function () {
-        so_fillProd();
 
-        $("#province").change(function () {
-            totalFeight($("#province option:selected").text(), pcount);
-            so_fillCity($(this).val());
-        });
+    var prodid = QueryString('productid');
+    $(document).ready(function () {
+        if (prodid == null) {
+            alert('商品参数有误');
+            return;
+        }
+        so_fillProd_xly();
 
     });
 
+    function so_fillProd_xly() {
+        $('#prodlist').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+        $.ajax({
+            type: "get",
+            async: false,
+            url: domain + 'api/product_get_detail.aspx',
+            data: { productid: prodid, random: Math.random() },
+            success: function (data, textStatus) {
+                var obj = eval('(' + data + ')');
+                if (obj != null) {
+                    var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(obj.price) / 100 + '</span></a><a class="prod-count">X 1</a></li>';
+                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
+                    $("#total_amount span").eq(0).html('¥' + parseInt(obj.price) / 100 );
+                    $('#prodlist').html(prodhtml + totalHtml);
+                }
+            }
+        });
+
+    }
+
+    function returnxly() {
+        location.href = 'Detail_xly.aspx?productid=' + prodid;
+    }
+
     function SubOrder() {
-        if ($("#consignee").val().Trim() == "") {
-            $("#ModalContent").html("请输入收件人姓名");
+        if ($("#childName").val().Trim() == "") {
+            $("#ModalContent").html("请输入孩子姓名");
             $('#myModal').modal('show');
             return;
         }
-        if ($("#mobile").val().Trim() == "") {
-            $("#ModalContent").html("请输入手机号");
+        if ($("#childIDcard").val().Trim() == "") {
+            $("#ModalContent").html("请输入孩子身份证");
             $('#myModal').modal('show');
             return;
         }
-        if (!$("#mobile").val().isMobile()) {
-            $("#ModalContent").html("请输入正确的手机号");
+        var result = isIdCardNo($("#childIDcard").val().Trim());
+        if (result != "") {
+            $("#ModalContent").html("请输入正确的身份证");
             $('#myModal').modal('show');
             return;
         }
-        if ($("#address").val().Trim() == "") {
-            $("#ModalContent").html("请输入详细地址");
+        if ($("#parentName").val().Trim() == "") {
+            $("#ModalContent").html("请输入家长姓名");
             $('#myModal').modal('show');
             return;
         }
-        if ($("#memo").val().length > 300) {
-            $("#ModalContent").html("留言太长，请简要填写");
+
+        if ($("#parentMobile").val().Trim() == "") {
+            $("#ModalContent").html("请输入手机号码");
             $('#myModal').modal('show');
             return;
+        }
+        if (!$("#parentMobile").val().isMobile()) {
+            $("#ModalContent").html("请输入正确的手机号码");
+            $('#myModal').modal('show');
+            return;
+        }
+
+        var emailReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
+        if ($("#parentEmail").val().Trim() != "") {
+            if (!emailReg.test($("#parentEmail").val().Trim())) {
+                $("#ModalContent").html("请输入正确的电子邮箱");
+                $('#myModal').modal('show');
+                return;
+            }
         }
 
         GetOpenidToken();
         $("#myToken").val(token);
         $("#myOpenid").val(openid);
         $("#myFrom").val(from);
-        $("#prodids").val(str_productids);
-        $("#counts").val(str_counts);
-        $("#myProvince").val($("#province option:selected").text());
-        $("#myCity").val($("#city option:selected").text());
-
         document.forms[0].submit();
     }
 </script>
 
 </asp:Content>
+
 

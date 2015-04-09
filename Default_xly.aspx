@@ -12,39 +12,11 @@
 <div class="m-wrap">
     <ul id="prodlistul" class="m-ul rel">
     </ul>
-    <div class="clear" style="height:60px;"></div>
-    <div class="m-bottom">
-        <ul id="footermenu">
-            <%--<li id="ftm-type">
-                <div>商品分类</div>
-            </li>--%>
-            <li id="ftm-user">
-                <%--<div><a href="userIndex.aspx">个人中心</a></div>--%>
-                <div><a href="ls_order.aspx">我的订单</a></div>
-            </li>
-            <li id="ftm-cart">
-                <div>
-                    <a id="my-cart" href="ShopCart.aspx">购物车
-                    <em id="my_cart_em" class="abs" style="display: none; right:35%;"></em>
-                </a></div>
-            </li>
-        </ul>
-        <div class="clear"></div>
-    </div>
-</div>
-<div id="myModal" class="modal hide fade" style="left:50%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-body">
-    <p>已添加购物车</p>
-    </div>
-    <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">再逛逛</button>
-    <a href='ShopCart.aspx' class="btn btn-primary" >去结算</a>
-    </div>
+    <div class="clear" style="height:20px;"></div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         filllist(3);
-        totalcart('my_cart_em');
         setCookie('source', 3);
     });
     function filllist(typeid) {
@@ -70,10 +42,8 @@
                         else {
                             strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
                         }
-                        var buybtn = '<a id="buyProd_xly" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">立即购买</a>';
-                        if (prodlist[i].prodid == '24')
-                            buybtn = "";
-                        html += '<li class="m-li left rel" style="width:100%"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="height:40px; line-height:20px;">' + prodlist[i].prodname + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>-->' + buybtn + '</div></li>';
+                        var buybtn = '<a id="buyProd_xly" onclick="location.href=\'Join_xly.aspx?productid=' + prodlist[i].prodid + '\';" class="btn btn-danger">我要报名</a>';
+                        html += '<li class="m-li left rel" style="width:100%"><a href="Detail_xly.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="height:40px; line-height:20px;">' + prodlist[i].prodname + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>-->' + buybtn + '</div></li>';
                     }
                     $('#prodlistul').html(html);
                 }
