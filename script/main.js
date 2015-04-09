@@ -18,7 +18,11 @@ function GetOpenidToken() {
     else {
         from = getCookie('from');
     }
-
+    var refer = document.referrer;
+    if (QueryString('source') == null && refer == '') {
+        delCookie("from");
+        from = null;
+    }
     if (openid == null || openid == '') {
         var encodeDomain = encodeURIComponent(domain);
         location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
