@@ -24,7 +24,7 @@ function GetOpenidToken() {
         from = null;
     }
     if (openid == null || openid == '') {
-        var encodeDomain = encodeURIComponent(domain);
+        var encodeDomain = encodeURIComponent(domain + 'index.aspx');
         location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
         return;
     }
@@ -98,6 +98,10 @@ function filldetail(pid) {
                 if (obj.originalprice != null && obj.originalprice != '') {
                     $('#originalprice').show();
                     $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
+                }
+                else if (pid == 24) {
+                    $('#originalprice').hide();
+                    $('#prodprice').hide();
                 }
                 else
                     $('#originalprice').hide();

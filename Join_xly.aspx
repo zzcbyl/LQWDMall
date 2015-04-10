@@ -52,7 +52,7 @@
                 <input type="hidden" name="myToken" id="myToken" value="" />
                 <input type="hidden" name="myOpenid" id="myOpenid" value="" />
                 <input type="hidden" name="myFrom" id="myFrom" value="" />
-                <a href="javascript:SubOrder();" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger" onclick="SubOrder();">提交订单</button></a>
+                <a href="javascript:SubOrder();" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger" onclick="SubOrder();">提交报名</button></a>
                 <a style="float:right; margin-right:10px;"><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
             </li>
         </ul>
@@ -158,9 +158,15 @@
             success: function (data, textStatus) {
                 var obj = eval('(' + data + ')');
                 if (obj != null) {
-                    var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(obj.price) / 100 + '</span></a><a class="prod-count">X 1</a></li>';
                     var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
-                    $("#total_amount span").eq(0).html('¥' + parseInt(obj.price) / 100 );
+                    var strprice = '<span class="red">¥' + parseInt(obj.price) / 100 + '</span>';
+                    if (obj.prodid == 24) {
+                        strprice = '';
+                        totalHtml = '';
+                        $("#total_amount").hide();
+                    }
+                    var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
+                    $("#total_amount span").eq(0).html('¥' + parseInt(obj.price) / 100);
                     $('#prodlist').html(prodhtml + totalHtml);
                 }
             }

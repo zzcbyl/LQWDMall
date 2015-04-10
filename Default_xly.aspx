@@ -39,6 +39,9 @@
                         if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
                             strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
                         }
+                        else if (prodlist[i].prodid == 24) {
+                            strprice = '';
+                        }
                         else {
                             strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
                         }
