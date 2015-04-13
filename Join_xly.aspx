@@ -10,24 +10,19 @@
         <span class="titleSpan">报名表</span>
     </div>
     <div class="sc-address-block rel">
-        <p class="add_list_p rel list_pdl">
-            <label>孩子姓名</label>
+        <p class="add_list_p rel">
             <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
         </p>
-        <p class="add_list_p rel list_pdl">
-            <label>孩子身份证</label>
+        <p class="add_list_p rel">
             <input type="text" id="childIDcard" maxlength="50" name="childIDcard" placeholder="请输入孩子身份证" />
         </p>
-        <p class="add_list_p rel list_pdl">
-            <label>家长姓名</label>
+        <p class="add_list_p rel">
             <input type="text" id="parentName" maxlength="50" name="parentName" placeholder="请输入家长姓名" />
         </p>
-        <p class="add_list_p rel list_pdl">
-            <label>手机号码</label>
+        <p class="add_list_p rel">
             <input type="text" id="parentMobile" maxlength="11" name="parentMobile" placeholder="请输入手机号码" />
         </p>
-        <p class="add_list_p rel list_pdl">
-            <label>电子邮箱</label>
+        <p class="add_list_p rel">
             <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="（选填）请输入电子邮箱" />
         </p>
     </div>

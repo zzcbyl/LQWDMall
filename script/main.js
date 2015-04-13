@@ -26,7 +26,11 @@ function GetOpenidToken() {
     if (openid == null || openid == '') {
         var encodeDomain = encodeURIComponent(domain + 'index.aspx');
         if (QueryString('productid') != null) {
-            encodeDomain = encodeURIComponent(document.URL);
+            var jumpurl = document.URL;
+            if (jumpurl.indexOf("#rd") > -1) {
+                jumpurl = jumpurl.replace("#rd", "");
+            }
+            encodeDomain = encodeURIComponent(jumpurl);
         }
         location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
         return;

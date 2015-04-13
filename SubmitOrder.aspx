@@ -10,16 +10,13 @@
     </div>
     <div class="sc-address-block rel">
         <p class="add_list_p rel">
-            <label>收货人</label>
-            <input type="text" id="consignee" name="consignee" placeholder="请输入收货人姓名" />
+                        <input type="text" id="consignee" name="consignee" placeholder="请输入收货人姓名" />
         </p>
         <p class="add_list_p rel">
-            <label>手机号码</label>
-            <input type="text" id="mobile" name="mobile" placeholder="请输入手机号" />
+                        <input type="text" id="mobile" name="mobile" placeholder="请输入手机号" />
         </p>
         <p class="add_list_p rel">
-            <label>所在地区</label>
-            <select id="province" name="province"></select>
+                        <select id="province" name="province"></select>
         </p>
         <p class="add_list_p rel">
             <select id="city" name="city"></select>
@@ -28,7 +25,6 @@
             <select></select>
         </p>--%>
         <p class="add_list_p rel">
-            <label>详细地址</label>
             <input type="text" id="address" name="address" placeholder="请输入详细地址" />
         </p>
     </div>
