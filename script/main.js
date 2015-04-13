@@ -1,6 +1,10 @@
 ﻿var token = '';
 var openid = '';
 var from = '';
+var shareTitle = "卢勤问答平台官方商城"; //标题
+var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
+var descContent = "卢勤问答平台官方认证商城，包括卢勤老师认证的正版书籍以及家庭教育相关产品。"; //简介
+var lineLink = "http://mall.luqinwenda.com/index.aspx?source=1"; //链接
 function GetOpenidToken() {
     openid = QueryString('openid');
     if (openid != null) {
@@ -113,6 +117,12 @@ function filldetail(pid) {
                 else
                     $('#originalprice').hide();
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
+
+
+                shareTitle = delHtmlTag(obj.prodname); //标题
+                imgUrl = domain + obj.images[0].src; //图片
+                descContent = obj.summary; //简介
+                lineLink = document.URL + "&source=1"; //链接
             }
         }
     });
@@ -303,16 +313,20 @@ function so_fillProd() {
             }
             else {
                 var prodhtml = "";
+                var orderprice = 0;
+                var ordercount = 0;
                 if (obj.count > 0) {
                     var str_prodids = QueryString("prodids");
                     if (str_prodids.length <= 0) return;
                     var prodidsArr = str_prodids.split(',');
                     for (var i = 0; i < obj.items.length; i++) {
-                        //if (prodidsArr.indexOf(obj.items[i].prodid) == -1)
-                        //    continue;
+                        if (prodidsArr.indexOf(obj.items[i].prodid) == -1)
+                            continue;
                         str_productids += obj.items[i].prodid + ",";
                         str_counts += obj.items[i].product_count + "|" + obj.items[i].precount + ",";
                         pcount += parseInt(obj.items[i].product_count) * parseInt(obj.items[i].precount);
+                        ordercount++;
+                        orderprice += parseInt(obj.items[i].price) * parseInt(obj.items[i].product_count);
                         prodhtml += '<li class="sub-cart-prod"><a class="prod-img" href="Detail.aspx?productid=' + obj.items[i].prodid + '"><img src="' + domain + obj.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail.aspx?productid=' + obj.items[i].prodid + '">' + obj.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(obj.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + obj.items[i].product_count + '</a></li>';
                     }
                     if (str_productids.length > 0)
@@ -322,8 +336,8 @@ function so_fillProd() {
                 }
                 else
                     prodhtml = "";
-                t_prod_price = obj.amount_price;
-                var totalHtml = '<li class="sub-total"><a id="freight_fee">运费: <span class="red">--</span></a><a id="total_count">共' + obj.count + '件商品，合计: <span class="red">¥' + parseInt(obj.amount_price) / 100 + '</span></a></li>';
+                t_prod_price = orderprice;
+                var totalHtml = '<li class="sub-total"><a id="freight_fee">运费: <span class="red">--</span></a><a id="total_count">共' + ordercount + '件商品，合计: <span class="red">¥' + parseInt(orderprice) / 100 + '</span></a></li>';
                 $('#prodlist').html(prodhtml + totalHtml);
                 so_fillProvince();
             }

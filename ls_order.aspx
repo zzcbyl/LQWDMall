@@ -77,24 +77,32 @@
 
     function loadOrder() {
         $('#orderlist').html('<div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>');
-        $.post(domain + 'api/order_get_list.aspx', { token: token, random: Math.random() }, function (data) {
-            if (data.status == -1) {
-                GetToken();
-                loadOrder();
-            }
-            else {
-                var orderHtml = '';
-                for (var i = 0; i < data.orders.length; i++) {
-                    var ct = new Date(data.orders[i].ctime);
-                    orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div>订单编号：' + new Date(data.orders[i].ctime).valueOf().toString() + data.orders[i].oid + '</div><div>订单日期：' + ct.Format("yyyy-MM-dd hh:mm:ss") + '</div><div class="clear"></div></div>';
-                    for (var j = 0; j < data.orders[i].details.length; j++) {
-                        orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + data.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + data.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + data.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + data.orders[i].details[j].product_count + '</p><p class="lop-price o-price">¥' + parseInt(data.orders[i].details[j].price * data.orders[i].details[j].product_count) / 100 + '</p></a>';
-                    }
-                    orderHtml += '<!--<p class="ls-order-num">数量：' + data.orders[i].details.length + '</p>--><p class="ls-order-state rel">订单状态：' + orderState(parseInt(data.orders[i].paystate), data.orders[i].oid) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(data.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(data.orders[i].orderprice) + parseInt(data.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
+        $.ajax({
+            type: "get",
+            async: false,
+            url: domain + 'api/order_get_list.aspx',
+            data: { token: token, random: Math.random() },
+            success: function (data, textStatus) {
+                var obj = eval('(' + data + ')');
+                if (obj != null && obj.status == -1) {
+                    GetToken();
+                    loadOrder();
                 }
-                $("#orderlist").html(orderHtml);
+                else {
+                    var orderHtml = '';
+                    for (var i = 0; i < obj.orders.length; i++) {
+                        var ct = new Date(obj.orders[i].ctime);
+                        orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div>订单编号：' + new Date(obj.orders[i].ctime).valueOf().toString() + obj.orders[i].oid + '</div><div>订单日期：' + ct.Format("yyyy-MM-dd hh:mm:ss") + '</div><div class="clear"></div></div>';
+                        for (var j = 0; j < obj.orders[i].details.length; j++) {
+                            orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + obj.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + obj.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + obj.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + obj.orders[i].details[j].product_count + '</p><p class="lop-price o-price">¥' + parseInt(obj.orders[i].details[j].price * obj.orders[i].details[j].product_count) / 100 + '</p></a>';
+                        }
+                        orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p>--><p class="ls-order-state rel">订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(obj.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(obj.orders[i].orderprice) + parseInt(obj.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
+                    }
+                    $("#orderlist").html(orderHtml);
+                }
             }
-        }, 'json');
+        });
+
     }
 
     function ls_pay(oid) {
