@@ -32,7 +32,7 @@
                 %>
         <div class="orderlist">
             <div class="ordertitle"><span>订单编号：<%=order._fields["oid"].ToString() %></span>
-                <span style="margin-left:50px;">下单时间：<%=order._fields["ctime"].ToString() %></span></div>
+                <span style="margin-left:50px;">下单时间：<%=Convert.ToDateTime(order._fields["ctime"]).ToString("yyyy-MM-dd HH:mm") %></span></div>
             <div class="orderproduct">
                 <div id="prodimg">
                     <%if (detailDT.Rows.Count > 0)
@@ -44,7 +44,7 @@
                     <p><%=order._fields["province"].ToString()%> <%=order._fields["city"].ToString()%> <%=order._fields["address"].ToString()%></p>
                 </div>
                 <div id="remarks"><%=order._fields["memo"].ToString().Trim() == string.Empty ? "无" : order._fields["memo"].ToString().Trim()%></div>
-                <div id="paystate"><%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款<br/>" + order._fields["paysuccesstime"].ToString() %></div>
+                <div id="paystate"><%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款<br/>" + Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm")%></div>
                 <div class="operation">
                     <p><a href='OrderDetail.aspx?oid=<%=order._fields["oid"].ToString() %>'>订单详情</a></p>
                 </div>

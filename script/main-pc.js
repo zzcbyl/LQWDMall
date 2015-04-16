@@ -28,16 +28,10 @@ function GetOpenidToken() {
         from = null;
     }
     if (openid == null || openid == '') {
-        var encodeDomain = encodeURIComponent(domain + 'index.aspx');
-        if (QueryString('productid') != null) {
-            var jumpurl = document.URL;
-            if (jumpurl.indexOf("#rd") > -1) {
-                jumpurl = jumpurl.replace("#rd", "");
-            }
-            encodeDomain = encodeURIComponent(jumpurl);
+        var jumpurl = document.URL;
+        if (jumpurl.toLowerCase().indexOf("default") == -1 && jumpurl.toLowerCase().indexOf("detail") == -1) {
+            jumpLogin();
         }
-        location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
-        return;
     }
     else {
         var jumpurl = document.URL;
@@ -68,6 +62,11 @@ function GetToken() {
             }
         }
     });
+}
+
+function jumpLogin() {
+    location.href = "http://www.luqinwenda.com/index.php?app=public&mod=Passport&act=login&reurl=" + encodeURIComponent(document.URL);
+    return;
 }
 
 //购物车 减少数量
@@ -101,7 +100,7 @@ function InCount(id ,total) {
 
 function filldetail(pid) {
     $('#prodtitle').html('<div class="loading"><img src="images/loading.gif" /><br />加载中...</div>');
-    
+
     $.ajax({
         type: "get",
         async: false,
@@ -110,22 +109,23 @@ function filldetail(pid) {
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
             if (obj != null) {
-                $('#prodtitle').html(obj.prodname);
+                $('#prodtitle').html(obj.prodname.replace("<br />", "　"));
+                obj.description = obj.description.replace(/width=\"300px\"/g, 'width="500px"');
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
+                $('#prodprice').html('¥' + parseInt(obj.price) / 100);
                 if (obj.originalprice != null && obj.originalprice != '') {
                     $('#originalprice').show();
                     $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
                 }
                 else if (pid == 24) {
                     $('#originalprice').hide();
-                    $('#prodprice').hide();
+                    $('#prodprice').html('　');
                 }
                 else
                     $('#originalprice').hide();
-                $('#prodprice').html('¥' + parseInt(obj.price) / 100);
 
-
+                document.title = obj.prodname.replace("<br />", "　");
                 shareTitle = delHtmlTag(obj.prodname); //标题
                 imgUrl = domain + obj.images[0].src; //图片
                 descContent = obj.summary; //简介
@@ -150,8 +150,11 @@ function totalcart(id) {
             }
             if (obj.status == 0) {
                 if (obj.count > 0) {
-                    $('#' + id).html(obj.count);
+                    $('#' + id).html('(' + obj.count + ')');
                     $('#' + id).show();
+                }
+                else {
+                    $('#' + id).hide();
                 }
             }
         }
@@ -161,6 +164,11 @@ function totalcart(id) {
 }
 
 function detailAddCart(pid, isshow) {
+    if (openid == null || openid == '') {
+        jumpLogin();
+        return;
+    }
+
     $.ajax({
         type: "get",
         async: false,
@@ -174,11 +182,11 @@ function detailAddCart(pid, isshow) {
                 return;
             }
             if ($("#my_cart_em").is(":hidden")) {
-                $('#my_cart_em').html(obj.count);
+                $('#my_cart_em').html('(' + obj.count + ')');
                 $('#my_cart_em').show();
             }
             else
-                $('#my_cart_em').html(obj.count);
+                $('#my_cart_em').html('(' + obj.count + ')');
             if (isshow == 1)
                 $('#myModal').modal('show');
             else
@@ -255,6 +263,7 @@ function selCbx() {
         $('#sc_del').css("color", "#ccc");
         $("#sc_submit").attr("href", "javascript:void(0);");
     }
+    totalcart('my_cart_em');
 }
 
 function totalcartprice() {

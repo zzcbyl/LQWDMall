@@ -21,7 +21,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="orderdetail_state">
-        订单状态：<%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款　" + order._fields["paysuccesstime"].ToString() %>
+        订单状态：<%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款　" + Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm")%>
     </div>
 
     <div class="orderdetail_info">
@@ -31,7 +31,7 @@
             <p>　　　　　　<%=order._fields["province"].ToString()%> <%=order._fields["city"].ToString()%> <%=order._fields["address"].ToString()%></p>
         </div>
         <div class="od_info_buyer">　买家留言：<%=order._fields["memo"].ToString().Trim() == string.Empty ? "无" : order._fields["memo"].ToString().Trim()%></div>
-        <div class="od_info_timer">订单编号：<%=order._fields["oid"].ToString() %>　　下单时间：<%=order._fields["ctime"].ToString() %></div>
+        <div class="od_info_timer">订单编号：<%=order._fields["oid"].ToString() %>　　下单时间：<%=Convert.ToDateTime(order._fields["ctime"]).ToString("yyyy-MM-dd HH:mm")%></div>
     </div>
 
     <ul class="prod_item">
@@ -51,7 +51,7 @@
                 <a id="prodtitle"><%=detailDT.Rows[i]["product_name"].ToString()%></a>
             </div>
             <div class="dashline" id="prod_item_b">无型号</div>
-            <div class="dashline" id="prod_item_c"><%=detailDT.Rows[i]["price"].ToString()%></div>
+            <div class="dashline" id="prod_item_c"><%=Math.Round(decimal.Parse(detailDT.Rows[i]["price"].ToString()) / 100, 2) %></div>
             <div class="dashline" id="prod_item_d"><%=detailDT.Rows[i]["product_count"].ToString()%></div>
         </li>
         <%}

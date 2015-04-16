@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
 
@@ -38,7 +38,8 @@
             return;
         }
         filldetail(prodid);
-        //totalcart('my_cart_em');
+        $("#bk_li").attr("class", "current");
+        $("#xly_li").attr("class", "");
 
         if (prodid == '24') {
             $('#addShopCart').attr({ "disabled": "disabled" });

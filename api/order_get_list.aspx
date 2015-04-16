@@ -31,7 +31,7 @@
                 foreach (DataColumn c in dr.Table.Columns)
                 {
                     orderDetailRowJsonStr = orderDetailRowJsonStr + ",\""
-                        + c.Caption.Trim() + "\":\"" + dr[c].ToString().Trim() + "\" ";
+                        + c.Caption.Trim() + "\":\"" + dr[c].ToString().Replace("\"", "\\\\").Trim() + "\" ";
                 }
                 if (orderDetailRowJsonStr.Trim().StartsWith(","))
                     orderDetailRowJsonStr = orderDetailRowJsonStr.Remove(0, 1);

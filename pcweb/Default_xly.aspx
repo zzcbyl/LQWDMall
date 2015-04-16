@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="卢勤问答平台夏令营" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
 
@@ -6,7 +6,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 <style type="text/css">
-    .m-li img { height:200px;}
+    .m-li img { height:300px;}
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
@@ -22,7 +22,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         filllist(3);
-        //setCookie('source', 3);
+        $("#bk_li").attr("class", "");
+        $("#xly_li").attr("class", "current");
     });
     function filllist(typeid) {
         $('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
@@ -51,7 +52,7 @@
                             strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
                         }
                         var buybtn = '<a id="buyProd_xly" onclick="location.href=\'Join_xly.aspx?productid=' + prodlist[i].prodid + '\';" class="btn btn-danger">我要报名</a>';
-                        html += '<li class="m-li left rel" style="width:100%"><a href="Detail_xly.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="height:20px; line-height:20px;">' + prodlist[i].prodname.replace("<br />", "　") + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn-xly">' + buybtn + '</div></li>';
+                        html += '<li class="m-li left rel" style="width:50%"><a href="Detail_xly.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="height:20px; line-height:20px;">' + prodlist[i].prodname.replace("<br />", "　") + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn-xly">' + buybtn + '</div></li>';
                     }
                     $('#prodlistul').html(html);
                 }

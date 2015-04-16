@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="确认下单-卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 <%@ Import Namespace="System.Web.Script.Serialization" %>
 <script runat="server">
 
@@ -7,13 +7,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
-    <div class="titleNav">
-        <%--<a href="ShopCart.aspx" class="returnA"> </a>--%>
-        <span class="titleSpan">确认下单</span>
-    </div>
     <div class="sc-address-block rel">
-        <p style="line-height:20px; font-weight:bold; margin-bottom:10px;">填写收货人地址</p>
+        <p style="line-height:20px; font-weight:bold; margin:0 0 10px 10px;">填写收货人地址</p>
         <p class="add_list_p rel list_pdl">
             <label>收货人</label>
             <input type="text" id="consignee" name="consignee" placeholder="请输入收货人姓名" />
@@ -119,18 +114,8 @@
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
-            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
-            string payurl = "";
-            if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
-            {
-                //微信支付
-                payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
-            }
-            else
-            {
-                //易宝支付
-                payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
-            }
+            string param = "?body=卢勤问答平台官方书城PC&detail=卢勤问答平台官方书城PC&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+            string payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
             this.Response.Redirect(payurl + param);
         }
     }
@@ -155,7 +140,8 @@
     var t_prod_price = 0;
     $(document).ready(function () {
         so_fillProd();
-
+        $("#bk_li").attr("class", "current");
+        $("#xly_li").attr("class", "");
         $("#province").change(function () {
             totalFeight($("#province option:selected").text(), pcount);
             so_fillCity($(this).val());

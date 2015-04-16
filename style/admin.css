@@ -36,7 +36,7 @@ a.btn-primary { color:#fff;}
 .orderproduct #prodimg a { border:1px solid #ddd; padding:1px; display:block; width:84px;}
 .orderproduct #prodimg img { width:80px; height:80px;}
 .orderproduct #address { float:left; width:30%; padding-top:18px;}
-.orderproduct #remarks { float:left; width:30%; margin-top:18px; height:44px; line-height:22px; overflow:hidden }
+.orderproduct #remarks { float:left; width:30%; margin-top:10px; height:44px; line-height:22px; }
 .orderproduct #paystate { float:left; width:20%; padding:18px 20px 0; text-align:center; height:44px; line-height:22px; }
 .orderproduct .operation { float:left; width:10%; text-align:center; padding-top:18px;}
 .orderproduct p { line-height:22px; }

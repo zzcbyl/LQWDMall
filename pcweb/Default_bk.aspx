@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
 
@@ -22,13 +22,21 @@
     </ul>
     <div class="clear" style="height:20px;"></div>
 </div>
-
+<div id="myModal" class="modal hide fade" style="left:50%;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-body">
+    <p>已添加购物车</p>
+    </div>
+    <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">再逛逛</button>
+    <a href='ShopCart.aspx?productid=<%=Request["productid"] %>' class="btn btn-primary" >去结算</a>
+    </div>
+</div>
 
 <script type="text/javascript">
     $(document).ready(function () {
         filllist(2);
-        //totalcart('my_cart_em');
-        //setCookie('source', 1);
+        $("#bk_li").attr("class", "current");
+        $("#xly_li").attr("class", "");
 
         $("#type-single").click(function () {
             filllist(1);
