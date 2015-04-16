@@ -17,16 +17,17 @@ a.btn-primary { color:#fff;}
 .loading { margin:0 auto; padding:30px 0; text-align:center; background:#fff; color:#999; line-height:30px; font-size:12px;}
 .loading img { width:50px; height:50px;}
 
-.mainPage { padding:30px 50px;}
+.mainPage { padding:10px 50px;}
 .headMaster { height:100px; background:#fff; padding:0 20px; line-height:100px;}
 .headMaster .left-logo { font-size:30px; font-weight:bold; float:left;}
 .headMaster .right-info { float:right; font-size:16px;}
 .navMaster { background:#fff; border:1px solid #b5b5bc; border-radius:4px; width:700px; height:50px; font-size:18px; line-height:48px;}
 .navMaster li { float:left; text-align:center; width:20%; border-right:1px solid #b5b5bc;}
-.tabletitle { background:#fff; height:50px;  line-height:48px; margin-top:10px; padding:0 20px;}
+.tabletitle { background:#fff; height:50px;  line-height:48px; margin-top:10px; padding:0 20px;text-align:center;}
 .tabletitle #product_li { float:left; width:10%;}
-.tabletitle #consignee_li { float:left; width:50%;}
+.tabletitle #consignee_li { float:left; width:30%;}
 .tabletitle #remark_li { float:left; width:30%;}
+.tabletitle #paystate_li{ float:left; width:20%; }
 .tabletitle #operation_id { float:left; width:10%; text-align:center;}
 .orderlist { margin-top:10px; line-height:30px; padding:0 20px 10px 20px; background:#fff;}
 .ordertitle { height:40px; line-height:40px; color:#999; border-bottom:1px dashed #ccc;}
@@ -34,8 +35,9 @@ a.btn-primary { color:#fff;}
 .orderproduct #prodimg { float:left; width:10%;}
 .orderproduct #prodimg a { border:1px solid #ddd; padding:1px; display:block; width:84px;}
 .orderproduct #prodimg img { width:80px; height:80px;}
-.orderproduct #address { float:left; width:50%; padding-top:18px;}
+.orderproduct #address { float:left; width:30%; padding-top:18px;}
 .orderproduct #remarks { float:left; width:30%; margin-top:18px; height:44px; line-height:22px; overflow:hidden }
+.orderproduct #paystate { float:left; width:20%; padding:18px 20px 0; text-align:center; height:44px; line-height:22px; }
 .orderproduct .operation { float:left; width:10%; text-align:center; padding-top:18px;}
 .orderproduct p { line-height:22px; }
 

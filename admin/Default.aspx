@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/AdminMaster.master" %>
 
 <script runat="server">
 
@@ -8,3 +8,4 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 </asp:Content>
+
