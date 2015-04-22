@@ -65,7 +65,7 @@ function GetToken() {
 }
 
 function jumpLogin() {
-    location.href = "http://www.luqinwenda.com/index.php?app=public&mod=Passport&act=login&reurl=" + encodeURIComponent(document.URL);
+    location.href = "http://localhost/index.php?app=public&mod=Passport&act=login&reurl=" + encodeURIComponent(document.URL);
     return;
 }
 
@@ -136,6 +136,7 @@ function filldetail(pid) {
 }
 
 function totalcart(id) {
+    //alert(token);
     $.ajax({
         type: "get",
         async: false,

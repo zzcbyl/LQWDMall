@@ -121,3 +121,6 @@ a{text-decoration:none;}
 .m-dcontent .paybtn { position:absolute; right:3px; top:10px;}
 
 .o-price, .o-state-close { color:#d93229;}
+
+.payment-description { margin:20px auto; background:#3F5E86; width:230px; color:#fff; font-size:16px; padding: 15px 30px; border-radius: 4px; line-height: 24px; text-align: left;}
+.payment-description > .btn-icon { float: left;margin: 0 15px 0 0; }

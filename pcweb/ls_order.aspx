@@ -48,22 +48,7 @@
     }
     private void GetOrder(string orderid)
     {
-        int userid = Users.CheckToken(Request["myToken"].ToString());
-        Order order = new Order(int.Parse(orderid));
-        int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
-        string param = "?body=卢勤问答平台官方书城PC&detail=卢勤问答平台官方书城PC&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
-        string payurl = "";
-        if (Request["myFrom"] != null && Request["myFrom"].ToString() == "1")
-        {
-            //微信支付
-            payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
-        }
-        else
-        {
-            //易宝支付
-            payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
-        }
-        this.Response.Redirect(payurl + param);
+        this.Response.Redirect("payment.aspx?orderid=" + orderid);
     }
 </script>
 <script type="text/javascript">

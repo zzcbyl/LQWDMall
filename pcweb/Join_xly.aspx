@@ -104,22 +104,7 @@
                 Response.Redirect("JoinSuccess.aspx");
                 return;
             }
-            int userid = Users.CheckToken(token);
-            Order order = new Order(int.Parse(jsonorder.order_id));
-            int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
-            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
-            string payurl = "";
-            if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
-            {
-                //微信支付
-                payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
-            }
-            else
-            {
-                //易宝支付
-                payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
-            }
-            this.Response.Redirect(payurl + param);
+            this.Response.Redirect("payment.aspx?orderid=" + jsonorder.order_id);
         }
     }
 

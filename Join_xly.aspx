@@ -102,7 +102,7 @@
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
-            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+            string param = "?body=卢勤问答平台官方夏令营&detail=卢勤问答平台官方夏令营&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
             if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
             {
