@@ -75,19 +75,19 @@
         var descContent = "分享测试，分享测试。"; //简介
         var lineLink = "http://mall.luqinwenda.com/shareTest.aspx?preopenid="; //链接
         var prodid = 26;
+        if (QueryString('openid') == null) {
+            var encodeDomain = encodeURIComponent(document.URL);
+            location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+            return;
+        }
+        lineLink += QueryString('openid');
         $(document).ready(function () {
             if (prodid == null) {
                 alert('商品参数有误');
                 return;
             }
-            if (QueryString('openid') == null) {
-                var encodeDomain = encodeURIComponent(document.URL);
-                location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
-                return;
-            }
-            lineLink += QueryString('openid');
+            
             filldetail(prodid);
-            //alert(lineLink);
         });
 
         function joinxly() {
