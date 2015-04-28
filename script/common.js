@@ -74,12 +74,14 @@ function setCookieT(sName, sValue, iTime) {
     }
     else {
         var date = new Date();
-        if (iTime)
+        if (iTime) {
             date.setTime(date.getTime() + iTime * 1000);
-        else
-            date.setTime(date.getTime() + 3600 * 24 * 365 * 3 * 1000);
-        //alert(date.getYear() + "," + date.getMonth() + "," + date.getDate());
-        document.cookie = escape(sName) + "=" + escape(sValue) + "; Expires=" + date.toGMTString();
+
+            //alert(date.getYear() + "," + date.getMonth() + "," + date.getDate());
+            document.cookie = escape(sName) + "=" + escape(sValue) + "; Expires=" + date.toGMTString();
+        } else {
+            document.cookie = escape(sName) + "=" + escape(sValue);
+        }
     }
 }
 // 读 cookie

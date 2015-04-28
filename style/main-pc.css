@@ -20,7 +20,7 @@ input,textarea{outline:none; }
 .loading img { width:50px; height:50px;}
 .header_box{background:#c22b2b; height:60px;}
 .header{overflow:hidden; height:60px;}
-.header .menu{float:left;width:400px; margin-left:20px}
+.header .menu{float:left;width:440px; margin-left:20px}
 .header .menu li{float:left; height:60px; line-height:60px;}
 .header .menu li a{font-size:14px; color:#fff; text-decoration:none; display:block; padding:0px 15px}
 .header .menu li a:hover,.header .menu li a.current{font-size:14px; color:#fff; text-decoration:none; background:#941d1d;}

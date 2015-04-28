@@ -1,4 +1,4 @@
-﻿<%@ Page Title="支付成功-卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="支付成功-卢勤问答平台官方商城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -8,7 +8,7 @@
         <i class="icon-success"></i><span>支付成功</span>
     </div>
     <div style="text-align:center; margin-top:20px;">
-        <a href="Default_bk.aspx">返回书城首页</a>　　　<a href="ls_order.aspx">查看订单</a>
+        <a href="Default_xly.aspx">返回夏令营首页</a>　　　<a href="Default_bk.aspx">返回书城首页</a>　　　<a href="ls_order.aspx">查看订单</a>
     </div>
 </div>
 <script runat="server">

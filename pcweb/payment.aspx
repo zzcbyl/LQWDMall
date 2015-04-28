@@ -15,6 +15,12 @@
                 this.payImg.Src = "http://weixin.luqinwenda.com/payment/payment_web_qrcode.aspx?product_id=" + order._fields["oid"].ToString() + "&total_fee=" + total + "&body=卢勤问答平台官方商城PC&detail=卢勤问答平台官方商城PC";
             }
         }
+        else
+        {
+            Response.Write("参数错误");
+            Response.End();
+            return;
+        }
     }
 </script>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
@@ -30,5 +36,23 @@
       请使用微信扫描<br>二维码以完成支付
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setInterval("checkpay()", 2000);
+    });
+    function checkpay() {
+        $.ajax({
+            type: "get",
+            async: false,
+            url: domain + 'pcweb/getPayResult.aspx',
+            data: { product_id: QueryString('orderid'), random: Math.random() },
+            success: function (data, textStatus) {
+                if (data.Trim() == "PAID") {
+                    location.href = domain + "pcweb/paySuccess.aspx?product_id=" + QueryString('orderid');
+                }
+            }
+        });
+    }
+</script>
 </asp:Content>
 

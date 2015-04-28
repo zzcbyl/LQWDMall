@@ -19,7 +19,7 @@
         </div>
         <div class="m-dprice rel" style="padding:0 0 0 180px;">
             <s class="gray" id="originalprice" style="margin-right:10px;"></s><span class="red" id="prodprice"></span>
-            <a onclick="javascript:joinxly();" class="btn btn-danger" style="position:absolute; left:400px; top:30px; ">我要报名</a>
+            <a onclick="joinxly();" class="btn btn-danger" style="position:absolute; left:400px; top:30px; ">我要报名</a>
         </div>
     </div>
     <div id="proddescription" class="m-ddescription" style="border-top:1px solid #ccc; min-height:300px; padding:15px; margin-top:65px;">
@@ -42,6 +42,10 @@
     });
 
     function joinxly() {
+        if (openid == null || openid == '') {
+            jumpLogin();
+            return;
+        }
         location.href = 'Join_xly.aspx?productid=' + prodid;
     }
 </script>

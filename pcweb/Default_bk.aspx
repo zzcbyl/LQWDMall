@@ -10,13 +10,7 @@
 <div style="background:#fff; padding:10px; line-height:22px;">
     1、本店为卢勤问答平台官方书城，所有图书均有现货。<br />2、本店的运费遵循市场规则，您可以自行拍下。<br />3、如果有任何疑问，或者其他要求，可以在线咨询客服。
 </div>
-<div style="background:#fff; width:100%; margin-top:10px; ">
-    <ul class="nav-default">
-        <li id="type-suit"><img src="../images/menu11.jpg" /></li>
-        <li id="type-single"><img src="../images/menu21.jpg" /></li>
-    </ul>
-    <div class="clear"></div>
-</div>
+
 <div class="m-wrap">
     <ul id="prodlistul" class="m-ul rel">
     </ul>
@@ -34,34 +28,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        filllist(2);
+        filllist();
         $("#bk_li").attr("class", "current");
         $("#xly_li").attr("class", "");
 
-        $("#type-single").click(function () {
-            filllist(1);
-        });
-
-        $("#type-suit").click(function () {
-            filllist(2);
-        });
     });
 
-    function filllist(typeid) {
-        if (typeid == 1) {
-            $("#type-single").css("background", "#D83337");
-            $("#type-suit").css("background", "#FDF8D2");
-            $("#type-single img").eq(0).attr("src", "../images/menu2.jpg");
-            $("#type-suit img").eq(0).attr("src", "../images/menu11.jpg");
-
-        }
-        else if (typeid == 2) {
-            $("#type-suit").css("background", "#D83337");
-            $("#type-single").css("background", "#FDF8D2");
-            $("#type-single img").eq(0).attr("src", "../images/menu21.jpg");
-            $("#type-suit img").eq(0).attr("src", "../images/menu1.jpg");
-        }
-
+    function filllist() {
         $('#prodlistul').html('<li><div class="loading"><img src="../images/loading.gif" /><br />加载中...</div></li>');
         $.ajax({
             type: "post",
@@ -74,7 +47,7 @@
                     var prodlist = obj.data;
                     var html = "";
                     for (var i = 0; i < prodlist.length; i++) {
-                        if (typeid != 0 && prodlist[i].prodtypeid != typeid)
+                        if (prodlist[i].prodtypeid == 3)
                             continue;
                         var strprice = '';
                         var iconjiu = '';

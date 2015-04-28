@@ -70,25 +70,30 @@
                     loadOrder();
                 }
                 else {
-                    var orderHtml = '';
-                    var produrl = '';
-                    for (var i = 0; i < obj.orders.length; i++) {
-                        var ct = new Date(obj.orders[i].ctime);
-                        orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div>订单编号：' +  obj.orders[i].oid + '</div><div>订单日期：' + ct.Format("yyyy-MM-dd hh:mm:ss") + '</div><div class="clear"></div></div>';
-                        var hideobj = '';
-                        for (var j = 0; j < obj.orders[i].details.length; j++) {
-                            if (obj.orders[i].details[j].product_id == 24) {
-                                hideobj = 'style="display:none;"';
+                    if (obj.orders.length > 0) {
+                        var orderHtml = '';
+                        var produrl = '';
+                        for (var i = 0; i < obj.orders.length; i++) {
+                            var ct = new Date(obj.orders[i].ctime);
+                            orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div>订单编号：' + obj.orders[i].oid + '</div><div>订单日期：' + ct.Format("yyyy-MM-dd hh:mm:ss") + '</div><div class="clear"></div></div>';
+                            var hideobj = '';
+                            for (var j = 0; j < obj.orders[i].details.length; j++) {
+                                if (obj.orders[i].details[j].product_id == 24) {
+                                    hideobj = 'style="display:none;"';
+                                }
+                                else
+                                    hideobj = '';
+                                if (obj.orders[i].details[j].prodtypeid == 3)
+                                    produrl = "Detail_xly.aspx?productid=" + obj.orders[i].details[j].product_id;
+                                else
+                                    produrl = "Detail_bk.aspx?productid=" + obj.orders[i].details[j].product_id;
+                                orderHtml += '<a class="ls-order-prod rel" href="' + produrl + '"><p class="lop-img"><img src="' + domain + obj.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + obj.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + obj.orders[i].details[j].product_count + '</p><p class="lop-price o-price" ' + hideobj + '>¥' + parseInt(obj.orders[i].details[j].price * obj.orders[i].details[j].product_count) / 100 + '</p></a>';
                             }
-                            else
-                                hideobj = '';
-                            if (obj.orders[i].details[j].prodtypeid == 3)
-                                produrl = "Detail_xly.aspx?productid=" + obj.orders[i].details[j].product_id;
-                            else
-                                produrl = "Detail_bk.aspx?productid=" + obj.orders[i].details[j].product_id;
-                            orderHtml += '<a class="ls-order-prod rel" href="' + produrl + '"><p class="lop-img"><img src="' + domain + obj.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + obj.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + obj.orders[i].details[j].product_count + '</p><p class="lop-price o-price" ' + hideobj + '>¥' + parseInt(obj.orders[i].details[j].price * obj.orders[i].details[j].product_count) / 100 + '</p></a>';
+                            orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p>--><p class="ls-order-state rel" ' + hideobj + '>订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid) + '</p><p class="ls-order-total" ' + hideobj + '><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(obj.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(obj.orders[i].orderprice) + parseInt(obj.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
                         }
-                        orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p>--><p class="ls-order-state rel" ' + hideobj + '>订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid) + '</p><p class="ls-order-total" ' + hideobj + '><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(obj.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(obj.orders[i].orderprice) + parseInt(obj.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
+                    }
+                    else {
+                        orderHtml = '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="loading" style="font-size:14px;">暂无订单</div></div>';
                     }
                     $("#orderlist").html(orderHtml);
                 }

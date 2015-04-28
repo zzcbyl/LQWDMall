@@ -27,6 +27,7 @@ function GetOpenidToken() {
         delCookie("from");
         from = null;
     }
+    //alert(openid);
     if (openid == null || openid == '') {
         var jumpurl = document.URL;
         if (jumpurl.toLowerCase().indexOf("default") == -1 && jumpurl.toLowerCase().indexOf("detail") == -1) {
@@ -65,7 +66,10 @@ function GetToken() {
 }
 
 function jumpLogin() {
-    location.href = "http://localhost/index.php?app=public&mod=Passport&act=login&reurl=" + encodeURIComponent(document.URL);
+    if (confirm("您还没有登录，请您先登录")) {
+        location.href = webdomain + "index.php?app=public&mod=Passport&act=login&reurl=" + encodeURIComponent(document.URL);
+    }
+    
     return;
 }
 
@@ -219,7 +223,7 @@ function fillcart() {
                 var prodids = "";
                 for (var i = 0; i < obj.items.length; i++) {
                     prodids += obj.items[i].product_id + ",";
-                    prodhtml += '<li id="li' + obj.items[i].product_id + '" class="sc-item"><a class="sc-p-del" onclick="delcartprodsingle(' + obj.items[i].product_id + ');">x</a><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + obj.items[i].product_id + '" /></a><a id="p-img-block" href="Detail.aspx?productid=' + obj.items[i].product_id + '"><img id="p-img" src="' + domain + obj.items[i].imgsrc + '" width="80px" height="80px" /></a><a id="p-title" href="Detail.aspx?productid=' + obj.items[i].product_id + '">' + obj.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(obj.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + obj.items[i].product_id + ');">－</a><input id="p-count' + obj.items[i].product_id + '" type="text" value="' + obj.items[i].product_count + '" onblur="InCount(' + obj.items[i].product_id + ',' + obj.items[i].inventory + ');" /><a href="javascript:AddCount(' + obj.items[i].product_id + ',' + obj.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
+                    prodhtml += '<li id="li' + obj.items[i].product_id + '" class="sc-item"><a class="sc-p-del" onclick="delcartprodsingle(' + obj.items[i].product_id + ');">x</a><a class="cbox"><input type="checkbox" checked="true" onclick="selCbx();" value="' + obj.items[i].product_id + '" /></a><a id="p-img-block" href="Detail_bk.aspx?productid=' + obj.items[i].product_id + '"><img id="p-img" src="' + domain + obj.items[i].imgsrc + '" width="80px" height="80px" /></a><a id="p-title" href="Detail_bk.aspx?productid=' + obj.items[i].product_id + '">' + obj.items[i].prodname + '</a><a id="p-xinghao">无型号</a><div style="margin-left:20px;"><div id="p-price-block"><span id="p-price" class="red">￥' + parseInt(obj.items[i].price) / 100 + '</span></div><div class="sc-p-count"><a href="javascript:SubCount(' + obj.items[i].product_id + ');">－</a><input id="p-count' + obj.items[i].product_id + '" type="text" value="' + obj.items[i].product_count + '" onblur="InCount(' + obj.items[i].product_id + ',' + obj.items[i].inventory + ');" /><a href="javascript:AddCount(' + obj.items[i].product_id + ',' + obj.items[i].inventory + ');">＋</a></div><div class="clear"></div></div></li>';
                 }
                 if (prodids.length > 0)
                     prodids = prodids.substring(0, prodids.length - 1);
@@ -232,6 +236,7 @@ function fillcart() {
                 $("#sc_submit").attr("href", "javascript:void(0);");
                 $('#sc_del').attr("onclick", "");
                 $('#sc_del').css("color", "#ccc");
+                prodhtml = '<li><div class="loading" style="font-size:14px;">暂无商品</div></li>';
             }
             $('#proditems').html(prodhtml);
             $("#cartTotal").html("￥" + parseInt(obj.amount_price) / 100);
@@ -344,7 +349,7 @@ function so_fillProd() {
                         pcount += parseInt(obj.items[i].product_count) * parseInt(obj.items[i].precount);
                         ordercount++;
                         orderprice += parseInt(obj.items[i].price) * parseInt(obj.items[i].product_count);
-                        prodhtml += '<li class="sub-cart-prod"><a class="prod-img" href="Detail.aspx?productid=' + obj.items[i].prodid + '"><img src="' + domain + obj.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail.aspx?productid=' + obj.items[i].prodid + '">' + obj.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(obj.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + obj.items[i].product_count + '</a></li>';
+                        prodhtml += '<li class="sub-cart-prod"><a class="prod-img" href="Detail_bk.aspx?productid=' + obj.items[i].prodid + '"><img src="' + domain + obj.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_bk.aspx?productid=' + obj.items[i].prodid + '">' + obj.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(obj.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + obj.items[i].product_count + '</a></li>';
                     }
                     if (str_productids.length > 0)
                         str_productids = str_productids.substring(0, str_productids.length - 1);

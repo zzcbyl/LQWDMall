@@ -193,7 +193,7 @@ public class Product
 
     public static Product[] GetAllProduct()
     {
-        SqlDataAdapter da = new SqlDataAdapter(" select * from m_product order by isrecommend desc, prodid desc", Util.ConnectionString.Trim());
+        SqlDataAdapter da = new SqlDataAdapter(" select * from m_product order by precount desc, prodid desc", Util.ConnectionString.Trim());
         DataTable dt = new DataTable();
         da.Fill(dt);
         Product[] productArray = new Product[dt.Rows.Count];
