@@ -78,7 +78,6 @@
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
             location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
-            return;
         }
         lineLink += QueryString('openid');
         $(document).ready(function () {
