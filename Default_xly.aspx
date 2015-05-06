@@ -36,14 +36,19 @@
                         if (typeid != 0 && prodlist[i].prodtypeid != typeid)
                             continue;
                         var strprice = '';
-                        if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                            strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                        }
-                        else if (prodlist[i].prodid == 24) {
-                            strprice = '';
+                        if (prodlist[i].prodid == 26) {
+                            strprice = '<span class="red mgleft">¥' + parseInt(prodlist[i].originalprice) / 100 + '</span>';
                         }
                         else {
-                            strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
+                            else if (prodlist[i].prodid == 24) {
+                                strprice = '';
+                            }
+                            else {
+                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
                         }
                         var buybtn = '<a id="buyProd_xly" onclick="location.href=\'Join_xly.aspx?productid=' + prodlist[i].prodid + '\';" class="btn btn-danger">我要报名</a>';
                         html += '<li class="m-li left rel" style="width:100%"><a href="Detail_xly.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="height:40px; line-height:20px;">' + prodlist[i].prodname + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>-->' + buybtn + '</div></li>';

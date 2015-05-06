@@ -118,17 +118,22 @@ function filldetail(pid) {
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
-                if (obj.originalprice != null && obj.originalprice != '') {
-                    $('#originalprice').show();
-                    $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
-                }
-                else if (pid == 24) {
+                if (pid == 26) {
                     $('#originalprice').hide();
-                    $('#prodprice').html('　');
+                    $('#prodprice').html('¥' + parseInt(obj.originalprice) / 100);
                 }
-                else
-                    $('#originalprice').hide();
-
+                else {
+                    if (obj.originalprice != null && obj.originalprice != '') {
+                        $('#originalprice').show();
+                        $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
+                    }
+                    else if (pid == 24) {
+                        $('#originalprice').hide();
+                        $('#prodprice').html('　');
+                    }
+                    else
+                        $('#originalprice').hide();
+                }
                 document.title = obj.prodname.replace("<br />", "　");
                 shareTitle = delHtmlTag(obj.prodname); //标题
                 imgUrl = domain + obj.images[0].src; //图片

@@ -36,9 +36,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title></title>
     <script src="script/config.js" type="text/javascript"></script>
-    <%--<link href="style/bootstrap.css" rel="stylesheet" type="text/css" />--%>
     <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <%--<link href="style/font-awesome.css" rel="stylesheet" type="text/css" />--%>
     <link href="style/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link href="style/bootstrap-spinner.css" rel="stylesheet" type="text/css" />
     <script src="script/jquery-2.0.1.min.js" type="text/javascript"></script>
@@ -90,7 +88,7 @@
                 <span class="barmaigin_btn leftbtn btnwith">
                     我也要发起
                 </span>
-                <span class="barmaigin_btn rightbtn btnwith">
+                <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
                     帮忙砍一刀
                 </span>
                 <div class="clear"></div>
@@ -98,6 +96,15 @@
         </div>
     </div>
 
+    <div id="popbg" onclick="follwerService();"></div>
+    <div id="popdiv">
+        <div style="padding:20px;">
+            <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=oqrMvt8K6cwKt5T1yAavEylbJaRs' style="width:100%" />
+            <div style="margin-top:10px; color:#fff; font-size:16px;">
+                长按二维码关注卢勤问答，帮TA砍一刀
+            </div>
+        </div>
+    </div>
     <script type="text/javascript">
         var shareTitle = "分享测试"; //标题
         var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
@@ -121,6 +128,25 @@
 
         function joinxly() {
             location.href = 'Join_xly.aspx?productid=' + prodid;
+        }
+
+        function follwerService() {
+            if ($("#popdiv").css("display") == "none") {
+                $("#popbg").css({ height: $(document).height()})
+                var A = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                var D = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+                if (D == 0) {
+                    D = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
+                }
+                var topheight = (A + (D - 300) / 2) - 50 + "px";
+                $(popdiv).css({ top: topheight });
+                $("#popbg").fadeIn();
+                $("#popdiv").fadeIn();
+            }
+            else {
+                $("#popbg").fadeOut();
+                $("#popdiv").fadeOut();
+            }
         }
 
         function filldetail(pid) {

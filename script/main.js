@@ -113,17 +113,23 @@ function filldetail(pid) {
                 $('#prodtitle').html(obj.prodname);
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
-                if (obj.originalprice != null && obj.originalprice != '') {
-                    $('#originalprice').show();
-                    $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
-                }
-                else if (pid == 24) {
-                    $('#originalprice').hide();
-                    $('#prodprice').hide();
-                }
-                else
-                    $('#originalprice').hide();
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
+                if (pid == 26) {
+                    $('#originalprice').hide();
+                    $('#prodprice').html('¥' + parseInt(obj.originalprice) / 100);
+                }
+                else {
+                    if (obj.originalprice != null && obj.originalprice != '') {
+                        $('#originalprice').show();
+                        $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
+                    }
+                    else if (pid == 24) {
+                        $('#originalprice').hide();
+                        $('#prodprice').hide();
+                    }
+                    else
+                        $('#originalprice').hide();
+                }
 
 
                 shareTitle = delHtmlTag(obj.prodname); //标题
