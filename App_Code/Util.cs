@@ -25,7 +25,6 @@ public class Util
 
     protected static DateTime tokenTime = DateTime.MinValue;
 
-    public static string conStr = "";
 
 	public Util()
 	{
