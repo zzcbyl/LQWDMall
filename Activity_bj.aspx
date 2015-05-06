@@ -27,7 +27,7 @@
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
     <meta content="telephone=no" name="format-detection">
@@ -46,6 +46,7 @@
     <script src="script/jquery.spinner.js" type="text/javascript"></script>
     <link href="style/main.css" rel="stylesheet" type="text/css" />
     <script src="script/common.js" type="text/javascript"></script>
+    <link href="style/activity.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -54,22 +55,47 @@
             <div id="prodimg" style="border:1px solid #ccc;">
             
             </div>
-            <div id="prodtitle" style="line-height:22px; font-size:16px; padding:10px 0;">
-            </div>
-            <div class="m-dprice rel">
-                <s class="gray" id="originalprice" style="margin-right:10px;"></s><span class="red" id="prodprice"></span>
-                <a onclick="javascript:joinxly();" class="btn btn-danger" style="width:20%; position:absolute; right:0px; bottom:0px;">我要报名</a>
+            <div class="prod_box">
+                <h3>好友帮Ta砍掉了</h3>
+                <p><span class="dfn">¥</span><span class="js_fruit">94.97</span></p>
+                <%--<s class="gray" id="originalprice" style="margin-right:10px;"></s><span class="red" id="prodprice"></span>--%>
+                <%--<a onclick="javascript:joinxly();" class="btn btn-danger" style="width:20%; ">我要报名</a>--%>
             </div>
         </div>
-        <div id="proddescription" class="m-ddescription">
+        <%--<div id="proddescription" class="m-ddescription">
+        </div>--%>
+        <div class="bargain_people">
+            <h3>谁砍过</h3>
+            <p>目前<span class="red pd2">12</span>位好友一共砍掉了<span class="red pd2">94.97</span>元</p>
+            <div class="bargain_list_scroll">
+                <ul class="bargain_list_info">
+                    <li>
+                        <span class="bargain_price" style="width:80px">-16.58</span>
+                        <p class="bargain_name">匿名好友</p>
+                        <p class="bargain_time">2015-5-5 22:00</p>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div style="background:#fff; padding:10px; text-align:center;">
+        <%--<div style="background:#fff; padding:10px; text-align:center;">
             <a onclick="javascript:joinxly();" class="btn btn-danger" style="width:25%;" >我要报名</a>
-        </div>
+        </div>--%>
         <div style="padding:20px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
         </div>
-        <div class="clear" style="height:20px;"></div>
+        
+        <div class="clear" style="height:60px;"></div>
+        <div class="m-bottom">
+            <div id="footermenu">
+                <span class="barmaigin_btn leftbtn btnwith">
+                    我也要发起
+                </span>
+                <span class="barmaigin_btn rightbtn btnwith">
+                    帮忙砍一刀
+                </span>
+                <div class="clear"></div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
@@ -77,10 +103,10 @@
         var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
         var descContent = "分享测试，分享测试。"; //简介
         var lineLink = "http://mall.luqinwenda.com/shareTest.aspx?preopenid="; //链接
-        var prodid = 26;
+        var prodid = 25;
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
-            location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+            //location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
         }
         lineLink += QueryString('openid');
         $(document).ready(function () {
@@ -108,20 +134,20 @@
                 success: function (data, textStatus) {
                     var obj = eval('(' + data + ')');
                     if (obj != null) {
-                        $('#prodtitle').html(obj.prodname);
-                        $('#proddescription').html(obj.description);
+                        //$('#prodtitle').html(obj.prodname);
+                        //$('#proddescription').html(obj.description);
                         $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
-                        if (obj.originalprice != null && obj.originalprice != '') {
-                            $('#originalprice').show();
-                            $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
-                        }
-                        else if (pid == 24) {
-                            $('#originalprice').hide();
-                            $('#prodprice').hide();
-                        }
-                        else
-                            $('#originalprice').hide();
-                        $('#prodprice').html('¥' + parseInt(obj.price) / 100);
+//                        if (obj.originalprice != null && obj.originalprice != '') {
+//                            $('#originalprice').show();
+//                            $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
+//                        }
+//                        else if (pid == 24) {
+//                            $('#originalprice').hide();
+//                            $('#prodprice').hide();
+//                        }
+//                        else
+//                            $('#originalprice').hide();
+                        //$('#prodprice').html('¥' + parseInt(obj.price) / 100);
                     }
                 }
             });
