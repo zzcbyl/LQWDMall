@@ -5,6 +5,8 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        string token = Util.GetWebContent("http://weixin.luqinwenda.com/get_token.aspx", "GET", "", "html/text");
+        
         string openId = Request["openid"] == null ? "oqrMvt8K6cwKt5T1yAavEylbJaRs" : Request["openid"].Trim();
         SqlDataAdapter da = new SqlDataAdapter(" select  qr_invite_list_detail_openid , qr_invite_list_detail_crt  "
             + " from qr_invite_list_detail left join qr_invite_list on qr_invite_list_id = qr_invite_list_detail_scene "
@@ -27,9 +29,12 @@
             cmd.Parameters["@joinTime"].Value = DateTime.Parse(dr["qr_invite_list_detail_crt"].ToString().Trim()).AddSeconds(1);
             conn.Open();
             SqlDataReader reader = cmd.ExecuteReader();
+            string[] infoArr = new string[2];
             if (!reader.Read())
             {
-                openIdArr.Add(dr["qr_invite_list_detail_openid"].ToString().Trim());
+                infoArr[0] = dr["qr_invite_list_detail_openid"].ToString().Trim();
+                infoArr[1] = dr["qr_invite_list_detail_crt"].ToString().Trim();
+                openIdArr.Add(infoArr);
             }
             reader.Close();
             conn.Close();
@@ -39,13 +44,16 @@
         
 
         string json = "{\"status\":\"" + openId.Trim() + "\" , \"count\" : " + openIdArr.Count.ToString()
-            + " , \"sub-open-id\" : [ ";
+            + " , \"sub-open-id-info\" : [ ";
 
         string subJson = "";
 
         foreach (object o in openIdArr)
         {
-            subJson = subJson + ",\"" + o.ToString().Trim() + "\"";
+            string[] infoArr = (string[])o;
+            string infoJson = Util.GetWebContent("https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+            + token + "&openid=" + infoArr[0] + "&lang=zh_CN", "GET", "", "text/html");
+            subJson = subJson + ",{\"join-date\":\"" + infoArr[1].Trim() + "\", \"info\":"+infoJson+"}";
         }
 
         if (!subJson.Trim().Equals(""))
