@@ -99,6 +99,27 @@
                 Response.Redirect("JoinSuccess.aspx");
                 return;
             }
+            if (Request["followerAmount"] != null && Request["followerAmount"].ToString() != "" && Convert.ToInt32(Request["followerAmount"].ToString()) > 0)
+            {
+                string bargainUrl = Util.ApiDomainString + "api/promote_get_sub_users.aspx?openid=" + Request.Form["myOpenid"].ToString();
+                string bargainResult = HTTPHelper.Get_Http(bargainUrl);
+                Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(bargainResult);
+                if ((int)dicBargain["count"] > 0)
+                {
+                    Object[] objList = (Object[])dicBargain["sub-open-id-info"];
+                    int objCount = objList.Count<object>();
+                    int TotalAmount = objCount * 100 * 1;
+                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + TotalAmount;
+                    string discountResult = HTTPHelper.Get_Http(discountUrl);
+                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                    if (dicDiscount["status"].ToString() == "1")
+                    {
+                        Response.Write("优惠金额错误,请重新支付");
+                        Response.End();
+                        return;
+                    }
+                }
+            }
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
@@ -118,6 +139,10 @@
         }
     }
 
+    public class ReturnDiscount
+    {
+        public int status { get; set; }
+    }
     public class ReturnOrder
     {
         public int status { get; set; }
@@ -153,7 +178,6 @@
             success: function (data, textStatus) {
                 var obj = eval('(' + data + ')');
                 if (obj != null) {
-                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
                     var strprice = '<span class="red">¥' + parseInt(obj.price) / 100 + '</span>';
                     if (obj.prodid == 24) {
                         strprice = '';
@@ -162,6 +186,13 @@
                     }
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
                     $("#total_amount span").eq(0).html('¥' + parseInt(obj.price) / 100);
+                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
+                    if (QueryString('followerAmount') != null && parseInt(QueryString('followerAmount')) > 0) {
+                        var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));
+                        $("#total_amount span").eq(0).html('¥' + amount);
+                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>优惠：<span class="red">¥' + QueryString('followerAmount') + '</span></a><a class="pd10">合计: <span class="red">¥' + amount + '</span></a></li>';
+                    }
+
                     $('#prodlist').html(prodhtml + totalHtml);
                 }
             }
