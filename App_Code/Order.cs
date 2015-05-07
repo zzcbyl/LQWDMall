@@ -67,4 +67,18 @@ public class Order
         int result = cmdUpdPayOrder.ExecuteNonQuery();
         return result;
     }
+
+    public int Discount(int amount)
+    {
+        SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
+        SqlCommand cmd = new SqlCommand(" update m_order set shipfee = shipfee - " + amount.ToString()
+            + "  where oid = " + _fields["oid"].ToString(),conn);
+        conn.Open();
+        int i = cmd.ExecuteNonQuery();
+        conn.Close();
+        cmd.Dispose();
+        conn.Dispose();
+        return i;
+
+    }
 }
