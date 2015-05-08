@@ -108,7 +108,7 @@
                 {
                     Object[] objList = (Object[])dicBargain["sub-open-id-info"];
                     int objCount = objList.Count<object>();
-                    int TotalAmount = objCount * 100 * 1;
+                    int TotalAmount = objCount * 100 * 10;
                     string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + TotalAmount;
                     string discountResult = HTTPHelper.Get_Http(discountUrl);
                     Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
@@ -123,6 +123,7 @@
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+            total = total <= 0 ? 0 : total;
             string param = "?body=卢勤问答平台官方夏令营&detail=卢勤问答平台官方夏令营&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
             if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
@@ -134,6 +135,11 @@
             {
                 //易宝支付
                 payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
+            }
+            if (Request["productid"].ToString() == "27")
+            {
+                //微信支付
+                payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
             }
             this.Response.Redirect(payurl + param);
         }
@@ -189,6 +195,7 @@
                     var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
                     if (QueryString('followerAmount') != null && parseInt(QueryString('followerAmount')) > 0) {
                         var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));
+                        amount = amount <= 0 ? 0 : amount;
                         $("#total_amount span").eq(0).html('¥' + amount);
                         totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>优惠：<span class="red">¥' + QueryString('followerAmount') + '</span></a><a class="pd10">合计: <span class="red">¥' + amount + '</span></a></li>';
                     }

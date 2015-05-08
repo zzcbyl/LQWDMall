@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" %>
+<%@ Import Namespace="System.Data" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +9,7 @@
     public string ticket = "";
     public string shaParam = "";
     public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
-
+    public int activate = 1;
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -28,6 +29,38 @@
             this.joinBtn.Visible = true;
         else
             this.joinBtn.Visible = false;
+
+        if (Request["preopenid"] != null)
+        {
+            if (Users.IsExistsUser("username", Request["preopenid"]))
+            {
+                Users user = Users.GetUser("username", Request["preopenid"]);
+                if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
+                {
+                    Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-05-08"), Convert.ToDateTime("2015-05-29"));
+                    for (int i = 0; i < orderArr.Length; i++)
+                    {
+                        if (orderArr[i]._fields["paystate"].ToString() == "1")
+                        {
+                            DataTable dt = orderArr[i].GetOrderDetails();
+                            if (dt != null && dt.Rows.Count > 0)
+                            {
+                                foreach (DataRow row in dt.Rows)
+                                {
+                                    if (row["product_id"].ToString() == "27")
+                                    {
+                                        activate = 0;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (activate == 0)
+                                break;
+                        }
+                    }
+                }
+            }
+        }
     }
 </script>
 
@@ -56,21 +89,30 @@
     <div class="mainpage">
         <div class="m-dcontent" style="margin-top:10px;">
             <div id="prodimg" style="border:1px solid #ccc;">
-            
+                <img src="images/activity_bj_banner.jpg" width="100%" />
             </div>
             <div class="prod_box">
-                <h3>好友帮Ta砍掉了</h3>
+                <h3>好友帮Ta共砍掉了</h3>
                 <p><span class="dfn">¥</span><span class="js_fruit" id="bargainTotal"> -</span></p>
-                <div><s class="gray" id="originalprice" style="margin-right:10px;">￥6000</s><span class="red pd5">￥<q class="red" id="prodprice"></q></span></div>
-                <div style="margin-top:5px;">
-                    <a id="joinBtn" runat="server" visible="false" onclick="javascript:joinxly();" class="btn btn-danger" style="width:20%;">我要报名</a>
+                <div>
+                    <div><s class="gray" id="originalprice" style="margin-right:10px;">￥6380</s><span class="red pd5">￥<q class="red" id="prodprice">6380</q></span></div>
+                    <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">按此价格<a onclick="javascript:joinxly();" class="btn btn-danger">报名</a></div>
                 </div>
+                
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
-            <h5>“放飞梦想我能行”知心姐姐北京精品营</h5>
-            <div style="text-indent:20px; margin-top:5px;">
-                2015年7月23日至7月28日，“放飞梦想我能行”知心姐姐北京精品营即将出发。卢勤老师全程陪同，知心姐姐教育心理咨询主任赵曼云老师亲自带队，以及数名安保人员全程跟随。这个夏天就让孩子和知心团队一起出发，放飞梦想，并且坚定地对梦想喊出“我能行”！
+            <div style="margin-top:5px;">
+                　7月23日至7月28日，“放飞梦想我能行”知心姐姐北京精品营即将出发。卢勤老师全程陪同，知心团队精英老师全程带队，这个夏天让孩子和知心团队一起出发，放飞梦想，并且坚定地对梦想喊出“我能行”！　　
+                <a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Detail_xly.aspx?productid=25&openid=<%=Request["openid"] %>'>详细介绍>></a>
+            </div>
+        </div>
+        <div style="background:#fff; padding:10px; margin-top:10px;">
+            <h5>砍价规则：</h5>
+            <div style="margin-top:5px;">
+                　1、点击“帮忙砍一刀”按钮，根据提示完成砍价，每砍一次优惠10元。<br />
+                　2、点击“我也要发起”按钮，你也可以发起活动，邀请好友帮忙砍价。<br />
+                　3、本活动官方截止结算日期为5月28日，也可以提前结算。<br />
             </div>
         </div>
         <div class="bargain_people">
@@ -86,18 +128,25 @@
         <div class="clear" style="height:60px;"></div>
         <div class="m-bottom">
             <div id="footermenu">
-                <span class="barmaigin_btn leftbtn btnwith" onclick="LaunchJump();">
+                <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
                     我也要发起
                 </span>
-                <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
+                <% if (activate == 1)
+                   { %>
+                   <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
+                <%}
+                   else
+                   { %>
+                    <span class="no_barmaigin_btn rightbtn btnwith">
+                <%} %>
+                
                     帮忙砍一刀
                 </span>
                 <div class="clear"></div>
             </div>
         </div>
     </div>
-
-    <div id="popbg" onclick="follwerService();"></div>
+    <div id="popbg"></div>
     <div id="popdiv">
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
@@ -106,12 +155,25 @@
             </div>
         </div>
     </div>
+    <div id="popdiv1">
+        <div style="padding:10px;">
+            <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
+            <div style="margin-top:10px; color:#fff; font-size:16px;">
+                长按二维码关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
+            </div>
+        </div>
+    </div>
+    <div id="showShare" style="display:none;" onclick="javascript:document.getElementById('showShare').style.display='none';">
+        <div style="width:100%; height:100%; background:#ccc; color:#000; position:absolute; top:0px; left:0px; text-align:center; filter:alpha(opacity=90); -moz-opacity:0.9;-khtml-opacity: 0.9; opacity: 0.9;  z-index:9;"></div>
+        <div style="width:170px; height:200px;  color:#000; position:absolute;  right:2pt; top:10pt; z-index:10; font-size:20pt;  background:url(images/jiantou.png) no-repeat"></div>
+        <div style="width:149px; height:200px;  color:#000; position:absolute; top:60pt; margin-left:70pt; z-index:20; font-size:15pt; line-height:30pt; text-align:center;">点击右上角“┇”<br />分享到朋友圈</div>
+
     <script type="text/javascript">
-        var shareTitle = "“放飞梦想我能行”知心姐姐北京精品营"; //标题
-        var imgUrl = "http://mall.luqinwenda.com/upload/prodimg/ying_bj.jpg"; //图片
-        var descContent = "分享测试，分享测试。"; //简介
-        var lineLink = "http://mall.luqinwenda.com/Activity_bj.aspx?preopenid="; //链接
-        var prodid = 25;
+        var shareTitle = "推荐给你一个好活动"; //标题
+        var imgUrl = "http://mall.luqinwenda.com/images/activity_bj_icon.jpg"; //图片
+        var descContent = "大家快来帮我砍价砍到0"; //简介
+        var lineLink = "http://mall.luqinwenda.com/Activity_bj.aspx?source=1&preopenid="; //链接
+        var prodid = 27;
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
             location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
@@ -122,19 +184,29 @@
                 alert('商品参数有误');
                 return;
             }
+
+            var from = QueryString('source');
+            if (from != null) {
+                setCookie('from', from);
+            }
+            else {
+                from = getCookie('from');
+            }
             if (QueryString('preopenid') != null) {
-                filldetail(prodid);
+                fillbarmaigin(QueryString('preopenid'));
             }
         });
 
         function joinxly() {
             location.href = 'Join_xly.aspx?productid=' + prodid + '&followerAmount=' + ($("#bargainAmount").html() == '-' ? "" : $("#bargainAmount").html());
         }
-        function LaunchJump() {
-            location.href = 'Activity_bj.aspx?preopenid=' + QueryString('openid') + "&openid=" + QueryString('openid');
-        }
+//        function LaunchJump() {
+//            location.href = 'Activity_bj.aspx?preopenid=' + QueryString('openid') + "&openid=" + QueryString('openid') + "&source=1";
+//        }
 
         function follwerService() {
+            $("#popbg").attr("onclick", "follwerService();");
+            $("#popdiv1").fadeOut();
             if ($("#popdiv").css("display") == "none") {
                 $("#popbg").css({ height: $(document).height()})
                 var A = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
@@ -142,8 +214,8 @@
                 if (D == 0) {
                     D = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
                 }
-                var topheight = (A + (D - 300) / 2) - 50 + "px";
-                $(popdiv).css({ top: topheight });
+                var topheight = (A + (D - 300) / 2) - 90 + "px";
+                $("#popdiv").css({ top: topheight });
                 $("#popbg").fadeIn();
                 $("#popdiv").fadeIn();
             }
@@ -153,40 +225,36 @@
             }
         }
 
-        function filldetail(pid) {
-            $('#bargainlist').html('<li class="loading"><img src="images/loading.gif" /><br />加载中...</li>');
-            $('#prodimg').html('<div class="loading"><img src="images/loading.gif" /><br />加载中...</div>');
+        function ActiveService() {
+            if (QueryString("fromsource") == "message") {
+                $("#showShare").show();
+                return;
+            }
 
-            $.ajax({
-                type: "get",
-                async: false,
-                url: domain + 'api/product_get_detail.aspx',
-                data: { productid: pid, random: Math.random() },
-                success: function (data, textStatus) {
-                    var obj = eval('(' + data + ')');
-                    if (obj != null) {
-                        //$('#prodtitle').html(obj.prodname);
-                        //$('#proddescription').html(obj.description);
-                        $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
-                        //                        if (obj.originalprice != null && obj.originalprice != '') {
-                        //                            $('#originalprice').show();
-                        //                            $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
-                        //                        }
-                        //                        else if (pid == 24) {
-                        //                            $('#originalprice').hide();
-                        //                            $('#prodprice').hide();
-                        //                        }
-                        //                        else
-                        //                            $('#originalprice').hide();
-                        $('#prodprice').html(parseInt(obj.price) / 100);
-
-                        fillbarmaigin(QueryString('preopenid'));
-                    }
+            $("#popbg").attr("onclick", "ActiveService();");
+            $("#popdiv").fadeOut();
+            if ($("#popdiv1").css("display") == "none") {
+                $("#popbg").css({ height: $(document).height() })
+                var A = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                var D = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+                if (D == 0) {
+                    D = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
                 }
-            });
+                var topheight = (A + (D - 300) / 2) - 90 + "px";
+                $("#popdiv1").css({ top: topheight });
+                $("#popbg").fadeIn();
+                $("#popdiv1").fadeIn();
+            }
+            else {
+                $("#popbg").fadeOut();
+                $("#popdiv1").fadeOut();
+            }
         }
 
+
         function fillbarmaigin(open_id) {
+            $('#bargainlist').html('<li class="loading"><img src="images/loading.gif" /><br />加载中...</li>');
+            //alert(open_id);
             $.ajax({
                 type: "get",
                 async: false,
@@ -206,13 +274,13 @@
                             innerHtml += '<li><span class="bargain_price" style="width:80px">砍一刀</span><p class="bargain_name">' + infoObj.info.nickname + '</p><p class="bargain_time">' + infoObj['join-date'] + '</p></li>';
                         }
 
-                        var amount = obj['sub-open-id-info'].length * 1;
+                        var amount = obj['sub-open-id-info'].length * 10;
 
                         $("#bargainCount").html(obj['sub-open-id-info'].length);
                         $("#bargainAmount").html(amount);
                         $("#bargainTotal").html(amount);
 
-                        $('#prodprice').html(parseFloat($('#prodprice').html()) - parseFloat(amount));
+                        $('#prodprice').html((parseFloat($('#prodprice').html()) - parseFloat(amount)) <= 0 ? "0" : (parseFloat($('#prodprice').html()) - parseFloat(amount)));
                     }
                     $("#bargainlist").html(innerHtml);
                 }
@@ -239,7 +307,7 @@
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
-            title: shareTitle, // 分享标题
+            title: descContent, // 分享标题
             link: lineLink, // 分享链接
             imgUrl: imgUrl, // 分享图标
             success: function () {
