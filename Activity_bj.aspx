@@ -10,6 +10,8 @@
     public string shaParam = "";
     public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
     public int activate = 1;
+    
+    
     protected void Page_Load(object sender, EventArgs e)
     {
         try
@@ -226,10 +228,12 @@
         }
 
         function ActiveService() {
-            if (QueryString("fromsource") == "message") {
+            if (QueryString("fromsource") == "message" || QueryString("fromsource") == "subscribe") {
                 $("#showShare").show();
                 return;
             }
+
+
 
             $("#popbg").attr("onclick", "ActiveService();");
             $("#popdiv").fadeOut();
@@ -347,4 +351,16 @@
         });
     });
     </script>
+    <%
+        if (Request["fromsource"] != null && Request["fromsource"].Trim().Equals("subscribe"))
+        { 
+        %>
+    <script type="text/javascript" >
+
+        ActiveService();
+
+    </script>
+    <%
+        }
+         %>
 </html>
