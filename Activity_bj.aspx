@@ -269,12 +269,21 @@
                     var obj = eval('(' + data + ')');
                     var innerHtml = '';
                     if (obj != null) {
+                        //alert(obj['sub-open-id-info'].length);
                         var infoObj;
                         var infoDate;
                         for (var i = 0; i < obj['sub-open-id-info'].length; i++) {
                             infoObj = obj['sub-open-id-info'][i];
+
                             infoObj['join-date'] = infoObj['join-date'].replace(/\//g, "-");
-                            infoObj.info.nickname = infoObj.info.nickname.substring(0, 1) + "***";
+                            if (infoObj.info.nickname == undefined) {
+                                infoObj.info.nickname = "匿名网友";
+                            }
+                            else if (infoObj.info.nickname.length < 4) {
+                                infoObj.info.nickname = infoObj.info.nickname + "**";
+                            }
+                            else
+                                infoObj.info.nickname = infoObj.info.nickname.substring(0, 3) + "**";
                             innerHtml += '<li><span class="bargain_price" style="width:80px">砍一刀</span><p class="bargain_name">' + infoObj.info.nickname + '</p><p class="bargain_time">' + infoObj['join-date'] + '</p></li>';
                         }
 
