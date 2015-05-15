@@ -151,17 +151,17 @@
     <div id="popbg"></div>
     <div id="popdiv">
         <div style="padding:10px;">
-            <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
+            <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按二维码关注卢勤问答，帮TA砍一刀
+                长按指纹关注卢勤问答，帮TA砍一刀
             </div>
         </div>
     </div>
     <div id="popdiv1">
         <div style="padding:10px;">
-            <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
+            <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按二维码关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
+                长按指纹关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
             </div>
         </div>
     </div>
@@ -216,7 +216,7 @@
                 if (D == 0) {
                     D = Math.max(document.body.clientHeight, document.documentElement.clientHeight)
                 }
-                var topheight = (A + (D - 300) / 2) - 90 + "px";
+                var topheight = (A + (D - 300) / 2) - 120 + "px";
                 $("#popdiv").css({ top: topheight });
                 $("#popbg").fadeIn();
                 $("#popdiv").fadeIn();
@@ -232,9 +232,6 @@
                 $("#showShare").show();
                 return;
             }
-
-
-
             $("#popbg").attr("onclick", "ActiveService();");
             $("#popdiv").fadeOut();
             if ($("#popdiv1").css("display") == "none") {
