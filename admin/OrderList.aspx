@@ -1,14 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/admin/AdminMaster.master" %>
+<%@ Register Assembly="AspNetPager" Namespace="Wuqi.Webdiyer" TagPrefix="webdiyer" %>
 <%@ Import Namespace="System.Data" %>
 
 <script runat="server">
     public Order[] orderArray = null;
     public Order order = new Order();
+    public int PageSize = 30;
     protected void Page_Load(object sender, EventArgs e)
+    {
+        BindOrderList(1);
+        this.AspNetPager1.PageSize = PageSize;
+    }
+
+    private void BindOrderList(int currentPage)
     {
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
-        orderArray = Order.GetOrders(0, startDate, endDate);
+        orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize);
+        this.AspNetPager1.RecordCount = Order.GetOrders(0, startDate, endDate).Length;
+    }
+    protected void AspNetPager1_PageChanged(object src, EventArgs e)
+    {
+        BindOrderList(this.AspNetPager1.CurrentPageIndex);
     }
 </script>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
@@ -38,8 +51,9 @@
                 <div id="prodimg">
                     <%if (detailDT.Rows.Count > 0)
                         { %>
-                        <a><img src='<%=Util.ApiDomainString + detailDT.Rows[0]["imgsrc"].ToString() %>' /></a></div>
+                        <a><img src='<%=Util.ApiDomainString + detailDT.Rows[0]["imgsrc"].ToString() %>' /></a>
                     <%} %>
+                </div>
                 <div id="address">
                     <p><%=order._fields["name"].ToString()%>    <%=order._fields["cell"].ToString()%></p>
                     <p><%=order._fields["province"].ToString()%> <%=order._fields["city"].ToString()%> <%=order._fields["address"].ToString()%></p>
@@ -56,5 +70,9 @@
         </div>
         <%}
             } %>
+    </div>
+    <div style="padding:10px 0;">
+        <webdiyer:aspnetpager id="AspNetPager1" runat="server" horizontalalign="Center" onpagechanged="AspNetPager1_PageChanged"
+            width="100%" ShowFirstLast="false" PagingButtonsStyle="margin:0 3px;" CurrentPageButtonStyle="color:#666; font-weight:bold; margin:0 5px;"  FirstPageText="首页" LastPageText="末页" NextPageText="下一页" PrevPageText="上一页" ></webdiyer:aspnetpager>
     </div>
 </asp:Content>
