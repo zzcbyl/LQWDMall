@@ -20,18 +20,18 @@
 <script runat="server">
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Request["product_id"] != null && int.Parse(Request["product_id"]) > 0)
+        if (Request["product_id"] != null && Request["product_id"] != "" && int.Parse(Request["product_id"]) > 0)
         {
             Order order = new Order();
             int result = order.updPayState(int.Parse(Request["product_id"]));
             if (result > 0)
             {
-                
-            }    
+
+            }
         }
         else
         {
-            Response.Write("参数错误");
+            //Response.Write("参数错误");
             Response.End();
         }
     }

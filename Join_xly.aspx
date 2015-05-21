@@ -23,7 +23,7 @@
             <input type="text" id="parentMobile" maxlength="11" name="parentMobile" placeholder="请输入手机号码" />
         </p>
         <p class="add_list_p rel">
-            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="（选填）请输入电子邮箱" />
+            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="请输入电子邮箱" />
         </p>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
@@ -246,15 +246,18 @@
             return;
         }
 
-        var emailReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
-        if ($("#parentEmail").val().Trim() != "") {
-            if (!emailReg.test($("#parentEmail").val().Trim())) {
-                $("#ModalContent").html("请输入正确的电子邮箱");
-                $('#myModal').modal('show');
-                return;
-            }
+        if ($("#parentEmail").val().Trim() == "") {
+            $("#ModalContent").html("请输入电子邮箱");
+            $('#myModal').modal('show');
+            return;
         }
-
+        var emailReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
+        if (!emailReg.test($("#parentEmail").val().Trim())) {
+            $("#ModalContent").html("请输入正确的电子邮箱");
+            $('#myModal').modal('show');
+            return;
+        }
+        
         GetOpenidToken();
         $("#myToken").val(token);
         $("#myOpenid").val(openid);

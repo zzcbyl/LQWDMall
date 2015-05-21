@@ -14,6 +14,11 @@
 
         order = new Order(int.Parse(Request["oid"]));
         detailDT = order.GetOrderDetails();
+
+        if (order._fields["paystate"].ToString() == "1" && Request.Form["shipNum"] != null && Request.Form["shipNum"].Trim() != string.Empty)
+        {
+            order.updPayState(int.Parse(Request["oid"].Trim()), 2, Request.Form["shipNum"].Trim());
+        }
     }
 </script>
 
@@ -21,7 +26,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="orderdetail_state">
-        订单状态：<%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款　" + Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm")%>
+        订单状态：<%=order._fields["paystate"].ToString() == "0" ? "未付款" : order._fields["paystate"].ToString() == "1" ? "已付款　" + Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm") + "　　快递：<input type=\"text\" name=\"shipNum\" style=\"width:200px;\" /> <input type=\"button\" value=\"发货\" style=\"padding:0px 10px;\" onclick=\"document.forms[0].submit();\" />" : order._fields["paystate"].ToString() == "2" ? "已发货　" + order._fields["shipNumber"].ToString() : "已收货" %>
     </div>
 
     <div class="orderdetail_info">

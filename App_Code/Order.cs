@@ -68,6 +68,16 @@ public class Order
         return result;
     }
 
+    public int updPayState(int orderid, int paystate, string shipNumber)
+    {
+        string sqlUpdPay = "update m_order set paystate = " + paystate + ", paysuccesstime = '" + DateTime.Now.ToString() + "', shipNumber='" + shipNumber + "' where oid = " + orderid;
+        SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
+        SqlCommand cmdUpdPayOrder = new SqlCommand(sqlUpdPay, conn);
+        conn.Open();
+        int result = cmdUpdPayOrder.ExecuteNonQuery();
+        return result;
+    }
+
     public int Discount(int amount)
     {
         SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
