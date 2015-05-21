@@ -71,8 +71,8 @@
         <%}
             } %>
     </div>
-    <div style="padding:10px 0;">
+    <div style="padding:10px 0; margin-top:10px; background:#fff;">
         <webdiyer:aspnetpager id="AspNetPager1" runat="server" horizontalalign="Center" onpagechanged="AspNetPager1_PageChanged"
-            width="100%" ShowFirstLast="false" PagingButtonsStyle="margin:0 3px;" CurrentPageButtonStyle="color:#666; font-weight:bold; margin:0 5px;"  FirstPageText="首页" LastPageText="末页" NextPageText="下一页" PrevPageText="上一页" ></webdiyer:aspnetpager>
+            width="100%" ShowFirstLast="false" PagingButtonsStyle="margin:0 5px;" CurrentPageButtonStyle="color:#666; font-weight:bold; font-size:16px; margin:0 5px;"  FirstPageText="首页" LastPageText="末页" NextPageText="下一页" PrevPageText="上一页" ></webdiyer:aspnetpager>
     </div>
 </asp:Content>
