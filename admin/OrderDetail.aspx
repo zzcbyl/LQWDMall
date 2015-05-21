@@ -18,6 +18,7 @@
         if (order._fields["paystate"].ToString() == "1" && Request.Form["shipNum"] != null && Request.Form["shipNum"].Trim() != string.Empty)
         {
             order.updPayState(int.Parse(Request["oid"].Trim()), 2, Request.Form["shipNum"].Trim());
+            Response.Redirect(Request.Url.ToString());
         }
     }
 </script>
