@@ -94,13 +94,17 @@
                 <img src="images/activity_bj_banner.jpg" width="100%" />
             </div>
             <div class="prod_box">
+                <% if (activate == 1)
+                       { %>
                 <h3>好友帮Ta共砍掉了</h3>
                 <p><span class="dfn">¥</span><span class="js_fruit" id="bargainTotal"> -</span></p>
                 <div>
-                    <div><s class="gray" id="originalprice" style="margin-right:10px;">￥6380</s><span class="red pd5">￥<q class="red" id="prodprice">6380</q></span></div>
+                    <div><s class="gray" id="originalprice" style="margin-right:10px;">￥6380</s><span class="red pd5">￥<q class="red" id="Q1">6380</q></span></div>
                     <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">按此价格<a onclick="javascript:joinxly();" class="btn btn-danger">报名</a></div>
                 </div>
-                
+                <%} else { %>
+                <h3 style="color:#ff0000">已报名</h3>
+                <%} %>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
@@ -115,6 +119,7 @@
                 　1、点击“帮忙砍一刀”按钮，根据提示完成砍价，每砍一次优惠10元。<br />
                 　2、点击“我也要发起”按钮，你也可以发起活动，邀请好友帮忙砍价。<br />
                 　3、本活动官方截止结算日期为5月28日，也可以提前结算。<br />
+                　4、在活动结束前报名成功，活动即会提前结束。<br />
             </div>
         </div>
         <div class="bargain_people">
@@ -133,15 +138,7 @@
                 <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
                     我也要发起
                 </span>
-                <% if (activate == 1)
-                   { %>
                    <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
-                <%}
-                   else
-                   { %>
-                    <span class="no_barmaigin_btn rightbtn btnwith">
-                <%} %>
-                
                     帮忙砍一刀
                 </span>
                 <div class="clear"></div>
