@@ -27,7 +27,7 @@ function GetOpenidToken() {
         delCookie("from");
         from = null;
     }
-    if (openid == null || openid == '') {
+    if (openid == null || openid == '' || openid == 'undefined') {
         var encodeDomain = encodeURIComponent(domain + 'index.aspx');
         if (QueryString('productid') != null) {
             var jumpurl = document.URL;
