@@ -138,6 +138,10 @@
             }
             if (Request["productid"].ToString() == "27")
             {
+                if (total == 0)
+                {
+                    this.Response.Redirect("paySuccess.aspx?product_id=" + order._fields["oid"]);
+                }
                 //微信支付
                 payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
             }
