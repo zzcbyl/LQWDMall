@@ -243,4 +243,9 @@ public class Util
         json.TryGetValue(key, out v);
         return v.ToString();
     }
+
+    public static string GetSafeRequestValue(HttpRequest request, string parameterName, string defaultValue)
+    {
+        return ((request[parameterName] == null) ? defaultValue : request[parameterName].Trim()).Replace("'", "");
+    }
 }

@@ -6,12 +6,18 @@
     protected void Page_Load(object sender, EventArgs e)
     {
         string token = Util.GetWebContent("http://weixin.luqinwenda.com/get_token.aspx", "GET", "", "html/text");
+
+        string openId = Request["openid"] == null ? "oqrMvt-oz_B5OMvzX-TXnx57sN5E" : Request["openid"].Trim();
+
+        int grouponId = int.Parse(Util.GetSafeRequestValue(Request, "grouponid", "2"));
+
+        Groupon groupon = new Groupon(grouponId);
         
-        string openId = Request["openid"] == null ? "oqrMvt8K6cwKt5T1yAavEylbJaRs" : Request["openid"].Trim();
         SqlDataAdapter da = new SqlDataAdapter(" select  qr_invite_list_detail_openid , qr_invite_list_detail_crt  "
             + " from qr_invite_list_detail left join qr_invite_list on qr_invite_list_id = qr_invite_list_detail_scene "
             + " where qr_invite_list_owner ='" + openId.Trim() + "' order by  qr_invite_list_detail_crt desc  ",
             System.Configuration.ConfigurationSettings.AppSettings["constrWX"].Trim());
+        
         DataTable dt = new DataTable();
         da.Fill(dt);
         da.Dispose();
@@ -33,8 +39,13 @@
             if (!reader.Read())
             {
                 infoArr[0] = dr["qr_invite_list_detail_openid"].ToString().Trim();
+
+                DateTime joinTime = DateTime.Parse(dr["qr_invite_list_detail_crt"].ToString().Trim());
+                
+                
                 infoArr[1] = dr["qr_invite_list_detail_crt"].ToString().Trim();
-                openIdArr.Add(infoArr);
+                if (joinTime>groupon.StartDateTime && joinTime < groupon.EndDateTime)
+                    openIdArr.Add(infoArr);
             }
             reader.Close();
             conn.Close();
@@ -51,8 +62,12 @@
         foreach (object o in openIdArr)
         {
             string[] infoArr = (string[])o;
-            string infoJson = Util.GetWebContent("https://api.weixin.qq.com/cgi-bin/user/info?access_token="
-            + token + "&openid=" + infoArr[0] + "&lang=zh_CN", "GET", "", "text/html");
+            
+            //string infoJson = Util.GetWebContent("https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+            //+ token + "&openid=" + infoArr[0] + "&lang=zh_CN", "GET", "", "text/html");
+            string infoJson = Util.GetWebContent("http://weixin.luqinwenda.com/get_user_info.aspx?openid="
+                + infoArr[0], "GET", "", "text/html");
+            
             subJson = subJson + ",{\"join-date\":\"" + infoArr[1].Trim() + "\", \"info\":"+infoJson+"}";
         }
 

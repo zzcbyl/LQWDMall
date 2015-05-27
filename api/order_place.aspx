@@ -51,8 +51,15 @@
             countPreArr[i] = int.Parse(countAndPreArr[1].Trim());
         }
         int userId = Users.CheckToken(token);
-        Cart cart = new Cart(userId);
-        int orderId = cart.PlaceOrder(name, cell, province, city, address, zip, productIdArr, countIdArr, countPreArr, memo, wechatId);
-        Response.Write("{\"status\": 0 , \"order_id\" : " + orderId.ToString() + " } ");
+        if (userId > 0)
+        {
+            Cart cart = new Cart(userId);
+            int orderId = cart.PlaceOrder(name, cell, province, city, address, zip, productIdArr, countIdArr, countPreArr, memo, wechatId);
+            Response.Write("{\"status\": 0 , \"order_id\" : " + orderId.ToString() + " } ");
+        }
+        else
+        {
+            Response.Write("{\"status\": 1 , \"message\" : \"user token is invalid.\" } ");
+        }
     }
 </script>

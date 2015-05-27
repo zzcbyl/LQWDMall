@@ -71,7 +71,7 @@ public class Order
     public int Discount(int amount)
     {
         SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
-        SqlCommand cmd = new SqlCommand(" update m_order set shipfee = shipfee - " + amount.ToString()
+        SqlCommand cmd = new SqlCommand(" update m_order set ajustfee = ajustfee - " + amount.ToString()
             + "  where oid = " + _fields["oid"].ToString(),conn);
         conn.Open();
         int i = cmd.ExecuteNonQuery();
@@ -80,5 +80,16 @@ public class Order
         conn.Dispose();
         return i;
 
+    }
+
+    public int OrderPriceToPay
+    {
+        get
+        {
+            return int.Parse(_fields["orderprice"].ToString().Trim())
+                + int.Parse(_fields["shipfee"].ToString().Trim())
+                + int.Parse(_fields["ajustfee"].ToString().Trim());
+
+        }
     }
 }

@@ -161,7 +161,7 @@
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按二维码关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
+                长按二维码并识别后关注卢勤问答，进入该公众服务号后，点击最新收到的图文消息后分享到朋友圈。
             </div>
         </div>
     </div>
