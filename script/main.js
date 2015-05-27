@@ -27,7 +27,7 @@ function GetOpenidToken() {
         delCookie("from");
         from = null;
     }
-    if (openid == null || openid == '') {
+    if (openid == null || openid == '' || openid == 'undefined') {
         var encodeDomain = encodeURIComponent(domain + 'index.aspx');
         if (QueryString('productid') != null) {
             var jumpurl = document.URL;
@@ -464,7 +464,7 @@ function totalFeight(province, count) {
 
 
 
-function orderState(state, oid) {
+function orderState(state, oid, number) {
     var str_state = '';
     switch (state) {
         case 0:
@@ -474,7 +474,7 @@ function orderState(state, oid) {
             str_state = "已付款 未发货";
             break;
         case 2:
-            str_state = "已发货";
+            str_state = "已发货　" + number;
             break;
         case 3:
             str_state = "已收货";

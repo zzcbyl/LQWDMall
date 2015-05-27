@@ -10,7 +10,6 @@
     public string shaParam = "";
     public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
     public int activate = 1;
-    public int endState = 0;
     
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -32,38 +31,23 @@
         else
             this.joinBtn.Visible = false;
 
-        if (DateTime.Now >= Convert.ToDateTime("2015-05-28 23:00"))
+        if (DateTime.Now >= Convert.ToDateTime("2015-06-02"))
         {
-            endState = 1;
+            activate = 0;
         }
-        
-        if (Request["preopenid"] != null)
+        else
         {
-            if (Users.IsExistsUser("username", Request["preopenid"]))
+            if (Request["preopenid"] != null)
             {
-                Users user = Users.GetUser("username", Request["preopenid"]);
-                if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
+                if (Users.IsExistsUser("username", Request["preopenid"]))
                 {
-                    Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-05-08"), Convert.ToDateTime("2015-05-29"));
-                    for (int i = 0; i < orderArr.Length; i++)
+                    Users user = Users.GetUser("username", Request["preopenid"]);
+                    if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
                     {
-                        if (orderArr[i]._fields["paystate"].ToString() == "1")
-                        {
-                            DataTable dt = orderArr[i].GetOrderDetails();
-                            if (dt != null && dt.Rows.Count > 0)
-                            {
-                                foreach (DataRow row in dt.Rows)
-                                {
-                                    if (row["product_id"].ToString() == "27")
-                                    {
-                                        activate = 0;
-                                        break;
-                                    }
-                                }
-                            }
-                            if (activate == 0)
-                                break;
-                        }
+                        Coupon[] couponArr = Coupon.GetCoupons(int.Parse(user._fields["uid"].ToString()), 1);
+                        if (couponArr.Length > 0)
+                            if (int.Parse(couponArr[0]._fields["coupon_isused"].ToString()) == 1)
+                                activate = 0;
                     }
                 }
             }
@@ -79,7 +63,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>“放飞梦想我能行”知心姐姐北京精品营</title>
+    <title>“六一儿童节”卢勤问答平台官方书城</title>
     <script src="script/config.js" type="text/javascript"></script>
     <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="style/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -96,40 +80,37 @@
     <div class="mainpage">
         <div class="m-dcontent" style="margin-top:10px;">
             <div id="prodimg" style="border:1px solid #ccc;">
-                <img src="images/activity_bj_banner.jpg" width="100%" />
+                <img src="images/activity_61_banner.jpg" width="100%" />
             </div>
             <div class="prod_box">
-                <% if (activate == 1)
-                       { %>
-                <h3>好友帮Ta共砍掉了</h3>
-                <p><span class="dfn">¥</span><span class="js_fruit" id="bargainTotal"> -</span></p>
-                <div>
-                    <div><s class="gray" id="originalprice" style="margin-right:10px;">￥6380</s><span class="red pd5">￥<q class="red" id="prodprice">6380</q></span></div>
-                    <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">按此价格<a onclick="javascript:joinxly();" class="btn btn-danger">报名</a></div>
-                </div>
+                <% if (activate == 1) { %>
+                    <h3>好友帮Ta共加了</h3>
+                    <p><span class="dfn">¥</span><span class="js_fruit" id="bargainTotal"> - </span></p>
+                    <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">使用优惠去 <a onclick="javascript:BuyBooks();" class="btn btn-danger">购书</a></div>
                 <%} else { %>
-                <h2 style="color:#ff0000">已报名</h2>
+                    <h2 style="color:#ff0000">已结束</h2>
                 <%} %>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
             <div style="margin-top:5px;">
-                　7月23日至7月28日，“放飞梦想我能行”知心姐姐北京精品营即将出发。卢勤老师全程陪同，知心团队精英老师全程带队，这个夏天让孩子和知心团队一起出发，放飞梦想，并且坚定地对梦想喊出“我能行”！　　
-                <a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Detail_xly.aspx?productid=25&openid=<%=Request["openid"] %>'>详细介绍>></a>
+                儿童节就要到了，想好送给孩子什么了吗？送美食，吃过就消化了；送玩具，玩过就不稀奇了，不如送好书，好书会带来好的观念，好的观念会陪伴孩子一生！现为了庆祝“六.一”儿童节，卢勤问答平台特意开展“优惠券抵书款活动”，只要你的朋友够多，您就可以免费得到卢勤老师的著作！
+                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx?openid=<%=Request["openid"] %>'>卢勤问答平台官方书城>></a>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
-            <h5>砍价规则：</h5>
+            <h5>活动规则：</h5>
             <div style="margin-top:5px;">
-                　1、点击“帮忙砍一刀”按钮，根据提示完成砍价，每砍一次优惠10元。<br />
-                　2、点击“我也要发起”按钮，你也可以发起活动，邀请好友帮忙砍价。<br />
-                　3、本活动官方截止结算日期为5月28日，也可以提前结算。<br />
-                　4、在活动结束前报名成功，活动即会提前结束。<br />
+                1、点击“加一元”按钮，根据提示完成帮助，每点击一次就为好友增加一元优惠券。<br />
+                2、点击“我也要发起”按钮，你也可以发起活动，邀请好友帮忙加一元。<br />
+                3、本活动官方截止时间为6月1日晚上23:00。<br />
+                4、优惠券不能拆开使用，剩余的款项在购书结束后作废，不得二次使用。<br />
+                5、本优惠券只能抵消书款，不能抵消运费。<br />
             </div>
         </div>
         <div class="bargain_people">
-            <h3>谁砍过</h3>
-            <p>目前<span class="red pd2" id="bargainCount">0</span>位好友一共砍掉了<span class="red pd2" id="bargainAmount">-</span>元</p>
+            <h3>谁帮我</h3>
+            <p>目前<span class="red pd2" id="bargainCount">0</span>位好友一共增加了<span class="red pd2" id="bargainAmount">-</span>元优惠券</p>
             <div class="bargain_list_scroll">
                 <ul id="bargainlist" class="bargain_list_info">
                     
@@ -140,46 +121,30 @@
         <div class="clear" style="height:60px;"></div>
         <div class="m-bottom">
             <div id="footermenu">
-                <% if (endState == 0) {%>
-                    <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
-                        我也要发起
-                    </span>
-                    <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
-                        帮忙砍一刀
-                    </span>
-                <%} else {%>
-                    <span class="no_barmaigin_btn leftbtn btnwith">
-                        我也要发起
-                    </span>
-                    <span class="no_barmaigin_btn rightbtn btnwith">
-                        帮忙砍一刀
-                    </span>
-                <%} %>
-                     
+                <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
+                    我也要发起
+                </span>
+                   <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
+                    帮忙加一元
+                </span>
                 <div class="clear"></div>
             </div>
         </div>
     </div>
     <div id="popbg"></div>
     <div id="popdiv">
-        <% if (endState == 0) {%>
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按指纹关注卢勤问答，帮TA砍一刀
+                长按指纹关注卢勤问答，帮TA加一元
             </div>
         </div>
-        <%} %>
     </div>
     <div id="popdiv1">
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-<<<<<<< HEAD
-                长按二维码并识别后关注卢勤问答，进入该公众服务号后，点击最新收到的图文消息后分享到朋友圈。
-=======
                 长按指纹关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
->>>>>>> origin/develop
             </div>
         </div>
     </div>
@@ -190,9 +155,9 @@
 
     <script type="text/javascript">
         var shareTitle = "推荐给你一个好活动"; //标题
-        var imgUrl = "http://mall.luqinwenda.com/images/activity_bj_icon.jpg"; //图片
-        var descContent = "大家快来帮我砍价砍到0"; //简介
-        var lineLink = "http://mall.luqinwenda.com/Activity_bj.aspx?source=1&preopenid="; //链接
+        var imgUrl = "http://mall.luqinwenda.com/images/activity_61_icon.jpg"; //图片
+        var descContent = "本活动为“优惠券抵书款活动”，只要你的朋友够多，您就可以享受0元购书！"; //简介
+        var lineLink = "http://mall.luqinwenda.com/Activity_childrensday.aspx?source=1&preopenid="; //链接
         var prodid = 27;
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
@@ -217,18 +182,15 @@
             }
         });
 
-        function joinxly() {
-            location.href = 'Join_xly.aspx?productid=' + prodid + '&followerAmount=' + ($("#bargainAmount").html() == '-' ? "" : $("#bargainAmount").html());
+        function BuyBooks() {
+            location.href = 'Default.aspx?openid=' + QueryString('preopenid') + '&source=1&followerAmount=' + ($("#bargainAmount").html() == '-' ? "" : $("#bargainAmount").html());
         }
-//        function LaunchJump() {
-//            location.href = 'Activity_bj.aspx?preopenid=' + QueryString('openid') + "&openid=" + QueryString('openid') + "&source=1";
-//        }
 
         function follwerService() {
             $("#popbg").attr("onclick", "follwerService();");
             $("#popdiv1").fadeOut();
             if ($("#popdiv").css("display") == "none") {
-                $("#popbg").css({ height: $(document).height()})
+                $("#popbg").css({ height: $(document).height() })
                 var A = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
                 var D = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
                 if (D == 0) {
@@ -299,16 +261,15 @@
                             }
                             else
                                 infoObj.info.nickname = infoObj.info.nickname.substring(0, 3) + "**";
-                            innerHtml += '<li><span class="bargain_price" style="width:80px">砍一刀</span><p class="bargain_name">' + infoObj.info.nickname + '</p><p class="bargain_time">' + infoObj['join-date'] + '</p></li>';
+                            innerHtml += '<li><span class="bargain_price" style="width:80px">加一元</span><p class="bargain_name">' + infoObj.info.nickname + '</p><p class="bargain_time">' + infoObj['join-date'] + '</p></li>';
                         }
 
-                        var amount = obj['sub-open-id-info'].length * 10;
+                        var amount = obj['sub-open-id-info'].length * 1;
 
                         $("#bargainCount").html(obj['sub-open-id-info'].length);
                         $("#bargainAmount").html(amount);
                         $("#bargainTotal").html(amount);
 
-                        $('#prodprice').html((parseFloat($('#prodprice').html()) - parseFloat(amount)) <= 0 ? "0" : (parseFloat($('#prodprice').html()) - parseFloat(amount)));
                     }
                     $("#bargainlist").html(innerHtml);
                 }
@@ -335,7 +296,7 @@
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
-            title: descContent, // 分享标题
+            title: "本活动为“优惠券抵书款活动”，只要你的朋友够多，您就可以享受0元购书！", // 分享标题
             link: lineLink, // 分享链接
             imgUrl: imgUrl, // 分享图标
             success: function () {
