@@ -59,7 +59,10 @@
                     <p><%=order._fields["province"].ToString()%> <%=order._fields["city"].ToString()%> <%=order._fields["address"].ToString()%></p>
                 </div>
                 <div id="remarks"><%=order._fields["memo"].ToString().Trim() == string.Empty ? "无" : order._fields["memo"].ToString().Trim()%></div>
-                <div id="totals"><%=float.Parse(order._fields["orderprice"].ToString()) / 100 %><%=int.Parse(order._fields["shipfee"].ToString()) > 0 ? "<br />(快递费:" + int.Parse(order._fields["shipfee"].ToString()) / 100 + ")" : int.Parse(order._fields["shipfee"].ToString()) < 0 ? "<br />(优惠:" + (1 - int.Parse(order._fields["shipfee"].ToString())) / 100 + ")" : ""%></div>
+                <div id="totals">
+                    <%=float.Parse(order._fields["orderprice"].ToString()) / 100 %><%=int.Parse(order._fields["shipfee"].ToString()) > 0 ? "<br />(快递费:" + int.Parse(order._fields["shipfee"].ToString()) / 100 + ")" : int.Parse(order._fields["shipfee"].ToString()) < 0 ? "<br />(优惠:" + (1 - int.Parse(order._fields["shipfee"].ToString())) / 100 + ")" : ""%>
+                    <%=int.Parse(order._fields["ajustfee"].ToString()) < 0 ? "<br />(优惠:" + (1 - int.Parse(order._fields["ajustfee"].ToString())) / 100 + ")" : "" %>
+                </div>
                 <div id="paystate"><%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款<br/>" + (order._fields["paysuccesstime"] != DBNull.Value ? Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm") : "") %></div>
                 <div class="operation">
                     <p><a href='OrderDetail.aspx?oid=<%=order._fields["oid"].ToString() %>'>订单详情</a></p>

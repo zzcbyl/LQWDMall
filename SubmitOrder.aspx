@@ -108,9 +108,57 @@
         }
         else
         {
+            if (Request.Form["myOpenid"] != null)
+            {
+                if (Users.IsExistsUser("username", Request.Form["myOpenid"]))
+                {
+                    Users user = Users.GetUser("username", Request.Form["myOpenid"]);
+                    if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
+                    {
+                        Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-01-01"), Convert.ToDateTime("2015-06-30"));
+                        int index = 0;
+                        for (int i = 0; i < orderArr.Length; i++)
+                        {
+                            if (int.Parse(orderArr[i]._fields["ajustfee"].ToString()) != 0)
+                            {
+                                index = 1;
+                                break;
+                            }
+                        }
+                        if (index == 0)
+                        {
+                            string bargainUrl = Util.ApiDomainString + "api/promote_get_sub_users.aspx?grouponid=1&openid=" + Request.Form["myOpenid"].ToString();
+                            string bargainResult = HTTPHelper.Get_Http(bargainUrl);
+                            Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(bargainResult);
+                            if ((int)dicBargain["count"] > 0)
+                            {
+                                Object[] objList = (Object[])dicBargain["sub-open-id-info"];
+                                int objCount = objList.Count<object>();
+                                int TotalAmount = objCount * 100 * 1;
+                                Order myorder = new Order(int.Parse(jsonorder.order_id));
+                                if (TotalAmount > int.Parse(myorder._fields["orderprice"].ToString()))
+                                {
+                                    TotalAmount = int.Parse(myorder._fields["orderprice"].ToString());
+                                }
+                                string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + TotalAmount;
+                                string discountResult = HTTPHelper.Get_Http(discountUrl);
+                                Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                                if (dicDiscount["status"].ToString() == "1")
+                                {
+                                    Response.Write("优惠金额错误,请重新支付");
+                                    Response.End();
+                                    return;
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
-            int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+            int total = (order.OrderPriceToPay < 0 ? 0 : order.OrderPriceToPay);
             string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
             if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
@@ -145,6 +193,7 @@
     var str_counts = "";
     var pcount = 0;
     var t_prod_price = 0;
+    var t_prePrice = 0;
     $(document).ready(function () {
         so_fillProd();
 
@@ -190,7 +239,7 @@
         $("#counts").val(str_counts);
         $("#myProvince").val($("#province option:selected").text());
         $("#myCity").val($("#city option:selected").text());
-
+        delCookie("followerAmount");
         document.forms[0].submit();
     }
 </script>

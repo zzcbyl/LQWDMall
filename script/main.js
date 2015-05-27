@@ -340,7 +340,7 @@ function so_fillProd() {
                         pcount += parseInt(obj.items[i].product_count) * parseInt(obj.items[i].precount);
                         ordercount++;
                         orderprice += parseInt(obj.items[i].price) * parseInt(obj.items[i].product_count);
-                        prodhtml += '<li class="sub-cart-prod"><a class="prod-img" href="Detail.aspx?productid=' + obj.items[i].prodid + '"><img src="' + domain + obj.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail.aspx?productid=' + obj.items[i].prodid + '">' + obj.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">¥' + parseInt(obj.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + obj.items[i].product_count + '</a></li>';
+                        prodhtml += '<li class="sub-cart-prod"><a class="prod-img" href="Detail.aspx?productid=' + obj.items[i].prodid + '"><img src="' + domain + obj.items[i].imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail.aspx?productid=' + obj.items[i].prodid + '">' + obj.items[i].prodname + '</a><a class="prod-xinghao">无型号</a><a class="prod-price"><span class="red">￥' + parseInt(obj.items[i].price) / 100 + '</span></a><a class="prod-count">X ' + obj.items[i].product_count + '</a></li>';
                     }
                     if (str_productids.length > 0)
                         str_productids = str_productids.substring(0, str_productids.length - 1);
@@ -350,7 +350,16 @@ function so_fillProd() {
                 else
                     prodhtml = "";
                 t_prod_price = orderprice;
-                var totalHtml = '<li class="sub-total"><a id="freight_fee">运费: <span class="red">--</span></a><a id="total_count">共' + ordercount + '件商品，合计: <span class="red">¥' + parseInt(orderprice) / 100 + '</span></a></li>';
+                var preferential = '';
+                if (getCookie("followerAmount") != null) {
+                    var prePrice = parseInt(getCookie("followerAmount")) * 100;
+                    if (prePrice > parseInt(t_prod_price))
+                        prePrice = t_prod_price;
+                    preferential = '<a id="preferential">六一优惠: <span class="red">￥' + prePrice / 100 + '</span></a>';
+                    t_prePrice = 0 - prePrice;
+                }
+
+                var totalHtml = '<li class="sub-total"><a id="freight_fee">运费: <span class="red">--</span></a>' + preferential + '<a id="total_count">共' + ordercount + '件商品，合计: <span class="red">￥' + parseInt(orderprice) / 100 + '</span></a><div class="clear"></div></li>';
                 $('#prodlist').html(prodhtml + totalHtml);
                 so_fillProvince();
             }
@@ -459,10 +468,8 @@ function totalFeight(province, count) {
         $('#freight_fee span').eq(0).html("-");
     else
         $('#freight_fee span').eq(0).html("￥" + (parseInt(freight_fee) / 100).toString());
-    $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee)/100).toString());
+    $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
 }
-
-
 
 function orderState(state, oid, number) {
     var str_state = '';

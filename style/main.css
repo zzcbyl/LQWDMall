@@ -112,11 +112,15 @@ a.btn-primary { color:#fff;}
 .sub-cart-prod .prod-img{ left:10px; top:13px; position:absolute; }
 .sub-cart-prod .prod-title{ margin-left:60px; margin-right:70px; display:block; height:36px; line-height:18px; overflow:hidden;}
 .sub-cart-prod .prod-xinghao { margin-left:60px; margin-right:70px; display:block; height:18px; line-height:18px; color:#666; font-size:12px; margin-top:5px;}
-.sub-cart-prod .prod-price { top:13px; right:5px; position:absolute}
-.sub-cart-prod .prod-count { top:40px; right:5px; position:absolute; font-size:12px;}
-.sub-total { padding:15px; position:relative; height:40px;}
-.sub-total #freight_fee { top:13px; right:5px; position:absolute; color:#666; }
-.sub-total #total_count { top:40px; right:5px; position:absolute; color:#666; }
+.sub-cart-prod .prod-price { top:13px; right:10px; position:absolute}
+.sub-cart-prod .prod-count { top:40px; right:10px; position:absolute; font-size:12px;}
+.sub-total { padding:10px; position:relative; line-height:25px;}
+/*.sub-total #freight_fee { top:13px; right:5px; position:absolute; color:#666; }
+.sub-total #preferential { top:40px; right:5px; position:absolute; color:#666; }
+.sub-total #total_count { top:67px; right:5px; position:absolute; color:#666; }*/
+.sub-total #freight_fee {  float:right; display:block; color:#666; clear:both; }
+.sub-total #preferential { float:right; display:block; color:#666; clear:both; }
+.sub-total #total_count { float:right; display:block; color:#666; clear:both; }
 .sc-address-block { background:#fff; margin:10px; padding:20px 10px 10px; line-height:22px;}
 .sc-address-block input { margin-bottom:0;}
 

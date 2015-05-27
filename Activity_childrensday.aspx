@@ -5,7 +5,7 @@
 
 <script runat="server">
     public string timeStamp = "";
-    public string nonceStr = "e4b6e00dd1f0bf0fcab93b165ae8f";
+    public string nonceStr = "e4b6e00dd125f0baf0fcadf3b165ae8f";
     public string ticket = "";
     public string shaParam = "";
     public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
@@ -44,10 +44,15 @@
                     Users user = Users.GetUser("username", Request["preopenid"]);
                     if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
                     {
-                        Coupon[] couponArr = Coupon.GetCoupons(int.Parse(user._fields["uid"].ToString()), 1);
-                        if (couponArr.Length > 0)
-                            if (int.Parse(couponArr[0]._fields["coupon_isused"].ToString()) == 1)
+                        Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-05-08"), Convert.ToDateTime("2015-05-29"));
+                        for (int i = 0; i < orderArr.Length; i++)
+                        {
+                            if (int.Parse(orderArr[i]._fields["ajustfee"].ToString()) != 0)
+                            {
                                 activate = 0;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -88,14 +93,14 @@
                     <p><span class="dfn">¥</span><span class="js_fruit" id="bargainTotal"> - </span></p>
                     <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">使用优惠去 <a onclick="javascript:BuyBooks();" class="btn btn-danger">购书</a></div>
                 <%} else { %>
-                    <h2 style="color:#ff0000">已结束</h2>
+                    <h2 style="color:#ff0000">优惠已使用</h2>
                 <%} %>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
             <div style="margin-top:5px;">
                 儿童节就要到了，想好送给孩子什么了吗？送美食，吃过就消化了；送玩具，玩过就不稀奇了，不如送好书，好书会带来好的观念，好的观念会陪伴孩子一生！现为了庆祝“六.一”儿童节，卢勤问答平台特意开展“优惠券抵书款活动”，只要你的朋友够多，您就可以免费得到卢勤老师的著作！
-                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx?openid=<%=Request["openid"] %>'>卢勤问答平台官方书城>></a>
+                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx'>卢勤问答平台官方书城>></a>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
@@ -144,7 +149,7 @@
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按指纹关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
+                长按指纹关注卢勤问答，点击“商城”－“六一活动”发起活动
             </div>
         </div>
     </div>
@@ -156,12 +161,12 @@
     <script type="text/javascript">
         var shareTitle = "推荐给你一个好活动"; //标题
         var imgUrl = "http://mall.luqinwenda.com/images/activity_61_icon.jpg"; //图片
-        var descContent = "本活动为“优惠券抵书款活动”，只要你的朋友够多，您就可以享受0元购书！"; //简介
+        var descContent = "“优惠券抵书款活动”，只要你的朋友够多，您就可以享受0元购书！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_childrensday.aspx?source=1&preopenid="; //链接
         var prodid = 27;
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
-            //location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+            location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
         }
         lineLink += QueryString('preopenid');
         $(document).ready(function () {
@@ -183,7 +188,8 @@
         });
 
         function BuyBooks() {
-            location.href = 'Default.aspx?openid=' + QueryString('preopenid') + '&source=1&followerAmount=' + ($("#bargainAmount").html() == '-' ? "" : $("#bargainAmount").html());
+            setCookie('followerAmount', ($("#bargainAmount").html() == '-' ? "" : $("#bargainAmount").html()));
+            location.href = 'Default.aspx?openid=' + QueryString('preopenid') + '&source=1';
         }
 
         function follwerService() {
@@ -240,7 +246,7 @@
                 type: "get",
                 async: false,
                 url: domain + 'api/promote_get_sub_users.aspx',
-                data: { openid: open_id, random: Math.random() },
+                data: { openid: open_id, grouponid: 1, random: Math.random() },
                 success: function (data, textStatus) {
                     //alert(data);
                     var obj = eval('(' + data + ')');
@@ -296,7 +302,7 @@
 
         //分享到朋友圈
         wx.onMenuShareTimeline({
-            title: "本活动为“优惠券抵书款活动”，只要你的朋友够多，您就可以享受0元购书！", // 分享标题
+            title: descContent, // 分享标题
             link: lineLink, // 分享链接
             imgUrl: imgUrl, // 分享图标
             success: function () {

@@ -54,7 +54,7 @@
     {
         int userid = Users.CheckToken(Request["myToken"].ToString());
         Order order = new Order(int.Parse(orderid));
-        int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+        int total = (order.OrderPriceToPay < 0 ? 0 : order.OrderPriceToPay);
         string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
         string payurl = "";
         if (Request["myFrom"] != null && Request["myFrom"].ToString() == "1")
@@ -105,8 +105,12 @@
                         }
                         if (index == 1)
                             orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p><p class="ls-order-state rel">订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid, obj.orders[i].shipNumber) + '</p>--><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">-</em>总价：<em class="o-price">-</em></span></p><div class="clear"></div></div>';
-                        else
-                            orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p>--><p class="ls-order-state rel">订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid, obj.orders[i].shipNumber) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(obj.orders[i].shipfee) / 100 + '</em>总价：<em class="o-price">¥' + (parseInt(obj.orders[i].orderprice) + parseInt(obj.orders[i].shipfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
+                        else {
+                            var strPre = '';
+                            if (parseInt(obj.orders[i].ajustfee) != 0)
+                                strPre = '优惠：<em class="o-price" style=" padding-right: 20px;">¥' + (0 - parseInt(obj.orders[i].ajustfee)) / 100 + '</em>';
+                            orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p>--><p class="ls-order-state rel">订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid, obj.orders[i].shipNumber) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">¥' + parseInt(obj.orders[i].shipfee) / 100 + '</em>' + strPre + '总价：<em class="o-price">¥' + (parseInt(obj.orders[i].orderprice) + parseInt(obj.orders[i].shipfee) + parseInt(obj.orders[i].ajustfee)) / 100 + '</em></span></p><div class="clear"></div></div>';
+                        }
                     }
                     $("#orderlist").html(orderHtml);
                 }
