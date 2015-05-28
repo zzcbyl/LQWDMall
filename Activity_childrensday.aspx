@@ -10,6 +10,7 @@
     public string shaParam = "";
     public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
     public int activate = 1;
+    public int endState = 1;
     
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -33,29 +34,28 @@
 
         if (DateTime.Now >= Convert.ToDateTime("2015-06-02"))
         {
-            activate = 0;
+            endState = 0;
         }
-        else
+
+        if (Request["preopenid"] != null)
         {
-            if (Request["preopenid"] != null)
+            if (Users.IsExistsUser("username", Request["preopenid"]))
             {
-                if (Users.IsExistsUser("username", Request["preopenid"]))
+                Users user = Users.GetUser("username", Request["preopenid"]);
+                if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
                 {
-                    Users user = Users.GetUser("username", Request["preopenid"]);
-                    if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
+                    Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-05-08"), Convert.ToDateTime("2015-05-29"));
+                    for (int i = 0; i < orderArr.Length; i++)
                     {
-                        Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-05-08"), Convert.ToDateTime("2015-05-29"));
-                        for (int i = 0; i < orderArr.Length; i++)
+                        if (int.Parse(orderArr[i]._fields["ajustfee"].ToString()) != 0)
                         {
-                            if (int.Parse(orderArr[i]._fields["ajustfee"].ToString()) != 0)
-                            {
-                                activate = 0;
-                                break;
-                            }
+                            activate = 0;
+                            break;
                         }
                     }
                 }
             }
+
         }
     }
 </script>
@@ -100,7 +100,7 @@
         <div style="background:#fff; padding:10px; margin-top:10px;">
             <div style="margin-top:5px;">
                 儿童节就要到了，想好送给孩子什么了吗？送美食，吃过就消化了；送玩具，玩过就不稀奇了，不如送好书，好书会带来好的观念，好的观念会陪伴孩子一生！现为了庆祝“六.一”儿童节，卢勤问答平台特意开展“优惠券抵书款活动”，只要你的朋友够多，您就可以免费得到卢勤老师的著作！
-                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx'>卢勤问答平台官方书城>></a>
+                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx?source=1'>卢勤问答平台官方书城>></a>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
@@ -126,12 +126,21 @@
         <div class="clear" style="height:60px;"></div>
         <div class="m-bottom">
             <div id="footermenu">
-                <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
-                    我也要发起
-                </span>
-                   <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
-                    帮忙加一元
-                </span>
+                <% if (endState == 1) {%>
+                    <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
+                        我也要发起
+                    </span>
+                       <span class="barmaigin_btn rightbtn btnwith" onclick="follwerService();">
+                        帮忙加一元
+                    </span>
+                <%} else {%>
+                    <span class="no_barmaigin_btn leftbtn btnwith">
+                        我也要发起
+                    </span>
+                    <span class="no_barmaigin_btn rightbtn btnwith">
+                        帮忙加一元
+                    </span>
+                <%} %>
                 <div class="clear"></div>
             </div>
         </div>
@@ -163,18 +172,12 @@
         var imgUrl = "http://mall.luqinwenda.com/images/activity_61_icon.jpg"; //图片
         var descContent = "“优惠券抵书款活动”，只要你的朋友够多，您就可以享受0元购书！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_childrensday.aspx?source=1&preopenid="; //链接
-        var prodid = 27;
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
             location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
         }
         lineLink += QueryString('preopenid');
         $(document).ready(function () {
-            if (prodid == null) {
-                alert('商品参数有误');
-                return;
-            }
-
             var from = QueryString('source');
             if (from != null) {
                 setCookie('from', from);
