@@ -32,7 +32,7 @@
         else
             this.joinBtn.Visible = false;
 
-        if (DateTime.Now >= Convert.ToDateTime("2015-06-02"))
+        if (DateTime.Now >= Convert.ToDateTime("2015-06-02") || DateTime.Now < Convert.ToDateTime("2015-06-01"))
         {
             endState = 0;
         }

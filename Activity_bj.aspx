@@ -175,11 +175,7 @@
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-<<<<<<< HEAD
                 长按二维码并识别后关注卢勤问答，进入该公众服务号后，点击最新收到的图文消息后分享到朋友圈。
-=======
-                长按指纹关注卢勤问答，点击“夏令营”－“砍价活动”发起活动
->>>>>>> origin/develop
             </div>
         </div>
     </div>
@@ -196,7 +192,7 @@
         var prodid = 27;
         if (QueryString('openid') == null) {
             var encodeDomain = encodeURIComponent(document.URL);
-            //location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+            location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
         }
         lineLink += QueryString('preopenid');
         $(document).ready(function () {
