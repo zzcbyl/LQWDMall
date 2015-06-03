@@ -36,14 +36,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no">
-    <title>看看你喜欢哪个样式</title>
+    <title>快来为北欧游学之旅营服投票，参与有惊喜！</title>
     <script src="../script/common.js" type="text/javascript"></script>
     <link href="/style/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="jquery-1.7.1.min.js" type="text/javascript"></script>
     <style type="text/css">
         body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
         body{ font: normal 14px/1.5 Arial, "Lucida Grande", Verdana, "Microsoft YaHei", hei;  padding:0 10px; color:#333; margin:0 auto; position:relative;}
-        .VoteItem { width:100%; }
+        .VoteItem { width:100%; margin-top:20px;}
         .VoteItem li { float:left; width:50%; text-align:center;}
         .VoteItem li img { width:90%; border:1px solid #ccc;}
         .CheckItem { padding:10px 0 20px;}
@@ -72,8 +72,16 @@
 </head>
 <body>
     <div>
-        <div style="height:50px; width:100%;">
-            banner
+        <div style="width:100%;">
+            <img src="images/vote_banner.jpg" style="width:100%;" />
+        </div>
+        <div style="clear:both;"></div>
+        <div style="line-height:20px; margin-top:10px;">
+            <div style="height:25px; font-size:16px; font-weight:bold;">活动规则</div>
+            1、每位微信用户只能投票一次。<br />
+            2、活动时间为：6月4日——6月23日。<br />
+            3、得票多者将成为北欧游学之旅的营服。<br />
+            4、活动截止后，我们将从得票最多的方案中随机抽取一位投票者，送上该系列整套营服（四件T恤和一件卫衣）。<br />
         </div>
         <ul class="VoteItem">
             <asp:Repeater ID="repeaterCloth" runat="server">
@@ -82,7 +90,8 @@
                         <a href='Clothing.aspx?clothingid=<%# DataBinder.Eval(Container.DataItem, "clothing_id") %>'><img id='img<%# DataBinder.Eval(Container.DataItem, "clothing_id") %>' src='<%# Util.ApiDomainString + DataBinder.Eval(Container.DataItem, "clothing_src")%>' /></a>
                         <div class="CheckItem"  id='item<%# DataBinder.Eval(Container.DataItem, "clothing_id") %>'>
                             <label>
-                                <img src="images/radio_2.jpg" style="width:20px; border:none; margin-top:-5px;" /> 
+                                <%# DataBinder.Eval(Container.DataItem, "clothing_name") %>
+                                <img src="images/radio_2.jpg" style="width:20px; border:none; margin-top:-5px; margin-left:5px;" /> 
                                 <%--<input type="radio" id='item<%# DataBinder.Eval(Container.DataItem, "clothing_id") %>' name="radItem" />
                                 <label for='item<%# DataBinder.Eval(Container.DataItem, "clothing_id") %>'>--%>
                                 <img src="images/zantongicon.jpg" style="width:30px; border:none; margin-top:-8px;" />
@@ -114,9 +123,9 @@
         <div style="height:20px;"></div>
     </div>
     <script type="text/javascript">
-        var shareTitle = "看看你喜欢哪个样式"; //标题
-        var imgUrl = "http://mall.luqinwenda.com/images/activity_bj_icon.jpg"; //图片
-        var descContent = "看看你喜欢哪个样式"; //简介
+        var shareTitle = "快来为北欧游学之旅营服投票"; //标题
+        var imgUrl = "http://mall.luqinwenda.com/dressvote/images/vote_share_icon.jpg"; //图片
+        var descContent = "快来为北欧游学之旅营服投票，参与有惊喜！"; //简介
         var lineLink = "http://mall.luqinwenda.com/dressvote/Votes.aspx"; //链接
         var index = 0;
         var openid = '';
@@ -126,7 +135,7 @@
         $(document).ready(function () {
             if (QueryString('openid') == null || QueryString('openid') == "") {
                 var encodeDomain = encodeURIComponent(document.URL);
-                location.href = "http://weixin.luqinwenda.com/authorize.aspx?callback=" + encodeDomain;
+                location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
             }
             openid = QueryString('openid');
 
@@ -142,6 +151,9 @@
                     clothingid = $(this).attr('id').replace('item', '');
                     $('#img' + clothingid).css({ "border": "1px solid #ff0000" });
                     $(this).find('img').eq(0).attr("src", "images/radio_1.jpg");
+                }
+                else {
+                    alert('您已投过票，每人只能投一次票');
                 }
             });
         });

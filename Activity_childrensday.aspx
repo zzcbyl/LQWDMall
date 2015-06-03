@@ -32,7 +32,7 @@
         else
             this.joinBtn.Visible = false;
 
-        if (DateTime.Now >= Convert.ToDateTime("2015-06-02") || DateTime.Now < Convert.ToDateTime("2015-06-01"))
+        if (DateTime.Now >= Convert.ToDateTime("2015-06-01 23:00:00") || DateTime.Now < Convert.ToDateTime("2015-06-01"))
         {
             endState = 0;
         }
@@ -91,7 +91,7 @@
                 <% if (activate == 1) { %>
                     <h3>好友帮Ta共加了</h3>
                     <p><span class="dfn">¥</span><span class="js_fruit" id="bargainTotal"> - </span></p>
-                    <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">使用优惠去 <a onclick="javascript:BuyBooks();" class="btn btn-danger">购书</a></div>
+                    <div style="margin-top:5px;" id="joinBtn" runat="server" visible="false">使用优惠去 <a href="javascript:BuyBooks();" class="btn btn-danger">购书</a></div>
                 <%} else { %>
                     <h2 style="color:#ff0000">优惠已使用</h2>
                 <%} %>
