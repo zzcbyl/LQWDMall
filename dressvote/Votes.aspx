@@ -123,7 +123,7 @@
         <div style="height:20px;"></div>
     </div>
     <script type="text/javascript">
-        var shareTitle = "快来为北欧游学之旅营服投票"; //标题
+        var shareTitle = "北欧游学之旅营服投票"; //标题
         var imgUrl = "http://mall.luqinwenda.com/dressvote/images/vote_share_icon.jpg"; //图片
         var descContent = "快来为北欧游学之旅营服投票，参与有惊喜！"; //简介
         var lineLink = "http://mall.luqinwenda.com/dressvote/Votes.aspx"; //链接
