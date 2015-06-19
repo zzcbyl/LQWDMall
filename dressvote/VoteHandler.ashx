@@ -39,13 +39,37 @@ public class VoteHandler : IHttpHandler {
             {
                 foreach (DataRow row in dt.Rows)
                 {
-                    listJson += "{\"vote_name\":\"" + row["vote_name"].ToString() + "\",\"vote_crt\":\"" + Convert.ToDateTime(row["vote_crt"].ToString()).ToString("yyyy-MM-dd HH:mm:ss") + "\",\"vote_remark\":\"" + row["vote_remark"].ToString() + "\"},";
+                    listJson += "{\"vote_name\":\"" + row["vote_name"].ToString() + "\",\"clothing_name\":\"" + getClothing(context, Convert.ToInt32(row["vote_clothingid"].ToString())) + "\",\"vote_crt\":\"" + Convert.ToDateTime(row["vote_crt"].ToString()).ToString("yyyy-MM-dd HH:mm:ss") + "\",\"vote_remark\":\"" + row["vote_remark"].ToString() + "\"},";
                 }
                 listJson = listJson.Substring(0, listJson.Length - 1);
             }
         }
         listJson += "]}";
         context.Response.Write(listJson);
+    }
+
+    private string getClothing(HttpContext context, int clothingid)
+    {
+        string clothingName = "";
+        DataTable dt = new DataTable();
+        if (context.Cache["clothings_dt"] == null || ((DataTable)context.Cache["clothings_dt"]).Rows.Count <= 0)
+        {
+            dt = Vote.getClothList();
+            context.Cache.Insert("clothings_dt", dt);
+        }
+        else
+            dt = (DataTable)context.Cache["clothings_dt"];
+
+        foreach (DataRow item in dt.Rows)
+        {
+            if (Convert.ToInt32(item["clothing_id"].ToString()).Equals(clothingid))
+            {
+                clothingName = item["clothing_name"].ToString();
+                break;
+            }
+        }
+
+        return clothingName;
     }
 
     private void userVote(HttpContext context)

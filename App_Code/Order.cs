@@ -58,10 +58,10 @@ public class Order
         return orderArray;
     }
 
-    public static Order[] GetOrdersByPages(int userId, DateTime startDate, DateTime endDate, int currentPage, int pageSize)
+    public static Order[] GetOrdersByPages(int userId, DateTime startDate, DateTime endDate, int currentPage, int pageSize, string where)
     {
         int intop = pageSize * (currentPage - 1);
-        string sql = "SELECT TOP " + pageSize + " * FROM m_order WHERE oid NOT IN (SELECT TOP " + intop + " oid FROM m_order where ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + " ORDER BY oid desc) ORDER BY oid desc";
+        string sql = "SELECT TOP " + pageSize + " * FROM m_order WHERE oid NOT IN (SELECT TOP " + intop + " oid FROM m_order where ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY oid desc) and ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY oid desc";
         SqlDataAdapter da = new SqlDataAdapter(sql, Util.ConnectionString.Trim());
         DataTable dt = new DataTable();
         da.Fill(dt);
@@ -73,6 +73,18 @@ public class Order
             orderArray[i]._fields = dt.Rows[i];
         }
         return orderArray;
+    }
+
+    public static int GetOrdersCount(int userId, DateTime startDate, DateTime endDate, string where)
+    {
+        string sql = " select * from m_order where ctime > '" + startDate.ToString() + "' and ctime < '"
+            + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString())
+            + where + "  order by oid desc ";
+        SqlDataAdapter da = new SqlDataAdapter(sql, Util.ConnectionString.Trim());
+        DataTable dt = new DataTable();
+        da.Fill(dt);
+        da.Dispose();
+        return dt.Rows.Count;
     }
 
     public int updPayState(int orderid)

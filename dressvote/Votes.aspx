@@ -66,7 +66,8 @@
         }
         .comment_people li .comment_name { float:left;}
         .comment_people li .comment_time { float:right;}
-        .comment_people li .comment_content { line-height:18px; text-indent:25px; color:#666; max-height:72px; overflow:hidden;}
+        .comment_people li .comment_content { line-height:18px; text-indent:25px; color:#666; max-height:72px; overflow:hidden; margin-top:5px;}
+        .comment_people li .comment_item { float:right; margin-right:15px;}
        
     </style>
 </head>
@@ -144,27 +145,27 @@
             $('.CheckItem').click(function () {
                 for (var i = 0; i < $('.VoteItem li').length; i++) {
                     $('.VoteItem li').eq(i).find('img').eq(0).css({ "border": "1px solid #ccc" });
-
                     $('.VoteItem li').eq(i).find('.CheckItem').find('img').eq(0).attr("src", "images/radio_2.jpg");
                 }
-                if (index == 0) {
+                //if (index == 0) {
                     clothingid = $(this).attr('id').replace('item', '');
                     $('#img' + clothingid).css({ "border": "1px solid #ff0000" });
                     $(this).find('img').eq(0).attr("src", "images/radio_1.jpg");
-                }
-                else {
-                    alert('您已投过票，每人只能投一次票');
-                }
+                //}
+                //else {
+                //    alert('您已投过票，每人只能投一次票');
+                //}
             });
         });
 
         function bindVoteList() {
-            $('#commentlist').html('<li class="loading"><img src="/images/loading.gif" /><br />加载中...</li>');
+            $('#commentlist').html('<li class="loading"><img src="http://mall.luqinwenda.com/images/loading.gif" /><br />加载中...</li>');
             $.ajax({
                 type: 'post',
                 url: 'VoteHandler.ashx',
                 data: { item: 2, currentPage: currentpage, pageSize: pagesize },
                 success: function (data, textStatus) {
+                    data = data.replace(/\n/g, '');
                     var json = eval("(" + data + ")");
                     var html = "";
                     for (var i = 0; i < json.data.length; i++) {
@@ -173,7 +174,7 @@
                         }
                         else
                             json.data[i].vote_name = json.data[i].vote_name.substring(0, 3) + "**";
-                        html += '<li><div style="line-height:22px;"><p class="comment_name">' + json.data[i].vote_name + '</p><p class="comment_time">' + json.data[i].vote_crt + '</p><div style="clear:both;"></div></div><div class="comment_content">' + json.data[i].vote_remark + '</div></li>';
+                        html += '<li><div style="line-height:22px;"><p class="comment_name">' + json.data[i].vote_name + '</p><p class="comment_time">' + json.data[i].vote_crt + '</p><p class="comment_item">' + json.data[i].clothing_name + '</p><div style="clear:both;"></div></div><div class="comment_content">' + json.data[i].vote_remark + '</div></li>';
                     }
                     $('#commentlist').html(html);
 
@@ -217,7 +218,7 @@
                                 bindVoteList();
                             }
                             else {
-                                alert('您已投过票，每人只能投一次票');
+                                alert('您的投票次数过多');
                             }
                         }
                         else

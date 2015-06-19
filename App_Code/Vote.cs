@@ -31,7 +31,7 @@ public class Vote
         SqlDataAdapter da = new SqlDataAdapter("select vote_id from vote_list where vote_openid='" + openid + "'", Util.ConnectionString);
         DataTable dt = new DataTable();
         da.Fill(dt);
-        if (dt != null && dt.Rows.Count > 0)
+        if (dt != null && dt.Rows.Count > 15)
         {
             result = true;
         }

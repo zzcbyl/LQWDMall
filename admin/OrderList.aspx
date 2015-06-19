@@ -16,8 +16,11 @@
     {
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
-        orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize);
-        this.AspNetPager1.RecordCount = Order.GetOrders(0, startDate, endDate).Length;
+        string where = string.Empty;
+        if (Request["state"] != null && Request["state"] == "1")
+            where = " and paystate = 1 ";
+        orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize, where);
+        this.AspNetPager1.RecordCount = Order.GetOrdersCount(0, startDate, endDate, where);
     }
     protected void AspNetPager1_PageChanged(object src, EventArgs e)
     {
