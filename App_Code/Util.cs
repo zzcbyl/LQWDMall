@@ -9,6 +9,8 @@ using System.Data.SqlClient;
 using System.Net;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 /// <summary>
 /// Summary description for Util
 /// </summary>
@@ -247,5 +249,69 @@ public class Util
     public static string GetSafeRequestValue(HttpRequest request, string parameterName, string defaultValue)
     {
         return ((request[parameterName] == null) ? defaultValue : request[parameterName].Trim()).Replace("'", "");
+    }
+
+    /// <summary>创建规定大小的图像 
+    /// </summary> 
+    /// <param name="oPath">源图像绝对路径</param> 
+    /// <param name="tPath">生成图像绝对路径</param> 
+    /// <param name="width">生成图像的宽度</param> 
+    /// <param name="height">生成图像的高度</param> 
+    public static void CreateImageOutput(int width, int height, string oPath, string tPath)
+    {
+        Bitmap originalBmp = new Bitmap(oPath);
+        //originalBmp = new Bitmap(System.Drawing.Image.FromFile(oPath));
+        // 源图像在新图像中的位置 
+        int left, top;
+
+        // 新图片的宽度和高度，如400*200的图像，想要生成160*120的图且不变形， 
+        // 那么生成的图像应该是160*80，然后再把160*80的图像画到160*120的画布上 
+        int newWidth, newHeight;
+        if (width * originalBmp.Height < height * originalBmp.Width)
+        {
+            newWidth = width;
+            newHeight = (int)Math.Round((decimal)originalBmp.Height * width / originalBmp.Width);
+            // 缩放成宽度跟预定义的宽度相同的，即left=0，计算top 
+            left = 0;
+            top = (int)Math.Round((decimal)(height - newHeight) / 2);
+        }
+        else
+        {
+            newWidth = (int)Math.Round((decimal)originalBmp.Width * height / originalBmp.Height);
+            newHeight = height;
+            // 缩放成高度跟预定义的高度相同的，即top=0，计算left 
+            left = (int)Math.Round((decimal)(width - newWidth) / 2);
+            top = 0;
+        }
+
+        // 生成按比例缩放的图，如：160*80的图 
+        Bitmap bmpOut2 = new Bitmap(newWidth, newHeight);
+        using (Graphics graphics = Graphics.FromImage(bmpOut2))
+        {
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.FillRectangle(Brushes.White, 0, 0, newWidth, newHeight);
+            graphics.DrawImage(originalBmp, 0, 0, newWidth, newHeight);
+        }
+
+        // 再把该图画到预先定义的宽高的画布上，如160*120 
+        Bitmap lastbmp = new Bitmap(width, height);
+        using (Graphics graphics = Graphics.FromImage(lastbmp))
+        {
+            // 设置高质量插值法 
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            // 清空画布并以白色背景色填充 
+            graphics.Clear(Color.White);
+            //加上边框 
+            //Pen pen = new Pen(ColorTranslator.FromHtml("#cccccc")); 
+            //graphics.DrawRectangle(pen, 0, 0, width - 1, height - 1); 
+            // 把源图画到新的画布上 
+            graphics.DrawImage(bmpOut2, left, top);
+        }
+
+        lastbmp.Save(tPath);//保存为文件，tpath 为要保存的路径 
+        //this.OutputImgToPage(bmpOut2);//直接输出到页面 
+        originalBmp.Dispose();
+        bmpOut2.Dispose();
+        lastbmp.Dispose();
     }
 }
