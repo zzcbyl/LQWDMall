@@ -123,7 +123,7 @@
                 var html = "";
                 for (var i = 0; i < json.data.length; i++) {
                     var imgName = json.data[i].image_url.replace('_thum.', '|')
-                    html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="http://192.168.1.133:8001/EuropeVote/upload/' + json.data[i].image_url + '" /></a><div id="item' + json.data[i].image_id + '" class="CheckItem" onclick="voteItem(this);"><label><span>' + json.data[i].image_username + ' </span><img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.jpg"><span class="VotesCount"> <em>' + json.data[i].image_count + '</em> 人</span></label></div></li>';
+                    html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="http://192.168.1.133:8001/EuropeVote/upload/' + json.data[i].image_url + '" /></a><div id="item' + json.data[i].image_id + '" class="CheckItem"><label><span>' + json.data[i].image_username + ' </span><img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.jpg"><span class="VotesCount"> <em>' + json.data[i].image_count + '</em> 人</span></label></div></li>';
                 }
                 $(".loading").remove();
                 //alert($('#VoteItem').html());
