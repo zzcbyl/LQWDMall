@@ -52,7 +52,7 @@
 <style type="text/css">
     #preview{width:260px;height:190px;border:1px solid #ccc;overflow:hidden; margin:0 auto; text-align:center;}
     #imghead {filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=image);}
-    .comment_people li { border:none; padding:0 10px;}
+    .VoteItem {margin-top: 3px; border-top: 1px solid #003366;}
     .CheckItem, .comment_people, .VoteItem { padding-bottom:0;}
 </style>
 </asp:Content>
@@ -76,8 +76,8 @@
         <input type="hidden" id="username" name="username" value="" />
     </form>
 </div>
-<div class="comment_people">
-    <h5>已上传照片</h5>
+<div class="" style="min-height:100px; background:#fdf6ea;margin-top:5px; padding:15px 0;">
+    <h5 style="padding:0 10px;">已上传照片</h5>
     <ul id="VoteItem" class="VoteItem">
             
     </ul>
@@ -123,7 +123,14 @@
                 var html = "";
                 for (var i = 0; i < json.data.length; i++) {
                     var imgName = json.data[i].image_url.replace('_thum.', '|')
-                    html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="http://192.168.1.133:8001/EuropeVote/upload/' + json.data[i].image_url + '" /></a><div id="item' + json.data[i].image_id + '" class="CheckItem"><label><span>' + json.data[i].image_username + ' </span><img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.jpg"><span class="VotesCount"> <em>' + json.data[i].image_count + '</em> 人</span></label></div></li>';
+                    var uname = json.data[i].image_username;
+                    if (uname.length == 2) {
+                        uname = uname.substring(0, 1) + "*";
+                    }
+                    else if (uname.length == 3) {
+                        uname = uname.substring(0, 1) + "*" + uname.substring(2, 1);
+                    }
+                    html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div id="item' + json.data[i].image_id + '" class="CheckItem"><label><span>' + uname + ' </span><img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png"><span class="VotesCount"> <em>' + json.data[i].image_count + '</em> 票</span></label></div></li>';
                 }
                 $(".loading").remove();
                 //alert($('#VoteItem').html());
@@ -139,6 +146,9 @@
                 else
                     $("#divLoading").show();
 
+            },
+            error: function (data) {
+                alert(data);
             }
         });
     }

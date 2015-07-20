@@ -269,19 +269,20 @@ public class Util
         int newWidth, newHeight;
         if (width * originalBmp.Height < height * originalBmp.Width)
         {
-            newWidth = width;
-            newHeight = (int)Math.Round((decimal)originalBmp.Height * width / originalBmp.Width);
+            newWidth = (int)Math.Round((decimal)originalBmp.Width * height / originalBmp.Height);
+            newHeight = height;
+            
             // 缩放成宽度跟预定义的宽度相同的，即left=0，计算top 
-            left = 0;
-            top = (int)Math.Round((decimal)(height - newHeight) / 2);
+            left = (int)Math.Round((decimal)(width - newWidth) / 2);
+            top = 0;
         }
         else
         {
-            newWidth = (int)Math.Round((decimal)originalBmp.Width * height / originalBmp.Height);
-            newHeight = height;
+            newWidth = width;
+            newHeight = (int)Math.Round((decimal)originalBmp.Height * width / originalBmp.Width);
             // 缩放成高度跟预定义的高度相同的，即top=0，计算left 
-            left = (int)Math.Round((decimal)(width - newWidth) / 2);
-            top = 0;
+            left = 0;
+            top = (int)Math.Round((decimal)(height - newHeight) / 2); ;
         }
 
         // 生成按比例缩放的图，如：160*80的图 

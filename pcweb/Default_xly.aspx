@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div style="background:#fff; padding:10px; line-height:22px;">
-    如果您在参营方面有疑问，可以拨打官方咨询电话18601016361,也可以咨询在线客服。
+    如果您在参营方面有疑问，可以拨打官方咨询电话18601016361，也可以咨询在线客服。
 </div>
 <div class="m-wrap">
     <ul id="prodlistul" class="m-ul rel">
@@ -58,6 +58,9 @@
                         }
                         var buybtn = '<a id="buyProd_xly" onclick="JoinXLY(' + prodlist[i].prodid + ')" class="btn btn-danger">我要报名</a>';
                         html += '<li class="m-li left rel" style="width:50%"><a href="Detail_xly.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="height:20px; line-height:20px;">' + prodlist[i].prodname.replace("<br />", "　") + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn-xly">' + buybtn + '</div></li>';
+                    }
+                    if (html == "") {
+                        html = '<li><div class="loading" style="font-size:14px;">暂无夏令营...</div></li>';
                     }
                     $('#prodlistul').html(html);
                 }

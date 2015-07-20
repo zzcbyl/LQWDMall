@@ -1,8 +1,14 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/EuropeVote/EuropeMaster.master" %>
 
 <script runat="server">
-    public DateTime startDt = Convert.ToDateTime("2015-07-2");
-    public DateTime endDt = Convert.ToDateTime("2015-06-25");
+    public DateTime startDt = Convert.ToDateTime("2015-07-08");
+    public DateTime endDt = Convert.ToDateTime("2015-07-15");
+    public DateTime currentDt = DateTime.Now;
+    public int leftindex = 0;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        leftindex = (int)endDt.Subtract(currentDt).TotalDays;
+    }
 </script>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
@@ -13,24 +19,27 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="navBar">
         <div><a href="Rule.aspx">活动规则</a></div>
-        <div><a href="Ranking.aspx">排行榜</a></div>
+        <div style="background:url(images/nav_split.jpg) no-repeat;"><a href="Prize.aspx">奖品</a></div>
+        <div style="background:url(images/nav_split.jpg) no-repeat;"><a href="Ranking.aspx">排行榜</a></div>
         <%--<div><a href="Upload.aspx">上传照片</a></div>--%>
     </div>
     <div class="navMenu">
-        <div class="leftPrev" onclick="LeftNav();">&lt;</div>
+        <div class="leftPrev" onclick="LeftNav();"><img src="images/btn_arrow_left.png" style="height:20px; margin-top:10px;" /></div>
         <div class="showMenu">
             <ul id="DateNav" class="navDate">
-            <%for (DateTime i = startDt; i >= endDt; i = i.AddDays(-1))
-              { %>
-                <li onclick="ChangeDate('<%=i.ToString("yyyy-MM-dd")%>',this);"><%=i.ToString("M月dd日")%></li>
-            <% } %>
+            <%
+                for (DateTime i = endDt; i > startDt; i = i.AddDays(-1))
+              {
+                    %>
+                <li onclick="ChangeDate('<%=i.ToString("yyyy-MM-dd")%>',this);">D<%=(int)(i.Subtract(startDt)).TotalDays + 1 %></li>
+            <%  } %>
             </ul>
         </div>
-        <div class="rightNext" onclick="RightNav();">&gt;</div>
+        <div class="rightNext" onclick="RightNav();"><img src="images/btn_arrow_right.png" style="height:20px; margin-top:10px;" /></div>
         <div class="clear"></div>
     </div>
     <ul id="VoteItem" class="VoteItem">
-        
+
     </ul>
     <div id="divLoading" onclick="LoadNextData();">点击加载下一页</div>
     <div class="comment_people">
@@ -57,10 +66,6 @@
     </div>
     <div class="theme-popover-mask"></div>
     <script type="text/javascript">
-        var shareTitle = "北欧游学之旅"; //标题
-        var imgUrl = "http://mall.luqinwenda.com/dressvote/images/vote_share_icon.jpg"; //照片
-        var descContent = "快来为北欧游学之旅，参与有惊喜！"; //简介
-        var lineLink = "http://mall.luqinwenda.com/EuropeVote/Default.aspx"; //链接
         var checkItemid = 0;
         var checkName = '';
         var openid = '';
@@ -77,7 +82,7 @@
             }
             openid = QueryString('openid');
 
-            LoadData('<%=startDt %>', $("#DateNav li").eq(0));
+            LoadData('<%=currentDt.ToString("yyyy-MM-dd") %>', $("#DateNav li").eq(<%=leftindex %>));
 
             bindVoteList();
 
@@ -140,6 +145,10 @@
         function LoadData(d, o) {
             currentDate = d;
             currentObj = o;
+            for(var i=0;i<parseInt(o);i++)
+            {
+                RightNav();
+            }
             $("#DateNav li").each(function () {
                 $(this).removeAttr("class");
             });
@@ -155,7 +164,14 @@
                     var html = "";
                     for (var i = 0; i < json.data.length; i++) {
                         var imgName = json.data[i].image_url.replace('_thum.', '|')
-                        html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="http://192.168.1.133:8001/EuropeVote/upload/' + json.data[i].image_url + '" /></a><div id="item' + json.data[i].image_id + '" class="CheckItem" onclick="voteItem(this);"><label><span>' + json.data[i].image_username + ' </span><img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.jpg"><span class="VotesCount"> <em>' + json.data[i].image_count + '</em> 人</span></label></div></li>';
+                        var uname = json.data[i].image_username;
+                        if (uname.length == 2) {
+                            uname = uname.substring(0, 1) + "*";
+                        }
+                        else if (uname.length == 3) {
+                            uname = uname.substring(0, 1) + "*" + uname.substring(2, 1);
+                        }
+                        html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div class="CheckItem"><label><span>' + uname + ' </span><!--<img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png">--><span class="VotesCount">　<em>' + json.data[i].image_count + '</em> 票</span></label><label><a id="item' + json.data[i].image_id + '" href="javascript:voteItem(this);" style="display:block;" ><img src="images/btn_vote.png" style="width:80px;border:none;" /></a></label><div class="clear"></div></div></li>';
                     }
                     $(".loading").remove();
                     //alert($('#VoteItem').html());
@@ -166,7 +182,7 @@
                     else if ($('#VoteItem li').length <= 0)
                         $('#VoteItem').html('<li class="loading" style="width:100%;">暂无照片</li><div class="clear"></div>');
 
-                    if (json.data.length < imgpagesize) 
+                    if (json.data.length < imgpagesize)
                         $("#divLoading").hide();
                     else
                         $("#divLoading").show();
