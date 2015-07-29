@@ -1,9 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/EuropeVote/EuropeMaster.master" %>
 
 <script runat="server">
-    public DateTime startDt = Convert.ToDateTime("2015-07-08");
-    public DateTime endDt = Convert.ToDateTime("2015-07-15");
-    public DateTime currentDt = DateTime.Now;
+    public DateTime startDt = Convert.ToDateTime("2015-07-23");
+    public DateTime endDt = Convert.ToDateTime("2015-08-06");
+    public DateTime currentDt = Convert.ToDateTime(DateTime.Now.ToShortDateString());
     public int leftindex = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -27,9 +27,8 @@
         <div class="leftPrev" onclick="LeftNav();"><img src="images/btn_arrow_left.png" style="height:20px; margin-top:10px;" /></div>
         <div class="showMenu">
             <ul id="DateNav" class="navDate">
-            <%
-                for (DateTime i = endDt; i > startDt; i = i.AddDays(-1))
-              {
+            <%  for (DateTime i = endDt; i >= startDt; i = i.AddDays(-1))
+                {
                     %>
                 <li onclick="ChangeDate('<%=i.ToString("yyyy-MM-dd")%>',this);">D<%=(int)(i.Subtract(startDt)).TotalDays + 1 %></li>
             <%  } %>
@@ -81,22 +80,22 @@
                 location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
             }
             openid = QueryString('openid');
-
             LoadData('<%=currentDt.ToString("yyyy-MM-dd") %>', $("#DateNav li").eq(<%=leftindex %>));
 
             bindVoteList();
+            
+            m=(<%=leftindex %>>=11?11:<%=leftindex %>);
+            MoveNav();
 
             $('.theme-poptit .close').click(function () {
                 closeVoteItem();
             })
-
         });
 
         function voteItem(obj) {
             for (var i = 0; i < $('#VoteItem li').length; i++) {
                 $('#VoteItem li').eq(i).find('img').eq(0).css({ "border": "1px solid #ccc" });
             }
-
             checkItemid = $(obj).attr("id").replace("item", "");
             checkName = $(obj).find('span').eq(0).html();
             $('#image_' + checkItemid).css({ "border": "1px solid #ff0000" });
@@ -171,7 +170,7 @@
                         else if (uname.length == 3) {
                             uname = uname.substring(0, 1) + "*" + uname.substring(2, 1);
                         }
-                        html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div class="CheckItem"><label><span>' + uname + ' </span><!--<img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png">--><span class="VotesCount">　<em>' + json.data[i].image_count + '</em> 票</span></label><label><a id="item' + json.data[i].image_id + '" href="javascript:voteItem(this);" style="display:block;" ><img src="images/btn_vote.png" style="width:80px;border:none;" /></a></label><div class="clear"></div></div></li>';
+                        html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div class="CheckItem"><label><span>' + uname + ' </span><!--<img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png">--><span class="VotesCount">　<em id="votecount' + json.data[i].image_id + '">' + json.data[i].image_count + '</em> 票</span></label><label><a id="item' + json.data[i].image_id + '" href="javascript:void(0);" onclick="voteItem(this);" style="display:block;" ><img src="images/btn_vote.png" style="width:80px;border:none;" /></a></label><div class="clear"></div></div></li>';
                     }
                     $(".loading").remove();
                     //alert($('#VoteItem').html());
@@ -200,7 +199,7 @@
                         if (data != null && parseInt(data) > 0) {
                             index = 1;
                             if (parseInt(data) == 1) {
-                                $("#item" + checkItemid).find('em').eq(0).html(parseInt($("#item" + checkItemid).find('em').eq(0).html()) + 1);
+                                $("#votecount" + checkItemid).html(parseInt($("#votecount" + checkItemid).html()) + 1);
                                 alert('投票成功');
                                 bindVoteList();
                             }
