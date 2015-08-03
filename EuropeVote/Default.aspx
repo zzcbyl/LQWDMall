@@ -17,6 +17,8 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+<% if (DateTime.Now > Convert.ToDateTime("2015-08-06"))
+   { %>
     <div class="navBar">
         <div><a href="Rule.aspx">活动规则</a></div>
         <div style="background:url(images/nav_split.jpg) no-repeat;"><a href="Prize.aspx">奖品</a></div>
@@ -30,7 +32,7 @@
             <%  for (DateTime i = endDt; i >= startDt; i = i.AddDays(-1))
                 {
                     %>
-                <li onclick="ChangeDate('<%=i.ToString("yyyy-MM-dd")%>',this);">D<%=(int)(i.Subtract(startDt)).TotalDays + 1 %></li>
+                <li onclick="ChangeDate('<%=i.ToString("yyyy-MM-dd")%>',this);">D<%=(int)(i.Subtract(startDt)).TotalDays + 1%></li>
             <%  } %>
             </ul>
         </div>
@@ -52,7 +54,14 @@
         </div>
     </div>
     <div style="height:20px;"></div>
-
+    <%}
+   else
+   { %>
+    <div style="background:#fff; height:50px; line-height:25px; padding:10px 0; font-size:16px; margin-top:10px; color:#666;">
+        <div style="text-align:center; ">活动未开始</div>
+        <div style="text-align:center; ">活动时间：8月6日－8月17日</div>
+    </div>
+      <%} %>
     <div id="popoverVote" class="theme-popover" style="width:300px;">
          <div class="theme-poptit">
               <a href="javascript:;" title="关闭" class="close">×</a>
@@ -85,7 +94,7 @@
             bindVoteList();
             
             m=(<%=leftindex %>>=11?11:<%=leftindex %>);
-            m-=2;
+            //m-=2;
             MoveNav();
 
             $('.theme-poptit .close').click(function () {
