@@ -122,11 +122,14 @@ public class Vote
 
     public static DataTable getVoteListByPage(int currentPage, int pageSize, DateTime startDT, DateTime endDT)
     {
-        int intop = pageSize * (currentPage - 1);
-        string sql = "SELECT TOP " + pageSize + " * FROM vote_list WHERE  vote_remark <> '' and vote_id NOT IN (SELECT TOP " + intop + " vote_id FROM vote_list where vote_remark <> '' and vote_crt >= '" + startDT.ToString("yyyy-MM-dd") + "' and vote_crt < '" + endDT.ToString("yyyy-MM-dd") + "' ORDER BY vote_id desc) and vote_crt >= '" + startDT.ToString("yyyy-MM-dd") + "' and vote_crt < '" + endDT.ToString("yyyy-MM-dd") + "' ORDER BY vote_id desc";
-        SqlDataAdapter da = new SqlDataAdapter(sql, Util.ConnectionString);
         DataTable dt = new DataTable();
-        da.Fill(dt);
+        int intop = pageSize * (currentPage - 1);
+        if (intop >= 0)
+        {
+            string sql = "SELECT TOP " + pageSize + " * FROM vote_list WHERE  vote_remark <> '' and vote_id NOT IN (SELECT TOP " + intop + " vote_id FROM vote_list where vote_remark <> '' and vote_crt >= '" + startDT.ToString("yyyy-MM-dd") + "' and vote_crt < '" + endDT.ToString("yyyy-MM-dd") + "' ORDER BY vote_id desc) and vote_crt >= '" + startDT.ToString("yyyy-MM-dd") + "' and vote_crt < '" + endDT.ToString("yyyy-MM-dd") + "' ORDER BY vote_id desc";
+            SqlDataAdapter da = new SqlDataAdapter(sql, Util.ConnectionString);
+            da.Fill(dt);
+        }
         return dt;
     }
 

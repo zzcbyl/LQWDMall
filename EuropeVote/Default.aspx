@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/EuropeVote/EuropeMaster.master" %>
 
 <script runat="server">
-    public DateTime startDt = Convert.ToDateTime("2015-07-23");
-    public DateTime endDt = Convert.ToDateTime("2015-08-06");
+    public DateTime startDt = Convert.ToDateTime("2015-08-06");
+    public DateTime endDt = Convert.ToDateTime("2015-08-17");
     public DateTime currentDt = Convert.ToDateTime(DateTime.Now.ToShortDateString());
     public int leftindex = 0;
     protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +21,7 @@
         <div><a href="Rule.aspx">活动规则</a></div>
         <div style="background:url(images/nav_split.jpg) no-repeat;"><a href="Prize.aspx">奖品</a></div>
         <div style="background:url(images/nav_split.jpg) no-repeat;"><a href="Ranking.aspx">排行榜</a></div>
-        <%--<div><a href="Upload.aspx">上传照片</a></div>--%>
+        <div style="background:url(images/nav_split.jpg) no-repeat;"><a href='Admin.aspx?openid=<%=Request["openid"] %>'>上传照片</a></div>
     </div>
     <div class="navMenu">
         <div class="leftPrev" onclick="LeftNav();"><img src="images/btn_arrow_left.png" style="height:20px; margin-top:10px;" /></div>
@@ -44,7 +44,7 @@
     <div class="comment_people">
         <h5>看看大家怎么说</h5>
         <ul id="commentlist">
-                
+            
         </ul>
         <div id="pageDiv" style="text-align:center; margin-top:10px;">
             <button class="btn btn-danger" onclick="prevPage();">上一页</button>　
@@ -69,7 +69,7 @@
         var checkName = '';
         var openid = '';
         var currentpage = 1;
-        var pagesize = 20;
+        var pagesize = 2;
         var imgcurrentpage = 1;
         var imgpagesize = 10;
         var currentDate;
@@ -85,6 +85,7 @@
             bindVoteList();
             
             m=(<%=leftindex %>>=11?11:<%=leftindex %>);
+            m-=2;
             MoveNav();
 
             $('.theme-poptit .close').click(function () {
@@ -170,7 +171,12 @@
                         else if (uname.length == 3) {
                             uname = uname.substring(0, 1) + "*" + uname.substring(2, 1);
                         }
-                        html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div class="CheckItem"><label><span>' + uname + ' </span><!--<img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png">--><span class="VotesCount">　<em id="votecount' + json.data[i].image_id + '">' + json.data[i].image_count + '</em> 票</span></label><label><a id="item' + json.data[i].image_id + '" href="javascript:void(0);" onclick="voteItem(this);" style="display:block;" ><img src="images/btn_vote.png" style="width:80px;border:none;" /></a></label><div class="clear"></div></div></li>';
+                        
+                        var voteStr='';
+                        if(Date.parse(new Date()) < Date.parse('2015-08-18'))
+                            voteStr = '<label><a id="item' + json.data[i].image_id + '" href="javascript:void(0);" onclick="voteItem(this);" style="display:block;" ><img src="images/btn_vote.png" style="width:80px;border:none;" /></a></label>';
+                        
+                        html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div class="CheckItem"><label><span>' + uname + ' </span><!--<img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png">--><span class="VotesCount">　<em id="votecount' + json.data[i].image_id + '">' + json.data[i].image_count + '</em> 票</span></label>' + voteStr + '<div class="clear"></div></div></li>';
                     }
                     $(".loading").remove();
                     //alert($('#VoteItem').html());
@@ -225,6 +231,8 @@
         }
 
         function bindVoteList() {
+            if(currentpage<=0)
+                return;
             $('#commentlist').html('<li class="loading"><img src="http://mall.luqinwenda.com/images/loading.gif" /><br />加载中...</li>');
             $.ajax({
                 type: 'post',
@@ -233,7 +241,7 @@
                 success: function (data, textStatus) {
                     data = data.replace(/\n/g, '');
                     var json = eval("(" + data + ")");
-                    var html = "";
+                    var html = '';
                     for (var i = 0; i < json.data.length; i++) {
                         if (json.data[i].vote_name != "匿名网友")
                             if (json.data[i].vote_name.length < 4)

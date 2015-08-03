@@ -60,7 +60,7 @@
         <div style="line-height:25px; text-indent:28px;">1、用手机进行拍摄。</div>
         <div style="line-height:25px; text-indent:28px;">2、每人每天只能上传一张照片到活动页面，且照片不可修改。</div>
         <div style="line-height:25px; text-indent:28px;">3、照片要带有与夏令营有关的元素，比如队旗，营服，夏令营活动等。</div>
-        <div style="line-height:25px; text-indent:28px;">4、活动时间为：8月4日——8月17日。</div>
+        <div style="line-height:25px; text-indent:28px;">4、活动时间为：8月6日——8月17日。</div>
         <br />
         <br />
     </div>
