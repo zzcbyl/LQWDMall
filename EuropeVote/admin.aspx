@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/EuropeVote/EuropeMaster.master" %>
 
 <script runat="server">
-    private string[] nameList = { "张三", "陈一喆", "姜欣怡", "周家宇", "周航羽", "任凤仪", "邱露微", "覃昱淞", "张博涵", "王昱晖", "朱灏", "姜美竹", "李杨", "曹安琪", "刘一泽", "陈巍午", "刘赫", "赵家正", "段思羽", "梁子正", "张心烨", "张峻滔", "金佳怡", "孙雅兰", "赵岱妮", "薛骏", "陈子彬", "袁千涵", "徐俊屹", "林李涵", "巫诗荻", "黄思霖" };
+    private string[] nameList = { "张三", "陈一喆", "姜欣怡", "周家宇", "周航羽", "任凤仪", "邱露微", "覃昱淞", "张博涵", "王昱晖", "朱灏", "姜美竹", "李杨", "曹安琪", "刘一泽", "陈巍午", "刘赫", "赵家正", "段思羽", "梁子正", "张心烨", "张峻滔", "金佳怡", "孙雅兰", "赵岱妮", "薛骏", "陈子彬", "袁千涵", "徐俊屹", "林李涵", "巫诗荻", "黄思霖","赵茁涵","李尚" };
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.hidSubmit.Value == "1")
@@ -44,7 +44,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<form runat="server">
+<form id="Form1" runat="server">
 <div class="d-admin form-inline">
     <div class="form-group">
         <lable>姓名：</lable>
@@ -75,7 +75,7 @@
         }
 
         var username = getCookie('username');
-        if (username != null && username != '' && $('#<%=errorInfo.ClientID %>').html() == '' ) {
+        if (username != null && username != '' && $('#<%=errorInfo.ClientID %>').html() == '') {
             location.href = 'Upload.aspx?openid=' + QueryString('openid');
         }
     });
@@ -84,7 +84,7 @@
         var openid = QueryString('openid');
         var username = $('#username').val();
         $("#<%=hidSubmit.ClientID %>").val("1");
-        
+
         setCookie('openid', openid);
         setCookie('username', username);
 

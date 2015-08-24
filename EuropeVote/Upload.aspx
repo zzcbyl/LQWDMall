@@ -30,7 +30,7 @@
                 string FileName = g.ToString().Substring(0, 10) + DateTime.Now.ToString("yyyyMMdd") + ext;
                 file.SaveAs(uploadPath + FileName);
                 string ThumFileName = g.ToString().Substring(0, 10) + DateTime.Now.ToString("yyyyMMdd") + "_thum" + ext;
-                Util.CreateImageOutput(500, 500, uploadPath + FileName, uploadPath + ThumFileName);
+                Util.CreateImageOutput(400, 400, uploadPath + FileName, uploadPath + ThumFileName);
 
                 int result = EuropeVote.Upload(openid, username, ThumFileName, DateTime.Now);
 

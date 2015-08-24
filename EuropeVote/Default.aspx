@@ -7,6 +7,8 @@
     public int leftindex = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (currentDt >= endDt)
+            currentDt = endDt;
         leftindex = (int)endDt.Subtract(currentDt).TotalDays;
     }
 </script>
@@ -17,7 +19,7 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-<% if (DateTime.Now > Convert.ToDateTime("2015-08-06"))
+<% if (DateTime.Now > Convert.ToDateTime("2015-08-04"))
    { %>
     <div class="navBar">
         <div><a href="Rule.aspx">活动规则</a></div>
@@ -78,7 +80,7 @@
         var checkName = '';
         var openid = '';
         var currentpage = 1;
-        var pagesize = 2;
+        var pagesize = 20;
         var imgcurrentpage = 1;
         var imgpagesize = 10;
         var currentDate;
@@ -94,7 +96,7 @@
             bindVoteList();
             
             m=(<%=leftindex %>>=11?11:<%=leftindex %>);
-            //m-=2;
+            //m-=3;
             MoveNav();
 
             $('.theme-poptit .close').click(function () {
@@ -107,7 +109,7 @@
                 $('#VoteItem li').eq(i).find('img').eq(0).css({ "border": "1px solid #ccc" });
             }
             checkItemid = $(obj).attr("id").replace("item", "");
-            checkName = $(obj).find('span').eq(0).html();
+			checkName = $(obj).parent().parent().parent().find('span').eq(0).html();
             $('#image_' + checkItemid).css({ "border": "1px solid #ff0000" });
             $('#memo').val("");
             $('.theme-popover-mask').fadeIn(100);
@@ -174,15 +176,16 @@
                     for (var i = 0; i < json.data.length; i++) {
                         var imgName = json.data[i].image_url.replace('_thum.', '|')
                         var uname = json.data[i].image_username;
+                        
                         if (uname.length == 2) {
-                            uname = uname.substring(0, 1) + "*";
+                            uname = uname.substr(0, 1) + "*";
                         }
                         else if (uname.length == 3) {
-                            uname = uname.substring(0, 1) + "*" + uname.substring(2, 1);
+                            uname = uname.substr(0, 1) + "*" + uname.substr(2, 1);
                         }
                         
                         var voteStr='';
-                        if(Date.parse(new Date()) < Date.parse('2015-08-18'))
+                        if(Date.parse(new Date()) < Date.parse('2015-08-17'))
                             voteStr = '<label><a id="item' + json.data[i].image_id + '" href="javascript:void(0);" onclick="voteItem(this);" style="display:block;" ><img src="images/btn_vote.png" style="width:80px;border:none;" /></a></label>';
                         
                         html += '<li><a href="ShowImage.aspx?name=' + imgName + '"><img id="image_' + json.data[i].image_id + '" src="' + domain + 'EuropeVote/upload/' + json.data[i].image_url + '" /></a><div class="CheckItem"><label><span>' + uname + ' </span><!--<img style="width:30px; border:none; margin-bottom:5px;" src="images/zantongicon.png">--><span class="VotesCount">　<em id="votecount' + json.data[i].image_id + '">' + json.data[i].image_count + '</em> 票</span></label>' + voteStr + '<div class="clear"></div></div></li>';

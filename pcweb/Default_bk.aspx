@@ -47,7 +47,7 @@
                     var prodlist = obj.data;
                     var html = "";
                     for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 3)
+                        if (prodlist[i].prodtypeid != 1 && prodlist[i].prodtypeid != 2)
                             continue;
                         var strprice = '';
                         var iconjiu = '';
