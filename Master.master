@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#"  %>
+<%@ Import Namespace="System.Web.Script.Serialization" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -50,6 +51,19 @@
                     string shaString = "jsapi_ticket=" + ticket.Trim() + "&noncestr=" + nonceStr.Trim()
                         + "&timestamp=" + timeStamp.Trim() + "&url=" + Request.Url.ToString().Trim();
                     shaParam = Util.GetSHA1(shaString);
+
+                    if (this.Session["RepeatCustomer"] == null)
+                    {
+                        JavaScriptSerializer json = new JavaScriptSerializer();
+                        string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + Util.GetToken() + "&paid=1";
+                        string orderlist = HTTPHelper.Get_Http(getorderurl);
+                        Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
+                        object[] orderArr = (object[])dicBargain["orders"];
+                        if (orderArr.Length > 0)
+                            this.Session["RepeatCustomer"] = "1";
+                        else
+                            this.Session["RepeatCustomer"] = "0";
+                    }
                 }
                 catch { }
             }

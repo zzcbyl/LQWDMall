@@ -3,6 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
+<script runat="server">
+    public string repeatCustomer = "0";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (this.Session["RepeatCustomer"] != null)
+            repeatCustomer = this.Session["RepeatCustomer"].ToString();
+    }
+</script>
 <div style="width:100%;">
     <img src="images/xly-banner.jpg" width="100%" />
 </div>
@@ -15,6 +23,7 @@
     <div class="clear" style="height:20px;"></div>
 </div>
 <script type="text/javascript">
+    var repeat = <%=repeatCustomer %>;
     $(document).ready(function () {
         filllist(3);
         setCookie('source', 3);
@@ -36,18 +45,31 @@
                         if (typeid != 0 && prodlist[i].prodtypeid != typeid)
                             continue;
                         var strprice = '';
-                        if (prodlist[i].prodid == 26) {
+                        var price = parseInt(prodlist[i].price);
+                        if (prodlist[i].prodid == 28) {
+                            if (repeat == 1) {
+                                price -= 30000;
+                            }
+                            if (currentDT <= deadline_28) {
+                                price -= 30000;
+                            }
+                            if(parseInt(prodlist[i].originalprice)!=price)
+                            strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
+                            else
+                            strprice = '<span class="red mgleft">¥' + price / 100 + '</span>';
+                        }
+                        else if (prodlist[i].prodid == 26) {
                             strprice = '<span class="red mgleft">¥' + parseInt(prodlist[i].originalprice) / 100 + '</span>';
                         }
                         else {
                             if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
                             }
                             else if (prodlist[i].prodid == 24) {
                                 strprice = '';
                             }
                             else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                strprice = '<span class="red">¥' + price / 100 + '</span>';
                             }
                         }
                         var buybtn = '<a id="buyProd_xly" onclick="location.href=\'Join_xly.aspx?productid=' + prodlist[i].prodid + '\';" class="btn btn-danger">我要报名</a>';

@@ -6,6 +6,14 @@
     <script src="script/zepto_min.js" type="text/javascript"></script>--%>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
+<script runat="server">
+    public string repeatCustomer = "0";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (this.Session["RepeatCustomer"] != null)
+            repeatCustomer = this.Session["RepeatCustomer"].ToString();
+    }
+</script>
 <div class="mainpage">
     <div class="titleNav">
         <a onclick="location.href = 'Default_xly.aspx';" class="returnA"> </a>
@@ -31,6 +39,7 @@
 </div>
 
 <script type="text/javascript">
+    var repeat = <%=repeatCustomer %>;
     var prodid = QueryString('productid');
     $(document).ready(function () {
         if (prodid == null) {

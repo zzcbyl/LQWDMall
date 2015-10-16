@@ -65,8 +65,11 @@
 </div>
 
 <script runat="server">
+    public string repeatCustomer = "0";
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.Session["RepeatCustomer"] != null)
+            repeatCustomer = this.Session["RepeatCustomer"].ToString();
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
             submitOrder(Request.Form["myToken"].ToString());
@@ -120,9 +123,34 @@
                     }
                 }
             }
+            if (Request["productid"].ToString().Equals("28"))
+            {
+                int discount = 0;
+                if (this.Session["RepeatCustomer"].ToString().Equals("1"))
+                {
+                    discount += 30000;
+                }
+                if (DateTime.Now <= Convert.ToDateTime("2015-12-1"))
+                {
+                    discount += 30000;  
+                }
+                if (!discount.Equals(0))
+                {
+                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
+                    string discountResult = HTTPHelper.Get_Http(discountUrl);
+                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                    if (dicDiscount["status"].ToString() == "1")
+                    {
+                        Response.Write("优惠金额错误,请重新支付");
+                        Response.End();
+                        return;
+                    }
+                }
+            }
+            
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
-            int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+            int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString()) + int.Parse(order._fields["ajustfee"].ToString());
             total = total <= 0 ? 0 : total;
             string param = "?body=卢勤问答平台官方夏令营&detail=卢勤问答平台官方夏令营&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
@@ -167,7 +195,7 @@
 </script>
 
 <script type="text/javascript">
-
+    var repeat = <%=repeatCustomer %>;
     var prodid = QueryString('productid');
     $(document).ready(function () {
         if (prodid == null) {
@@ -188,16 +216,26 @@
             success: function (data, textStatus) {
                 var obj = eval('(' + data + ')');
                 if (obj != null) {
-                    var strprice = '<span class="red">¥' + parseInt(obj.price) / 100 + '</span>';
+                    var price_1 = parseInt(obj.price);
+                    var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     if (obj.prodid == 24) {
                         strprice = '';
                         totalHtml = '';
                         $("#total_amount").hide();
-                        obj.price = 0;
+                        price_1 = 0;
+                    }
+                    if (obj.prodid == 28) {
+                        if (repeat == 1) {
+                            price_1 -= 30000;
+                        }
+                        if (currentDT <= deadline_28) {
+                            price_1 -= 30000;
+                        }
+                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     }
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
-                    $("#total_amount span").eq(0).html('¥' + parseInt(obj.price) / 100);
-                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
+                    $("#total_amount span").eq(0).html('¥' + price_1 / 100);
+                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
                     if (QueryString('followerAmount') != null && parseInt(QueryString('followerAmount')) > 0) {
                         var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));
                         amount = amount <= 0 ? 0 : amount;
