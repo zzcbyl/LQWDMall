@@ -9,10 +9,16 @@
         int userId = Users.CheckToken(token);
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
+        int isPaid = ((Request["paid"] == null) ? 0 : int.Parse(Request["paid"].Trim()));
         Order[] orderArray = Order.GetOrders(userId, startDate, endDate);
         string orderJsonStr = "";
         foreach (Order order in orderArray)
         {
+            if (isPaid != 0 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()))
+            {
+                break;
+            }
+            
             orderJsonStr = orderJsonStr + ",{";
             string orderInfoJsonStr = "";
             foreach (DataColumn c in order._fields.Table.Columns)
