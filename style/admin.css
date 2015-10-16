@@ -1,0 +1,61 @@
+﻿body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
+html { background: #f0f0f0; height:100%; }
+body{ font-family:微软雅黑; font-size:14px; min-height:100%; width:100%; background: #e3e2e2; color:#333; margin:0 auto; }
+a,a:visited { color: #323232; outline-style: none; text-decoration: none; }
+em { font-style: normal; font-weight: normal; list-style: outside none none; margin: 0; padding: 0;}
+a:hover { text-decoration:none; color: #323232;}
+a:focus { text-decoration:none;}
+.left { float:left; }
+.right { float:right; }
+.rel { position:relative; }
+.pd5 { padding:5px;}
+.pd10 { padding:10px;}
+.red { color:Red;}
+.clear { clear:both;}
+a.btn-primary { color:#fff;}
+.dashline { border-top:1px dashed #ccc;}
+.loading { margin:0 auto; padding:30px 0; text-align:center; background:#fff; color:#999; line-height:30px; font-size:12px;}
+.loading img { width:50px; height:50px;}
+
+.mainPage { padding:10px 50px;}
+.headMaster { height:100px; background:#fff; padding:0 20px; line-height:100px;}
+.headMaster .left-logo { font-size:30px; font-weight:bold; float:left;}
+.headMaster .right-info { float:right; font-size:16px;}
+.navMaster { background:#fff; border:1px solid #b5b5bc; border-radius:4px; width:700px; height:50px; font-size:18px; line-height:48px;}
+.navMaster li { float:left; text-align:center; width:20%; border-right:1px solid #b5b5bc;}
+.tabletitle { background:#fff; height:50px;  line-height:48px; margin-top:10px; padding:0 20px;text-align:center; min-width:880px;}
+.tabletitle #product_li { float:left; width:10%;}
+.tabletitle #consignee_li { float:left; width:25%;}
+.tabletitle #remark_li { float:left; width:30%;}
+.tabletitle #totals_li { float:left; width:10%;}
+.tabletitle #paystate_li{ float:left; width:15%; }
+.tabletitle #operation_id { float:left; width:10%; text-align:center;}
+.orderlist { margin-top:10px; line-height:30px; padding:0 20px 10px 20px; background:#fff; min-width:880px;}
+.ordertitle { height:40px; line-height:40px; color:#999; border-bottom:1px dashed #ccc;}
+.orderproduct { margin-top:10px;}
+.orderproduct #prodimg { float:left; width:10%;}
+.orderproduct #prodimg a { border:1px solid #ddd; padding:1px; display:block; width:84px;}
+.orderproduct #prodimg img { width:80px; height:80px;}
+.orderproduct #address { float:left; width:25%; padding-top:18px;}
+.orderproduct #remarks { float:left; width:30%; margin-top:10px; line-height:22px; }
+.orderproduct #totals { float:left; width:10%; margin-top:10px; text-align:center; line-height:22px; }
+.orderproduct #paystate { float:left; width:15%; padding:18px 20px 0; text-align:center; line-height:22px; }
+.orderproduct .operation { float:left; width:10%; text-align:center; padding-top:18px;}
+.orderproduct p { line-height:22px; }
+
+.orderdetail_state { background:#fff; height:50px; line-height:30px; padding:10px 20px; font-size:16px; }
+.orderdetail_info { margin-top:10px; background:#fff; border:1px solid #ccc; line-height:50px;}
+.orderdetail_info div { height:50px; padding:0 20px; overflow:hidden;}
+.orderdetail_info .od_info_title { border-bottom:1px dashed #ccc; font-size:16px; }
+.orderdetail_info .od_info_consignee { height:60px; padding-top:15px;}
+.orderdetail_info .od_info_consignee p { line-height:25px; height:25px; overflow:hidden; }
+.orderdetail_info .od_info_timer { border-top:1px dashed #ccc; color:#999; }
+.prod_item {  }
+.prod_item .list_hd div { float:left; width:20%; text-align:center; background:#fff; height:50px;  line-height:48px; margin:10px 0; padding:0 20px;}
+.prod_item .list_hd #prod_item_a { width:40%;}
+
+.prod_item .list_prod div { float:left; width:20%; text-align:center; background:#fff; height:100px; padding:10px 20px;}
+.prod_item .list_prod #prod_item_a { width:40%; padding:5px 0;}
+.prod_item .list_prod #prod_item_a #prodimg { padding:5px; display:block; float:left; width:90px; height:90px; margin-left:15px;}
+.prod_item .list_prod #prod_item_a #prodimg img { width:80px; height:80px;}
+.prod_item .list_prod #prod_item_a #prodtitle { float:left; margin-left:10px;}

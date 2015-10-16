@@ -1,0 +1,89 @@
+﻿body,ul,li,p,h1,h2,h3,h4,h5,h6,dl,dt,dd,form,input,textarea,select{margin:0; padding:0; list-style-type:none;}
+html { background: #f33c3c; height:100%; }
+body{ font: normal 14px/1.5 Arial, "Lucida Grande", Verdana, "Microsoft YaHei", hei;  min-height:100%; max-width:650px; background:#f33c3c; padding:0 10px; color:#333; margin:0 auto; position:relative;}
+
+.mainpage { position:relative;}
+.m-bottom #footermenu { background:#343232; height:40px; line-height:40px;}
+.m-bottom .btnwith { width:47%;}
+.m-bottom .leftbtn { float:left; margin-left:2%; }
+.m-bottom .rightbtn { float:right; margin-right:2%;}
+.m-bottom .barmaigin_btn { background:#f90; border-radius:4px;  color:#fff; display:inline-block; font-size:16px; line-height:40px; text-align:center; }
+.m-bottom .no_barmaigin_btn { background:#aaa; border-radius:4px;  color:#efefef; display:inline-block; font-size:16px; line-height:40px; text-align:center; }
+
+.prod_box { text-align:center; position:relative; margin:20px 10px 10px;}
+.prod_box h3:before, .prod_box h3:after {
+    background-image: url(../images/prodboxbg.png);
+    background-repeat: no-repeat;
+    background-size: 88px auto
+}
+.prod_box h3 {
+    background: #f90;
+    color: #fff;
+    font-size: 16px;
+    line-height: 25px;
+    height: 25px;
+    width: 155px;
+    text-align: center;
+    margin: 0 auto;
+    position: relative;
+    font-weight: 400
+}
+.prod_box h3:before {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 25px;
+    background-position: -30px 0;
+    left: -18px;
+    top: 2px
+}
+.prod_box h3:after {
+    content: "";
+    position: absolute;
+    width: 28px;
+    height: 25px;
+    background-position: -60px 0;
+    right: -18px;
+    top: 2px
+}
+.prod_box p { color:#f33c3c; line-height:30px; margin-top:10px;}
+.prod_box p .dfn { font-family:Arial; font-size:14px; font-weight:400; font-style:normal; }
+.prod_box p .js_fruit { font-family:Arial; font-size:30px;}
+
+.bargain_people { padding:10px; background:#fff; margin-top:10px; }
+.bargain_people h3 { font-size:16px; font-weight:400; line-height:25px;}
+.bargain_people ul {
+    margin-top: 8px;
+    border-top: 1px solid #d5d5d5
+}
+.bargain_people li {
+    padding: 8px 0;
+    border-bottom: 1px solid #d5d5d5;
+    overflow: hidden;
+    font-size: 12px
+}
+
+.bargain_people li .bargain_name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.bargain_people li .bargain_time {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px
+}
+
+.bargain_people li .bargain_price {
+    font-size: 20px;
+    float: right;
+    padding-top: 10px;
+    width: 50px;
+    text-align: right
+}
+.bargain_price { color:#f33c3c;}
+
+#popbg {background: #000; filter: alpha(opacity=70); left: 0px; width: 100%; position: absolute; top: 0px; height: 100%; opacity: 0.7; z-index:99;display:none;}  
+#popdiv { position: absolute; top:10px; left:0; background:#FF9900; width:100%; max-width:650px; z-index:100; display:none; }
+#popdiv1 { position: absolute; top:10px; left:0; background:#FF9900; width:100%; max-width:650px; z-index:100; display:none; }
