@@ -10,7 +10,7 @@
             if (orderid > 0)
             {
                 Order order = new Order(orderid);
-                int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString());
+                int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString()) + int.Parse(order._fields["ajustfee"].ToString());
                 this.total.InnerHtml = "￥" + (decimal.Parse(total.ToString()) / 100).ToString();
                 this.payImg.Src = "http://weixin.luqinwenda.com/payment/payment_web_qrcode.aspx?product_id=" + order._fields["oid"].ToString() + "&total_fee=" + total + "&body=卢勤问答平台官方商城PC&detail=卢勤问答平台官方商城PC";
             }

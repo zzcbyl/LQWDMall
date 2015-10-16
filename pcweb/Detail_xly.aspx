@@ -1,7 +1,12 @@
 ﻿<%@ Page Title="卢勤问答平台冬令营" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
-
+    public string repeatCustomer = "0";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (this.Session["RepeatCustomer"] != null)
+            repeatCustomer = this.Session["RepeatCustomer"].ToString();
+    }
 </script>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
@@ -30,6 +35,7 @@
     <div class="clear" style="height:20px;"></div>
 </div>
 <script type="text/javascript">
+    var repeat = <%=repeatCustomer %>;
     var prodid = QueryString('productid');
     $(document).ready(function () {
         if (prodid == null) {

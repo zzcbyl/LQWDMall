@@ -70,8 +70,11 @@
 </div>
 
 <script runat="server">
+    public string repeatCustomer = "0";
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (this.Session["RepeatCustomer"] != null)
+            repeatCustomer = this.Session["RepeatCustomer"].ToString();
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
             submitOrder(Request.Form["myToken"].ToString());
@@ -99,6 +102,31 @@
         }
         else
         {
+            if (Request["productid"].ToString().Equals("28"))
+            {
+                int discount = 0;
+                if (this.Session["RepeatCustomer"] != null && this.Session["RepeatCustomer"].ToString().Equals("1"))
+                {
+                    discount += 30000;
+                }
+                if (DateTime.Now <= Convert.ToDateTime("2015-12-1"))
+                {
+                    discount += 30000;
+                }
+                if (!discount.Equals(0))
+                {
+                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
+                    string discountResult = HTTPHelper.Get_Http(discountUrl);
+                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                    if (dicDiscount["status"].ToString() == "1")
+                    {
+                        Response.Write("优惠金额错误,请重新支付");
+                        Response.End();
+                        return;
+                    }
+                }
+            }
+            
             if (Request["productid"].ToString() == "24")
             {
                 Response.Redirect("JoinSuccess.aspx");
@@ -122,7 +150,7 @@
 </script>
 
 <script type="text/javascript">
-
+    var repeat = <%=repeatCustomer %>;
     var prodid = QueryString('productid');
     $(document).ready(function () {
         if (prodid == null) {
@@ -144,15 +172,27 @@
             success: function (data, textStatus) {
                 var obj = eval('(' + data + ')');
                 if (obj != null) {
-                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + parseInt(obj.price) / 100 + '</span></a></li>';
-                    var strprice = '<span class="red">¥' + parseInt(obj.price) / 100 + '</span>';
+                    var price_1 = parseInt(obj.price);
+                    var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
+                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
+                    var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     if (obj.prodid == 24) {
                         strprice = '';
                         totalHtml = '';
                         $("#total_amount").hide();
                     }
+                    if (obj.prodid == 28) {
+                        if (repeat == 1) {
+                            price_1 -= 30000;
+                        }
+                        if (currentDT <= deadline_28) {
+                            price_1 -= 30000;
+                        }
+                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
+                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
+                    }
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
-                    $("#total_amount span").eq(0).html('¥' + parseInt(obj.price) / 100);
+                    $("#total_amount span").eq(0).html('¥' + price_1 / 100);
                     $('#prodlist').html(prodhtml + totalHtml);
                 }
             }
