@@ -22,8 +22,14 @@
     {
         if (Request["product_id"] != null && Request["product_id"] != "" && int.Parse(Request["product_id"]) > 0)
         {
+            //paymethod=wechat
+            string paymethod = "";
+            if (Request["paymethod"] != null && !Request["paymethod"].ToString().Equals(""))
+            {
+                paymethod = Request["paymethod"].ToString().Replace("'", "");
+            }
             Order order = new Order();
-            int result = order.updPayState(int.Parse(Request["product_id"]));
+            int result = order.updPayState(int.Parse(Request["product_id"]), paymethod);
             if (result > 0)
             {
 

@@ -86,7 +86,7 @@
         string result = HTTPHelper.Get_Http(getUrl);
         JavaScriptSerializer json = new JavaScriptSerializer();
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
-        if (jsonorder.status == -1)
+        if (jsonorder.status == 1)
         {
             //理论不可能过期，提交之前已获取最新token
             string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + Request.Form["myOpenid"].ToString();

@@ -87,9 +87,9 @@ public class Order
         return dt.Rows.Count;
     }
 
-    public int updPayState(int orderid)
+    public int updPayState(int orderid, string paymethod)
     {
-        string sqlUpdPay = "update m_order set paystate = 1, paysuccesstime = '" + DateTime.Now.ToString() + "' where oid = " + orderid;
+        string sqlUpdPay = "update m_order set paystate = 1, paysuccesstime = '" + DateTime.Now.ToString() + "', paymethod='" + paymethod + "' where oid = " + orderid;
         SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
         SqlCommand cmdUpdPayOrder = new SqlCommand(sqlUpdPay, conn);
         conn.Open();
