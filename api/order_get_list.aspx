@@ -5,7 +5,7 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string token = (Request["token"] == null) ? "ec3113c0caa6991ce9078158d7b4f2c9bc10995e149e6db2cc2975c15fe6398ef448d182" : Request["token"].Trim();
+        string token = (Request["token"] == null) ? "c4d86ec6a5f03ca3d92f7c43a67e1dcf9bf0bdfe4c1ffee253f5907a4ddc592b92306a62" : Request["token"].Trim();
         int userId = Users.CheckToken(token);
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
@@ -16,7 +16,7 @@
         {
             if (isPaid != 0 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()))
             {
-                break;
+                continue;
             }
             
             orderJsonStr = orderJsonStr + ",{";
