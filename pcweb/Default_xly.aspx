@@ -32,7 +32,7 @@
         $("#xly_li").attr("class", "current");
     });
     function filllist(typeid) {
-        $('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+        $('#prodlistul').html('<li><div class="loading"><img src="http://mall.luqinwenda.com/images/loading.gif" /><br />加载中...</div></li>');
 
         $.ajax({
             type: "post",

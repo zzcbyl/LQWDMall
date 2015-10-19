@@ -1,9 +1,53 @@
 ﻿<%@ Master Language="C#" %>
+<%@ Import Namespace="System.Web.Script.Serialization" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        try
+        {
 
+            if (Request["openid"] != null && this.Session["RepeatCustomer"] == null)
+            {
+                string token = submitOrder(Request["openid"].ToString());
+                JavaScriptSerializer json = new JavaScriptSerializer();
+                string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1";
+                string orderlist = HTTPHelper.Get_Http(getorderurl);
+                Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
+                object[] orderArr = (object[])dicBargain["orders"];
+                if (orderArr.Length > 0)
+                    this.Session["RepeatCustomer"] = "1";
+                else
+                    this.Session["RepeatCustomer"] = "0";
+            }
+        }
+        catch { }
+    }
+
+    private string submitOrder(string openid)
+    {
+        HttpCookie cookie = Request.Cookies["userToken"];
+        if (cookie != null)
+        {
+            return Request.Cookies["userToken"].Value;
+        }
+
+        //理论不可能过期，提交之前已获取最新token
+        JavaScriptSerializer json = new JavaScriptSerializer();
+        string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + openid;
+        string tokenResult = HTTPHelper.Get_Http(tokenUrl);
+        Dictionary<string, object> dic = (Dictionary<string, object>)json.DeserializeObject(tokenResult);
+        if (dic["status"].Equals("0"))
+            submitOrder(openid);
+
+        cookie = new HttpCookie("userToken");
+        cookie.Value = dic["token"].ToString();
+        cookie.Expires = DateTime.Now.AddHours(1);
+        Response.Cookies.Add(cookie);
+        return dic["token"].ToString();
+    }
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
