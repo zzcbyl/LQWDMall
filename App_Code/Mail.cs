@@ -26,10 +26,14 @@ public class Mail
         SendMail(parameter[0], parameter[1], parameter[2], parameter[3], parameter[4], parameter[5], parameter[6]);
     }
 
-    public static void SendMail(string strFrom, string strFromPass, string strTo, string strSubject, string strBody, string strSmtpServer, string strFileName = "")
+    public static void SendMail(string strFrom, string strFromPass, string strTo, string strSubject, string strBody, string strSmtpServer, string strFileName = "", string displayName = "卢勤问答平台")
     {
-
-        System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(strFrom, strTo, strSubject, strBody);
+        MailAddress from = new MailAddress(strFrom, displayName);
+        MailAddress to = new MailAddress(strTo);
+        System.Net.Mail.MailMessage message = new System.Net.Mail.MailMessage(from, to);
+        message.Subject = strSubject;
+        message.SubjectEncoding = System.Text.Encoding.UTF8;
+        message.Body = strBody;
         message.BodyEncoding = System.Text.Encoding.UTF8;
         message.IsBodyHtml = true;
         if (strFileName != "" && strFileName != null)
