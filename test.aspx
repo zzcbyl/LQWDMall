@@ -8,7 +8,7 @@
     protected void Button1_Click(object sender, EventArgs e)
     {
 
-        Mail.SendMail("customer-service@luqinwenda.com", "customer_802", "cn36301@126.com", "webtest", "测试", "smtp.exmail.qq.com", Server.MapPath("/upload/file/alls.jpg"));
+        
     }
 
 
