@@ -1,7 +1,12 @@
-﻿<%@ Page Title="卢勤问答平台夏令营" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="卢勤问答平台冬令营" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
-
+    public string repeatCustomer = "0";
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (this.Session["RepeatCustomer"] != null)
+            repeatCustomer = this.Session["RepeatCustomer"].ToString();
+    }
 </script>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
@@ -20,13 +25,14 @@
 </div>
 
 <script type="text/javascript">
+    var repeat = <%=repeatCustomer %>;
     $(document).ready(function () {
         filllist(3);
         $("#bk_li").attr("class", "");
         $("#xly_li").attr("class", "current");
     });
     function filllist(typeid) {
-        $('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+        $('#prodlistul').html('<li><div class="loading"><img src="http://mall.luqinwenda.com/images/loading.gif" /><br />加载中...</div></li>');
 
         $.ajax({
             type: "post",
@@ -42,7 +48,20 @@
                         if (typeid != 0 && prodlist[i].prodtypeid != typeid)
                             continue;
                         var strprice = '';
-                        if (prodlist[i].prodid == 26) {
+                        var price = parseInt(prodlist[i].price);
+                        if (prodlist[i].prodid == 28) {
+                            if (repeat == 1) {
+                                price -= 30000;
+                            }
+                            if (currentDT <= deadline_28) {
+                                price -= 30000;
+                            }
+                            if (parseInt(prodlist[i].originalprice) != price)
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
+                            else
+                                strprice = '<span class="red mgleft">¥' + price / 100 + '</span>';
+                        }
+                        else if (prodlist[i].prodid == 26) {
                             strprice = '<span class="red mgleft">¥' + parseInt(prodlist[i].originalprice) / 100 + '</span>';
                         }
                         else {

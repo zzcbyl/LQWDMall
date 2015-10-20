@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master"  %>
+﻿<%@ Page Title="卢勤问答平台冬令营" Language="C#" MasterPageFile="~/Master.master"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
     <%--<link href="style/proddetail.css" rel="stylesheet" type="text/css" />
@@ -17,7 +17,7 @@
 <div class="mainpage">
     <div class="titleNav">
         <a onclick="location.href = 'Default_xly.aspx';" class="returnA"> </a>
-        <span class="titleSpan">夏令营详情</span>
+        <span class="titleSpan">冬令营详情</span>
     </div>
     <div class="m-dcontent" style="margin-top:10px;">
         <div id="prodimg" style="border:1px solid #ccc;">

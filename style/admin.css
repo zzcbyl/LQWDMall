@@ -23,14 +23,14 @@ a.btn-primary { color:#fff;}
 .headMaster .right-info { float:right; font-size:16px;}
 .navMaster { background:#fff; border:1px solid #b5b5bc; border-radius:4px; width:700px; height:50px; font-size:18px; line-height:48px;}
 .navMaster li { float:left; text-align:center; width:20%; border-right:1px solid #b5b5bc;}
-.tabletitle { background:#fff; height:50px;  line-height:48px; margin-top:10px; padding:0 20px;text-align:center; min-width:880px;}
+.tabletitle { background:#fff; height:50px;  line-height:48px; padding:0 20px;text-align:center; min-width:880px;}
 .tabletitle #product_li { float:left; width:10%;}
 .tabletitle #consignee_li { float:left; width:25%;}
 .tabletitle #remark_li { float:left; width:30%;}
 .tabletitle #totals_li { float:left; width:10%;}
 .tabletitle #paystate_li{ float:left; width:15%; }
 .tabletitle #operation_id { float:left; width:10%; text-align:center;}
-.orderlist { margin-top:10px; line-height:30px; padding:0 20px 10px 20px; background:#fff; min-width:880px;}
+.orderlist { margin-top:5px; line-height:30px; padding:0 20px 10px 20px; background:#fff; min-width:880px;}
 .ordertitle { height:40px; line-height:40px; color:#999; border-bottom:1px dashed #ccc;}
 .orderproduct { margin-top:10px;}
 .orderproduct #prodimg { float:left; width:10%;}
