@@ -18,7 +18,7 @@
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
         string where = string.Empty;
         if (Request["state"] != null && Request["state"] == "1")
-            where = " and paystate = 1 ";
+            where = " and paystate in (1,2) ";
         orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize, where);
         this.AspNetPager1.RecordCount = Order.GetOrdersCount(0, startDate, endDate, where);
     }
@@ -39,7 +39,7 @@
         <li id="consignee_li">收货人信息</li>
         <li id="remark_li">留言</li>
         <li id="totals_li">金额</li>
-        <li id="paystate_li">是否付款</li>
+        <li id="paystate_li">状态</li>
         <li id="operation_id">操作</li>
     </ul>
     <div id="orderContent">
@@ -70,7 +70,7 @@
                     <%=float.Parse(order._fields["orderprice"].ToString()) / 100 %><%=int.Parse(order._fields["shipfee"].ToString()) > 0 ? "<br />(快递费:" + int.Parse(order._fields["shipfee"].ToString()) / 100 + ")" : int.Parse(order._fields["shipfee"].ToString()) < 0 ? "<br />(优惠:" + (1 - int.Parse(order._fields["shipfee"].ToString())) / 100 + ")" : ""%>
                     <%=int.Parse(order._fields["ajustfee"].ToString()) < 0 ? "<br />(优惠:" + (1 - int.Parse(order._fields["ajustfee"].ToString())) / 100 + ")" : "" %>
                 </div>
-                <div id="paystate"><%=order._fields["paystate"].ToString() == "0" ? "未付款" : "已付款<br/>" + (order._fields["paysuccesstime"] != DBNull.Value ? Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm") : "") %></div>
+                <div id="paystate"><%=order._fields["paystate"].ToString() == "0" ? "未付款" : order._fields["paystate"].ToString() == "2" ? "已发货<br />" + order._fields["shipNumber"].ToString() : "已付款<br/>" + (order._fields["paysuccesstime"] != DBNull.Value ? Convert.ToDateTime(order._fields["paysuccesstime"]).ToString("yyyy-MM-dd HH:mm") : "")%></div>
                 <div class="operation">
                     <p><a href='OrderDetail.aspx?oid=<%=order._fields["oid"].ToString() %>'>订单详情</a></p>
                 </div>
