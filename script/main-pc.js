@@ -55,14 +55,13 @@ function GetToken() {
     $.ajax({
         type: "get",
         async: false,
-        url: domain + 'api/user_get_token.aspx',
-        data: { username: openid, random: Math.random() },
+        url: "/Handler.ashx",
+        data: { method: "gettoken", openid: openid, random: Math.random() },
         success: function (data, textStatus) {
-            var obj = eval('(' + data + ')');
-            if (obj != null && obj.status == 1) {
+            if (data != null && data != "-1") {
                 //alert(obj.token);
-                setCookie('token', obj.token);
-                token = obj.token;
+                setCookie('token', data);
+                token = data;
             }
         }
     });

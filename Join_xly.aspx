@@ -89,12 +89,7 @@
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == 1)
         {
-            //理论不可能过期，提交之前已获取最新token
-            string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + Request.Form["myOpenid"].ToString();
-            string tokenResult = HTTPHelper.Get_Http(tokenUrl);
-            ReturnToken jsontoken = json.Deserialize<ReturnToken>(tokenResult);
-            if (jsontoken.status != -1)
-                submitOrder(jsontoken.token);
+            submitOrder(MyToken.GetToken(Request.Form["myOpenid"].ToString()));
         }
         else
         {
@@ -122,12 +117,6 @@
                 };
                 Thread th = new Thread(Mail.SendMailAsyn);
                 th.Start(para);
-            }
-            
-            if (Request["productid"].ToString() == "30")
-            {
-                Response.Redirect("JoinSuccess.aspx");
-                return;
             }
             if (Request["followerAmount"] != null && Request["followerAmount"].ToString() != "" && Convert.ToInt32(Request["followerAmount"].ToString()) > 0)
             {
@@ -159,7 +148,7 @@
                 }
                 if (DateTime.Now <= Convert.ToDateTime("2015-12-1"))
                 {
-                    discount += 30000;  
+                    discount += 30000;
                 }
                 if (!discount.Equals(0))
                 {
@@ -174,7 +163,35 @@
                     }
                 }
             }
-            
+
+            if (Request["productid"].ToString().Equals("30"))
+            {
+                int discount = 0;
+                if (this.Session["RepeatCustomer"].ToString().Equals("1"))
+                {
+                    discount += 100000;
+                }
+                if (DateTime.Now <= Convert.ToDateTime("2015-12-1"))
+                {
+                    discount += 80000;
+                }
+                if (!discount.Equals(0))
+                {
+                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
+                    string discountResult = HTTPHelper.Get_Http(discountUrl);
+                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                    if (dicDiscount["status"].ToString() == "1")
+                    {
+                        Response.Write("优惠金额错误,请重新支付");
+                        Response.End();
+                        return;
+                    }
+                }
+
+                Response.Redirect("JoinSuccess.aspx");
+                return;
+            }
+
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = int.Parse(order._fields["orderprice"].ToString()) + int.Parse(order._fields["shipfee"].ToString()) + int.Parse(order._fields["ajustfee"].ToString());
