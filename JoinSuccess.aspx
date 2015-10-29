@@ -8,7 +8,7 @@
         <span class="titleSpan">报名结果</span>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
-        <h3 style="text-align:center; margin-top:10px;">大开眼界北欧四国游学之旅</h3>
+        <h3 style="text-align:center; margin-top:10px;">文明小使者畅游新加坡<br />2016新加坡精品冬令营</h3>
 
         <div style=" margin:20px 0; padding:10px;">
             <p style="text-align:center; color:Green; font-size:22px; font-weight:bold; line-height:35px;margin-top: 20px;"><i class="ico-ok-big"></i>报名成功</p>

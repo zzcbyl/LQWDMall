@@ -124,7 +124,7 @@
                 th.Start(para);
             }
             
-            if (Request["productid"].ToString() == "24")
+            if (Request["productid"].ToString() == "30")
             {
                 Response.Redirect("JoinSuccess.aspx");
                 return;
@@ -245,18 +245,21 @@
                 if (obj != null) {
                     var price_1 = parseInt(obj.price);
                     var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                    if (obj.prodid == 24) {
-                        strprice = '';
-                        totalHtml = '';
-                        $("#total_amount").hide();
-                        price_1 = 0;
-                    }
                     if (obj.prodid == 28) {
                         if (repeat == 1) {
                             price_1 -= 30000;
                         }
                         if (currentDT <= deadline_28) {
                             price_1 -= 30000;
+                        }
+                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
+                    }
+                    else if (obj.prodid == 30) {
+                        if (repeat == 1) {
+                            price_1 -= 100000;
+                        }
+                        if (currentDT <= deadline_30) {
+                            price_1 -= 80000;
                         }
                         strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     }
