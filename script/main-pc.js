@@ -6,6 +6,7 @@ var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
 var descContent = "卢勤问答平台官方认证商城，包括卢勤老师认证的正版书籍以及家庭教育相关产品。"; //简介
 var lineLink = "http://mall.luqinwenda.com/index.aspx?source=1"; //链接
 var deadline_28 = (Date.parse(new Date("2015/12/1"))) / 1000;
+var deadline_30 = (Date.parse(new Date("2015/12/1"))) / 1000;
 var currentDT = (Date.parse(new Date())) / 1000;
 function GetOpenidToken() {
     openid = QueryString('openid');
@@ -134,9 +135,19 @@ function filldetail(pid) {
                     }
                     $('#prodprice').html('¥' + price_1 / 100);
                 }
-                else if (pid == 26) {
-                    $('#originalprice').hide();
-                    $('#prodprice').html('¥' + parseInt(obj.originalprice) / 100);
+                else if (pid == 30) {
+                    var price_1 = parseInt(obj.price);
+                    if (repeat == 1) {
+                        price_1 -= 100000;
+                    }
+                    if (currentDT <= deadline_30) {
+                        price_1 -= 80000;
+                    }
+                    if (parseInt(obj.originalprice) != price_1) {
+                        $('#originalprice').show();
+                        $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
+                    }
+                    $('#prodprice').html('¥' + price_1 / 100);
                 }
                 else {
                     if (obj.originalprice != null && obj.originalprice != '') {

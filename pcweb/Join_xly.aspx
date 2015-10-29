@@ -155,7 +155,7 @@
                 }
             }
             
-            if (Request["productid"].ToString() == "24")
+            if (Request["productid"].ToString() == "30")
             {
                 Response.Redirect("JoinSuccess.aspx");
                 return;
@@ -204,11 +204,6 @@
                     var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
                     var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                    if (obj.prodid == 24) {
-                        strprice = '';
-                        totalHtml = '';
-                        $("#total_amount").hide();
-                    }
                     if (obj.prodid == 28) {
                         if (repeat == 1) {
                             price_1 -= 30000;
@@ -218,6 +213,15 @@
                         }
                         strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                         totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
+                    }
+                    else if (obj.prodid == 30) {
+                        if (repeat == 1) {
+                            price_1 -= 100000;
+                        }
+                        if (currentDT <= deadline_30) {
+                            price_1 -= 80000;
+                        }
+                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     }
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
                     $("#total_amount span").eq(0).html('¥' + price_1 / 100);
