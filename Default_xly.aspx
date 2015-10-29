@@ -25,7 +25,7 @@
 <script type="text/javascript">
     var repeat = <%=repeatCustomer %>;
     $(document).ready(function () {
-        filllist(1000);
+        filllist(3);
         setCookie('source', 3);
     });
     function filllist(typeid) {
