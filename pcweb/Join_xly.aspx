@@ -30,7 +30,7 @@
         </p>
         <p class="add_list_p rel list_pdl">
             <label>电子邮箱</label>
-            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="（选填）请输入电子邮箱" />
+            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="请输入电子邮箱" />
         </p>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
@@ -294,12 +294,10 @@
         }
 
         var emailReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
-        if ($("#parentEmail").val().Trim() != "") {
-            if (!emailReg.test($("#parentEmail").val().Trim())) {
-                $("#ModalContent").html("请输入正确的电子邮箱");
-                $('#myModal').modal('show');
-                return;
-            }
+        if (!emailReg.test($("#parentEmail").val().Trim())) {
+            $("#ModalContent").html("请输入正确的电子邮箱");
+            $('#myModal').modal('show');
+            return;
         }
 
         GetOpenidToken();

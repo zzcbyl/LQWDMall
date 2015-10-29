@@ -173,6 +173,7 @@
     <div style="padding-left: 15px;">
         <p>连续8年获得“最佳国际机场”称号的——<span style="color:#00B050; font-weight:bold;">新加坡樟宜国际机场</span>。</p>
     </div>
+    <p>【优惠政策】12月1日前报名优惠800元，老营员优惠1000元，老营员可以同时享受双重优惠</p>
     <p>【报名方式】</p>
     <div style="padding-left: 15px;">
         <p>新老师电话：18601016361</p>
