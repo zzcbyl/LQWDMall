@@ -10,7 +10,7 @@
         int typeId = ((Request["typeid"] == null) ? 0 : int.Parse(Request["typeid"].Trim()));
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
-        int isPaid = ((Request["paid"] == null) ? 0 : int.Parse(Request["paid"].Trim()));
+        int isPaid = ((Request["paid"] == null) ? -1 : int.Parse(Request["paid"].Trim()));
 
         //isPaid = 1;
         //typeId = 3;
@@ -24,7 +24,7 @@
            
             
             
-            if (isPaid != 0 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()) )
+            if (isPaid != -1 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()) )
             {
                 continue;
             }
