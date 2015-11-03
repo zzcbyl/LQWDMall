@@ -12,8 +12,8 @@
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
         int isPaid = ((Request["paid"] == null) ? 0 : int.Parse(Request["paid"].Trim()));
 
-        isPaid = 1;
-        typeId = 3;
+        //isPaid = 1;
+        //typeId = 3;
         
         
         Order[] orderArray = Order.GetOrders(userId, startDate, endDate);
@@ -63,11 +63,6 @@
             string orderDetailJsonStr = "";
             foreach (DataRow dr in order.GetOrderDetails().Rows)
             {
-                Product product = new Product(int.Parse(dr["product_id"].ToString().Trim()));
-                if (typeId != 0 && int.Parse(product._fields["prodtypeid"].ToString().Trim()) != typeId)
-                {
-                    continue;
-                }
                 
                 orderDetailJsonStr = orderDetailJsonStr + ",{";
                 string orderDetailRowJsonStr = "";
