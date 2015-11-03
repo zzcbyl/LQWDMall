@@ -135,8 +135,8 @@ function filldetail(pid) {
                     $('#prodprice').html('¥' + price_1 / 100);
                 }
                 else if (pid == 30) {
-                    $('#originalprice').html('');
-                    $('#prodprice').html('');
+                    $('#originalprice').html('&nbsp;');
+                    $('#prodprice').html('&nbsp;');
                 }
                 else {
                     if (obj.originalprice != null && obj.originalprice != '') {
