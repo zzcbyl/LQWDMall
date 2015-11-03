@@ -152,28 +152,6 @@
 
             if (Request["productid"].ToString().Equals("30"))
             {
-                int discount = 0;
-                if (this.Session["RepeatCustomer"].ToString().Equals("1"))
-                {
-                    discount += 100000;
-                }
-                if (DateTime.Now <= Convert.ToDateTime("2015-12-1"))
-                {
-                    discount += 80000;
-                }
-                if (!discount.Equals(0))
-                {
-                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
-                    string discountResult = HTTPHelper.Get_Http(discountUrl);
-                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
-                    if (dicDiscount["status"].ToString() == "1")
-                    {
-                        Response.Write("优惠金额错误,请重新支付");
-                        Response.End();
-                        return;
-                    }
-                }
-
                 Response.Redirect("JoinSuccess.aspx");
                 return;
             }
@@ -229,18 +207,16 @@
                         }
                         strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
                     }
-                    else if (obj.prodid == 30) {
-                        if (repeat == 1) {
-                            price_1 -= 100000;
-                        }
-                        if (currentDT <= deadline_30) {
-                            price_1 -= 80000;
-                        }
-                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                    }
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
                     $("#total_amount span").eq(0).html('¥' + price_1 / 100);
                     var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
+
+                    if (obj.prodid == 30) {
+                        prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price"></a><a class="prod-count"></a></li>';
+                        $("#total_amount").html('');
+                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"></li>';
+                    }
+
                     if (QueryString('followerAmount') != null && parseInt(QueryString('followerAmount')) > 0) {
                         var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));
                         amount = amount <= 0 ? 0 : amount;

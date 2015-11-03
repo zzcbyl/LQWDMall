@@ -135,18 +135,8 @@ function filldetail(pid) {
                     $('#prodprice').html('¥' + price_1 / 100);
                 }
                 else if (pid == 30) {
-                    var price_1 = parseInt(obj.price);
-                    if (repeat == 1) {
-                        price_1 -= 100000;
-                    }
-                    if (currentDT <= deadline_30) {
-                        price_1 -= 80000;
-                    }
-                    if (parseInt(obj.originalprice) != price_1) {
-                        $('#originalprice').show();
-                        $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
-                    }
-                    $('#prodprice').html('¥' + price_1 / 100);
+                    $('#originalprice').html('');
+                    $('#prodprice').html('');
                 }
                 else {
                     if (obj.originalprice != null && obj.originalprice != '') {
