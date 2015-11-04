@@ -12,7 +12,7 @@
             {
                 string token = MyToken.GetToken(Request["openid"].ToString());
                 JavaScriptSerializer json = new JavaScriptSerializer();
-                string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3";
+                string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=1000";
                 string orderlist = HTTPHelper.Get_Http(getorderurl);
                 Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
                 object[] orderArr = (object[])dicBargain["orders"];
