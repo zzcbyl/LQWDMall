@@ -19,6 +19,8 @@
         string where = string.Empty;
         if (Request["state"] != null && Request["state"] == "1")
             where = " and paystate in (1,2) ";
+        else if (Request["state"] != null && Request["state"] == "2")
+            where = " and paystate in (1) and name <> '' ";
         orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize, where);
         this.AspNetPager1.RecordCount = Order.GetOrdersCount(0, startDate, endDate, where);
     }
@@ -32,7 +34,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div style=" position:absolute; right:50px; top:70px;">
         <a style='padding:3px 10px; margin-right:10px; <%= (Request["state"] == null || Request["state"].Equals("")) ? "background:#55798C; color:#fff;" : "background:#ccc; color:#666;"%>' href="OrderList.aspx">全部</a>
-        <a style='padding:3px 10px; <%= (Request["state"] == null || Request["state"].Equals("")) ? "background:#ccc; color:#666;" : "background:#55798C; color:#fff;"%>' href="OrderList.aspx?state=1">已付款</a>
+        <a style='padding:3px 10px; <%= (Request["state"] != null && Request["state"].Equals("1")) ? "background:#55798C; color:#fff;" : "background:#ccc; color:#666;" %>' href="OrderList.aspx?state=1">已付款</a>　
+        <a style='padding:3px 10px; <%= (Request["state"] != null && Request["state"].Equals("2")) ? "background:#55798C; color:#fff;" : "background:#ccc; color:#666;" %>' href="OrderList.aspx?state=2">未发货</a>
     </div>
     <ul class="tabletitle">
         <li id="product_li">商品</li>

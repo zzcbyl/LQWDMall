@@ -50,9 +50,18 @@ function GetOpenidToken() {
         }
     }
 
-    token = getCookie('token');
-    if (token == null || token == 'undefined') {
+    var openidtoken = getCookie('token');
+    //alert(openidtoken);
+    if (openidtoken == null || openidtoken == 'undefined') {
         GetToken();
+    }
+    else {
+        var arr = openidtoken.split('|');
+        if (arr[0] == openid)
+            token = arr[1];
+        else {
+            GetToken();    
+        }
     }
 }
 function GetToken() {
@@ -64,7 +73,7 @@ function GetToken() {
         success: function (data, textStatus) {
             if (data != null && data != "-1") {
                 //alert(obj.token);
-                setCookie('token', data);
+                setCookie('token', openid + "|" + data);
                 token = data;
             }
         }
@@ -448,6 +457,7 @@ function so_fillCity(pid, city) {
 }
 
 function so_fillAddress() {
+    //alert(token);
     $.post(domain + 'api/user_get_address.aspx', { token: token, random: Math.random() }, function (data) {
         if (data.status == -1) {
             GetToken();
