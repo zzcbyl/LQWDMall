@@ -18,6 +18,7 @@
         <div class="clear"></div>
     </div>--%>
     <div id="orderlist">
+        <div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>
         <%--<div class="m-dcontent" style="margin:10px; padding:10px 20px;">
             <div class="ls-order-title">
                 <div style="float:left;">订单编号</div>
@@ -76,7 +77,7 @@
     });
 
     function loadOrder() {
-        $('#orderlist').html('<div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>');
+        //$('#orderlist').html('<div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>');
         $.ajax({
             type: "get",
             async: false,

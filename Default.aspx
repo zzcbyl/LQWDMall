@@ -18,6 +18,7 @@
 </div>
 <div class="m-wrap">
     <ul id="prodlistul" class="m-ul rel">
+        <li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>
     </ul>
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
@@ -78,7 +79,7 @@
             $("#type-suit img").eq(0).attr("src", "images/menu1.jpg");
         }
 
-        $('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+        //$('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
         $.ajax({
             type: "post",
             async: false,

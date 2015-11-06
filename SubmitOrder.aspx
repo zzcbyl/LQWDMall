@@ -37,7 +37,7 @@
     </div>--%>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
         <ul id="prodlist">
-            
+            <li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>
         </ul>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">

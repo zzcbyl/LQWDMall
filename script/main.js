@@ -101,7 +101,7 @@ function InCount(id ,total) {
 }
 
 function filldetail(pid) {
-    $('#prodtitle').html('<div class="loading"><img src="images/loading.gif" /><br />加载中...</div>');
+    //$('#prodtitle').html('<div class="loading"><img src="images/loading.gif" /><br />加载中...</div>');
 
     $.ajax({
         type: "get",
@@ -224,7 +224,7 @@ function detailAddCart(pid, isshow) {
 
 //填充购物车
 function fillcart() {
-    $('#proditems').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+    //$('#proditems').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
     $.ajax({
         type: "get",
         async: false,
@@ -338,7 +338,7 @@ function dealCartCount(pid, count) {
 }
 
 function so_fillProd() {
-    $('#prodlist').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+    //$('#prodlist').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
     $.ajax({
         type: "get",
         async: false,
