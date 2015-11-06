@@ -5,7 +5,7 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string token = (Request["token"] == null) ? "fdcc2e8a4877e2d186f14127cd8fe021d36386bafd9e39dd29e2954ae868281ae86b1e38" : Request["token"].Trim();
+        string token = (Request["token"] == null) ? "a51ec2c5dc89b56b79efb0ec882d2776a901e901806e59ab2d9f31ac3df19ca20be1fda8" : Request["token"].Trim();
         int userId = Users.CheckToken(token);
 
         if (userId <= 0)
