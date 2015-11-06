@@ -7,6 +7,13 @@
     {
         string token = (Request["token"] == null) ? "fdcc2e8a4877e2d186f14127cd8fe021d36386bafd9e39dd29e2954ae868281ae86b1e38" : Request["token"].Trim();
         int userId = Users.CheckToken(token);
+
+        if (userId <= 0)
+        {
+            Response.Write("{\"status\":1, \"message\":\"Invalid token!\"}");
+            Response.End();
+        }
+        
         int typeId = ((Request["typeid"] == null) ? 0 : int.Parse(Request["typeid"].Trim()));
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
