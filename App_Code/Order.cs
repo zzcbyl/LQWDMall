@@ -40,6 +40,75 @@ public class Order
         return dt;
     }
 
+    public int SyncPaymentStatus()
+    {
+        string res = Util.GetWebContent("http://yeepay.luqinwenda.com/api/get_payment_status.aspx?mallorderid=" 
+            + _fields["oid"].ToString(), "get", "", "html/text");
+        int status = int.Parse(Util.GetSimpleJsonValueByKey(res, "is_paid"));
+
+        return status;
+    }
+
+    public int UpdatePaymentState()
+    {
+        if (DateTime.Now - this.OrderDate <= new TimeSpan(3, 0, 0, 0) && this.PayState == 0)
+        {
+            int status = this.SyncPaymentStatus();
+            this._fields["paystate"] = (object)status;
+            this.PayState = status;
+            return status;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public DateTime OrderDate
+    {
+        get
+        {
+            return DateTime.Parse(_fields["ctime"].ToString().Trim());
+        }
+    }
+
+    public int PayState
+    {
+        get
+        {
+            return int.Parse(_fields["paystate"].ToString());
+        }
+        set
+        {
+            string sql = " update m_order set paystate = " + value.ToString() 
+                +   ((value==1)? "  , paysuccesstime = getdate() " : "   ")
+                + " where oid = " + _fields["oid"].ToString().Trim();
+            SqlConnection conn = new SqlConnection(Util.ConnectionString);
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            cmd.Dispose();
+            conn.Dispose();
+
+        }
+    }
+
+    public DateTime PaySuccessTime
+    {
+        get
+        {
+            try
+            {
+                return DateTime.Parse(_fields["paysuccesstime"].ToString().Trim());
+            }
+            catch
+            {
+                return DateTime.Parse("2000-1-1");
+            }
+        }
+    }
+
     public static Order[] GetOrders(int userId, DateTime startDate, DateTime endDate)
     {
         string sql = " select * from m_order where ctime > '" + startDate.ToString() + "' and ctime < '"
@@ -54,6 +123,11 @@ public class Order
         {
             orderArray[i] = new Order();
             orderArray[i]._fields = dt.Rows[i];
+            orderArray[i].UpdatePaymentState();
+
+            
+
+
         }
         return orderArray;
     }
@@ -71,6 +145,7 @@ public class Order
         {
             orderArray[i] = new Order();
             orderArray[i]._fields = dt.Rows[i];
+            orderArray[i].UpdatePaymentState();
         }
         return orderArray;
     }
