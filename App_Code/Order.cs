@@ -44,9 +44,16 @@ public class Order
     {
         string res = Util.GetWebContent("http://yeepay.luqinwenda.com/api/get_payment_status.aspx?mallorderid=" 
             + _fields["oid"].ToString(), "get", "", "html/text");
-        int status = int.Parse(Util.GetSimpleJsonValueByKey(res, "is_paid"));
+        if (int.Parse(Util.GetSimpleJsonValueByKey(res, "is_paid")) == 0)
+        {
+            int status = int.Parse(Util.GetSimpleJsonValueByKey(res, "is_paid"));
 
-        return status;
+            return status;
+        }
+        else
+        {
+            return -1;
+        }
     }
 
     public int UpdatePaymentState()
@@ -54,8 +61,11 @@ public class Order
         if (DateTime.Now - this.OrderDate <= new TimeSpan(3, 0, 0, 0) && this.PayState == 0)
         {
             int status = this.SyncPaymentStatus();
-            this._fields["paystate"] = (object)status;
-            this.PayState = status;
+            if (status > 0)
+            {
+                this._fields["paystate"] = (object)status;
+                this.PayState = status;
+            }
             return status;
         }
         else
