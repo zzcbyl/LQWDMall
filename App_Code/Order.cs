@@ -58,7 +58,8 @@ public class Order
 
     public int UpdatePaymentState()
     {
-        if (DateTime.Now - this.OrderDate <= new TimeSpan(3, 0, 0, 0) && this.PayState == 0)
+        if (DateTime.Now - this.OrderDate <= new TimeSpan(3, 0, 0, 0) && this.PayState == 0 
+            && _fields["paymethod"].ToString().Equals("yeepay"))
         {
             int status = this.SyncPaymentStatus();
             if (status > 0)
@@ -70,7 +71,7 @@ public class Order
         }
         else
         {
-            return 0;
+            return -1;
         }
     }
 
