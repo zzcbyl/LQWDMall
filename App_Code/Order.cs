@@ -44,7 +44,7 @@ public class Order
     {
         string res = Util.GetWebContent("http://yeepay.luqinwenda.com/api/get_payment_status.aspx?mallorderid=" 
             + _fields["oid"].ToString(), "get", "", "html/text");
-        if (int.Parse(Util.GetSimpleJsonValueByKey(res, "is_paid")) == 0)
+        if (int.Parse(Util.GetSimpleJsonValueByKey(res, "status")) == 0)
         {
             int status = int.Parse(Util.GetSimpleJsonValueByKey(res, "is_paid"));
 
