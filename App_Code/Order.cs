@@ -58,14 +58,15 @@ public class Order
 
     public int UpdatePaymentState()
     {
-        if (DateTime.Now - this.OrderDate <= new TimeSpan(3, 0, 0, 0) && this.PayState == 0 
-            && _fields["paymethod"].ToString().Equals("yeepay"))
+        if (DateTime.Now - this.OrderDate <= new TimeSpan(3, 0, 0, 0) && this.PayState == 0 )
         {
             int status = this.SyncPaymentStatus();
-            if (status > 0)
+            if (status == 2)
             {
-                this._fields["paystate"] = (object)status;
-                this.PayState = status;
+                this._fields["paystate"] = (object)1;
+                this.PayState = 1;
+                this._fields["paymethod"] = "yeepay_sync";
+                this.PayMethod = "yeepay_sync";
             }
             return status;
         }
@@ -102,6 +103,26 @@ public class Order
             cmd.Dispose();
             conn.Dispose();
 
+        }
+    }
+
+    public string PayMethod
+    {
+        get
+        {
+            return _fields["paymethod"].ToString();
+        }
+        set
+        {
+            string sql = " update m_order set paymethod = '" + value.Trim().Replace("'","") + "' " 
+                + " where oid = " + _fields["oid"].ToString().Trim();
+            SqlConnection conn = new SqlConnection(Util.ConnectionString);
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            cmd.Dispose();
+            conn.Dispose();
         }
     }
 
