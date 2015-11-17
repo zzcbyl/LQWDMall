@@ -4,12 +4,12 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div style="width:100%;">
-    <a href="Activity11.aspx"><img src="images/act11_banner.jpg" width="100%" /></a>
+    <img src="images/mall-banner.jpg" width="100%" />
 </div>
-<div style="background:#fff; padding:10px 20px; margin-top:10px; font-size:16px; color:#ff0000; font-weight:bold; line-height:25px; position:relative;">
+<%--<div style="background:#fff; padding:10px 20px; margin-top:10px; font-size:16px; color:#ff0000; font-weight:bold; line-height:25px; position:relative;">
     <p>　　满50送218！！！是的，您没看错哦，购书还送专家课程，小编为了您的家庭教育也是蛮拼的！</p>
     <div style="position:absolute; right:20px; bottom:5px; font-size:14px;"><a style="color:#bbb;" href="Activity11.aspx">活动详情>></a></div>
-</div>
+</div>--%>
 <div style="background:#fff; padding:10px; margin-top:10px;">
     1、本店为卢勤问答平台官方书城，所有图书均有现货。2、本店的运费遵循市场规则，您可以自行拍下。3、如果有任何疑问，或者其他要求，可以在线咨询客服。
 </div>

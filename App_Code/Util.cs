@@ -146,6 +146,12 @@ public class Util
         drShipFee["addintional_weight_fee"] = 800;
         dtShipFee.Rows.Add(drShipFee);
 
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "贵州省";
+        drShipFee["start_weight_fee"] = 1500;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
 
         int startWeight = 1200;
         int addintionalWeight = 800;
