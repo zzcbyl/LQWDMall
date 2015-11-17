@@ -54,19 +54,26 @@
                                 price -= 30000;
                             }
                             if(parseInt(prodlist[i].originalprice)!=price)
-                            strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
                             else
-                            strprice = '<span class="red mgleft">¥' + price / 100 + '</span>';
+                                strprice = '<span class="red mgleft">¥' + price / 100 + '</span>';
                         }
-                        else if (prodlist[i].prodid == 26) {
-                            strprice = '<span class="red mgleft">¥' + parseInt(prodlist[i].originalprice) / 100 + '</span>';
+                        else if (prodlist[i].prodid == 30) {
+//                            if (repeat == 1) {
+//                                price -= 100000;
+//                            }
+//                            if (currentDT <= deadline_30) {
+//                                price -= 80000;
+//                            }
+//                            if(parseInt(prodlist[i].originalprice)!=price)
+//                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
+//                            else
+//                                strprice = '<span class="red mgleft">¥' + price / 100 + '</span>';
+                            strprice = '<span class="red mgleft"></span>';
                         }
                         else {
                             if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
                                 strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + price / 100 + '</span>';
-                            }
-                            else if (prodlist[i].prodid == 24) {
-                                strprice = '';
                             }
                             else {
                                 strprice = '<span class="red">¥' + price / 100 + '</span>';

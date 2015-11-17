@@ -50,4 +50,5 @@ web.config
 upload
 upload/*
 config*
->>>>>>> develop
+
+test*

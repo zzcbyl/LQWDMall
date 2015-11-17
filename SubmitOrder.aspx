@@ -37,7 +37,7 @@
     </div>--%>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
         <ul id="prodlist">
-            
+            <li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>
         </ul>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
@@ -99,12 +99,7 @@
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == 1)
         {
-            //理论不可能过期，提交之前已获取最新token
-            string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + Request.Form["myOpenid"].ToString();
-            string tokenResult = HTTPHelper.Get_Http(tokenUrl);
-            ReturnToken jsontoken = json.Deserialize<ReturnToken>(tokenResult);
-            if (jsontoken.status != -1)
-                submitOrder(jsontoken.token);
+            submitOrder(MyToken.GetToken(Request.Form["myOpenid"].ToString()));
         }
         else
         {

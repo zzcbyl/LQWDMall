@@ -16,6 +16,7 @@
             
         </div>
         <div id="prodtitle" style="line-height:22px; font-size:16px; padding:10px 0;">
+            <div class="loading"><img src="images/loading.gif" /><br />加载中...</div>
         </div>
         <div class="m-dprice"><s class="gray" id="originalprice" style="margin-right:10px;"></s><span class="red" id="prodprice"></span></div>
         <%--<div class="m-express" style="display: block;">

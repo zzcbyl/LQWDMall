@@ -18,14 +18,14 @@
             user = new Users(userId);
         }
         string token = "";
-        int status = 1;
+        int status = 0;
         try
         {
             token = user.CreateToken(expireDate);
         }
         catch
         {
-            status = 0;
+            status = 1;
         }
         
         Response.Write("{\"status\":" + status + " , \"token\" : \"" + token.Trim() + "\" , \"expire_date\":\""

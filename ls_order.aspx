@@ -8,6 +8,9 @@
         <a href="javascript:Previous();" class="returnA"> </a>
         <span class="titleSpan">我的订单</span>
     </div>
+    <div style="margin-top:10px; background:#fff; padding:5px 15px; color:#ff0000;">
+        <span>由于卢勤老师最近一直在出差，需要签名的订单要延后到下周发货，如果不需要签名的订单请联系微信客服，我们会安排立即发出，请大家谅解。</span>
+    </div>
     <%--<div style="background:#f0f0f0; margin:10px; padding:10px;">
         <ul class="ls-order-ul">
             <li><a class="ok">全部</a></li>
@@ -18,6 +21,7 @@
         <div class="clear"></div>
     </div>--%>
     <div id="orderlist">
+        <div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>
         <%--<div class="m-dcontent" style="margin:10px; padding:10px 20px;">
             <div class="ls-order-title">
                 <div style="float:left;">订单编号</div>
@@ -76,14 +80,14 @@
     });
 
     function loadOrder() {
-        $('#orderlist').html('<div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>');
+        //$('#orderlist').html('<div class="loading" style="margin:10px;"><img src="images/loading.gif" /><br />加载中...</div>');
         $.ajax({
             type: "get",
             async: false,
             url: domain + 'api/order_get_list.aspx',
             data: { token: token, random: Math.random() },
             success: function (data, textStatus) {
-                //alert(data);
+                
                 var obj = eval('(' + data + ')');
                 if (obj != null && obj.status == -1) {
                     GetToken();
@@ -96,15 +100,17 @@
                         var ct = new Date(obj.orders[i].ctime);
                         orderHtml += '<div class="m-dcontent" style="margin:10px; padding:10px 20px;"><div class="ls-order-title"><div>订单编号：' + new Date(obj.orders[i].ctime).valueOf().toString() + obj.orders[i].oid + '</div><div>订单日期：' + ct.Format("yyyy-MM-dd hh:mm:ss") + '</div><div class="clear"></div></div>';
                         for (var j = 0; j < obj.orders[i].details.length; j++) {
-                            if (obj.orders[i].details[j].product_id == 24) {
+                            if (obj.orders[i].details[j].product_id == 30) {
                                 index = 1;
                                 orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + obj.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + obj.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + obj.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + obj.orders[i].details[j].product_count + '</p><p class="lop-price o-price"></p></a>';
                             }
-                            else
+                            else {
+                                index = 0;
                                 orderHtml += '<a class="ls-order-prod rel" href="Detail.aspx?productid=' + obj.orders[i].details[j].product_id + '"><p class="lop-img"><img src="' + domain + obj.orders[i].details[j].imgsrc + '" /></p><p class="lop-name">' + obj.orders[i].details[j].product_name + '</p><p class="lop-num">数量：' + obj.orders[i].details[j].product_count + '</p><p class="lop-price o-price">¥' + parseInt(obj.orders[i].details[j].price * obj.orders[i].details[j].product_count) / 100 + '</p></a>';
+                            }
                         }
                         if (index == 1)
-                            orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p><p class="ls-order-state rel">订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid, obj.orders[i].shipNumber) + '</p>--><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">-</em>总价：<em class="o-price">-</em></span></p><div class="clear"></div></div>';
+                            orderHtml += '<!--<p class="ls-order-num">数量：' + obj.orders[i].details.length + '</p><p class="ls-order-state rel">订单状态：' + orderState(parseInt(obj.orders[i].paystate), obj.orders[i].oid, obj.orders[i].shipNumber) + '</p><p class="ls-order-total"><span> 运费：<em class="o-price" style=" padding-right: 20px;">-</em>总价：<em class="o-price">-</em></span></p>--><div class="clear"></div></div>';
                         else {
                             var strPre = '';
                             if (parseInt(obj.orders[i].ajustfee) != 0)

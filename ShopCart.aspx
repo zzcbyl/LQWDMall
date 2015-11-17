@@ -12,6 +12,7 @@
     </div>
     <div style="background:#fff; margin:10px;">
         <ul id="proditems">
+            <li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>
         </ul>
     </div>
     <div class="clear" style="height:80px;"></div>
