@@ -152,6 +152,30 @@ public class Util
         drShipFee["addintional_weight_fee"] = 800;
         dtShipFee.Rows.Add(drShipFee);
 
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "甘肃省";
+        drShipFee["start_weight_fee"] = 1500;
+        drShipFee["addintional_weight_fee"] = 800;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "香港特别行政区";
+        drShipFee["start_weight_fee"] = 5000;
+        drShipFee["addintional_weight_fee"] = 2000;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "澳门特别行政区";
+        drShipFee["start_weight_fee"] = 5000;
+        drShipFee["addintional_weight_fee"] = 2000;
+        dtShipFee.Rows.Add(drShipFee);
+
+        drShipFee = dtShipFee.NewRow();
+        drShipFee["province"] = "台湾省";
+        drShipFee["start_weight_fee"] = 5000;
+        drShipFee["addintional_weight_fee"] = 2000;
+        dtShipFee.Rows.Add(drShipFee);
+
 
         int startWeight = 1200;
         int addintionalWeight = 800;
