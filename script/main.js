@@ -65,11 +65,12 @@ function GetOpenidToken() {
     }
 }
 function GetToken() {
+
     $.ajax({
         type: "get",
         async: false,
         url: "Handler.ashx",
-        data: { method: "gettoken", openid: openid, random: Math.random() },
+        data: { method: "forcegettoken", openid: openid, random: Math.random() },
         success: function (data, textStatus) {
             if (data != null && data != "-1") {
                 //alert(obj.token);
@@ -202,6 +203,7 @@ function totalcart(id) {
 }
 
 function detailAddCart(pid, isshow) {
+    //alert(token);
     $.ajax({
         type: "get",
         async: false,
