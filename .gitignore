@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-.gitignore
+
 web.config
-=======
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
@@ -50,8 +48,5 @@ web.config
 upload
 upload/*
 config*
-<<<<<<< HEAD
->>>>>>> develop
-=======
 test*
->>>>>>> develop
+
