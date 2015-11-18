@@ -56,7 +56,7 @@ function GetToken() {
         type: "get",
         async: false,
         url: "/Handler.ashx",
-        data: { method: "gettoken", openid: openid, random: Math.random() },
+        data: { method: "forcegettoken", openid: openid, random: Math.random() },
         success: function (data, textStatus) {
             if (data != null && data != "-1") {
                 //alert(obj.token);
