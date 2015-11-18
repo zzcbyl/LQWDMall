@@ -37,7 +37,7 @@ public class MyToken
         return token;
     }
 
-    private static string ForceGetToken(string openid)
+    public static string ForceGetToken(string openid)
     {
         JavaScriptSerializer json = new JavaScriptSerializer();
         string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + openid;
