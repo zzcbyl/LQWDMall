@@ -24,7 +24,7 @@ a.btn-primary { color:#fff;}
 .navMaster { background:#fff; border:1px solid #b5b5bc; border-radius:4px; width:700px; height:50px; font-size:18px; line-height:48px;}
 .navMaster li { float:left; text-align:center; width:20%; border-right:1px solid #b5b5bc;}
 .tabletitle { background:#fff; height:50px;  line-height:48px; padding:0 20px;text-align:center; min-width:880px;}
-.tabletitle #product_li { float:left; width:10%;}
+.tabletitle #product_li { float:left; width:8%;}
 .tabletitle #consignee_li { float:left; width:25%;}
 .tabletitle #remark_li { float:left; width:30%;}
 .tabletitle #totals_li { float:left; width:10%;}
@@ -33,7 +33,7 @@ a.btn-primary { color:#fff;}
 .orderlist { margin-top:5px; line-height:30px; padding:0 20px 10px 20px; background:#fff; min-width:880px;}
 .ordertitle { height:40px; line-height:40px; color:#999; border-bottom:1px dashed #ccc;}
 .orderproduct { margin-top:10px;}
-.orderproduct #prodimg { float:left; width:10%;}
+.orderproduct #prodimg { float:left; width:8%;}
 .orderproduct #prodimg a { border:1px solid #ddd; padding:1px; display:block; width:84px;}
 .orderproduct #prodimg img { width:80px; height:80px;}
 .orderproduct #address { float:left; width:25%; padding-top:18px;}

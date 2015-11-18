@@ -5,19 +5,57 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string token = (Request["token"] == null) ? "c4d86ec6a5f03ca3d92f7c43a67e1dcf9bf0bdfe4c1ffee253f5907a4ddc592b92306a62" : Request["token"].Trim();
+        string token = (Request["token"] == null) ? "b63ad193a45f0c71d9fdabc8589919290c4a63fa1c6bb3f272d60c11682fd76bce726d18" : Request["token"].Trim();
         int userId = Users.CheckToken(token);
+
+        if (userId <= 0)
+        {
+            Response.Write("{\"status\":1, \"message\":\"Invalid token!\"}");
+            Response.End();
+        }
+        
+        int typeId = ((Request["typeid"] == null) ? 0 : int.Parse(Request["typeid"].Trim()));
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
-        int isPaid = ((Request["paid"] == null) ? 0 : int.Parse(Request["paid"].Trim()));
+        int isPaid = ((Request["paid"] == null) ? -1 : int.Parse(Request["paid"].Trim()));
+
+        //isPaid = 1;
+        //typeId = 3;
+        
+        
         Order[] orderArray = Order.GetOrders(userId, startDate, endDate);
         string orderJsonStr = "";
         foreach (Order order in orderArray)
         {
-            if (isPaid != 0 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()))
+
+           
+            
+            
+            if (isPaid != -1 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()) )
             {
                 continue;
             }
+
+            
+            bool isTypeValid = true;
+            if (typeId != 0)
+            {
+                isTypeValid = false;
+
+                foreach (DataRow dr in order.GetOrderDetails().Rows)
+                {
+                    Product product = new Product(int.Parse(dr["product_id"].ToString().Trim()));
+                    if (int.Parse(product._fields["prodtypeid"].ToString().Trim()) == typeId)
+                    {
+                        isTypeValid = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isTypeValid)
+                continue;
+            
             
             orderJsonStr = orderJsonStr + ",{";
             string orderInfoJsonStr = "";
@@ -32,6 +70,7 @@
             string orderDetailJsonStr = "";
             foreach (DataRow dr in order.GetOrderDetails().Rows)
             {
+                
                 orderDetailJsonStr = orderDetailJsonStr + ",{";
                 string orderDetailRowJsonStr = "";
                 foreach (DataColumn c in dr.Table.Columns)

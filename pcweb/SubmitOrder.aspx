@@ -102,12 +102,7 @@
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == -1)
         {
-            //理论不可能过期，提交之前已获取最新token
-            string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + Request.Form["myOpenid"].ToString();
-            string tokenResult = HTTPHelper.Get_Http(tokenUrl);
-            ReturnToken jsontoken = json.Deserialize<ReturnToken>(tokenResult);
-            if (jsontoken.status != -1)
-                submitOrder(jsontoken.token);
+            submitOrder(MyToken.GetToken(Request.Form["myOpenid"].ToString()));
         }
         else
         {

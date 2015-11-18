@@ -50,4 +50,8 @@ web.config
 upload
 upload/*
 config*
+<<<<<<< HEAD
+>>>>>>> develop
+=======
+test*
 >>>>>>> develop

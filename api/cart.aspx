@@ -13,13 +13,13 @@
         
         if (uid == -1)
         {
-            Response.Write("{\"status\":-1, \"error_message\":\"The token is invalid.\"}");
+            Response.Write("{\"status\":1, \"error_message\":\"The token is invalid.\"}");
         }
         else
         {
             if (uid == -2)
             {
-                Response.Write("{\"status\":-1, \"error_message\":\"The token is expire.\"}");
+                Response.Write("{\"status\":1, \"error_message\":\"The token is expire.\"}");
             }
             else
             {

@@ -30,7 +30,7 @@
         </p>
         <p class="add_list_p rel list_pdl">
             <label>电子邮箱</label>
-            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="（选填）请输入电子邮箱" />
+            <input type="text" id="parentEmail" maxlength="100" name="parentEmail" placeholder="请输入电子邮箱" />
         </p>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
@@ -95,12 +95,7 @@
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == -1)
         {
-            //理论不可能过期，提交之前已获取最新token
-            string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + Request.Form["myOpenid"].ToString();
-            string tokenResult = HTTPHelper.Get_Http(tokenUrl);
-            ReturnToken jsontoken = json.Deserialize<ReturnToken>(tokenResult);
-            if (jsontoken.status != -1)
-                submitOrder(jsontoken.token);
+            submitOrder(MyToken.GetToken(Request.Form["myOpenid"].ToString()));
         }
         else
         {
@@ -154,12 +149,13 @@
                     }
                 }
             }
-            
-            if (Request["productid"].ToString() == "24")
+
+            if (Request["productid"].ToString().Equals("30"))
             {
                 Response.Redirect("JoinSuccess.aspx");
                 return;
             }
+            
             this.Response.Redirect("payment.aspx?orderid=" + jsonorder.order_id);
         }
     }
@@ -202,13 +198,6 @@
                 if (obj != null) {
                     var price_1 = parseInt(obj.price);
                     var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
-                    var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                    if (obj.prodid == 24) {
-                        strprice = '';
-                        totalHtml = '';
-                        $("#total_amount").hide();
-                    }
                     if (obj.prodid == 28) {
                         if (repeat == 1) {
                             price_1 -= 30000;
@@ -217,10 +206,24 @@
                             price_1 -= 30000;
                         }
                         strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
                     }
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
                     $("#total_amount span").eq(0).html('¥' + price_1 / 100);
+                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
+
+                    if (obj.prodid == 30) {
+                        prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price"></a><a class="prod-count"></a></li>';
+                        $("#total_amount").html('');
+                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"></li>';
+                    }
+
+                    if (QueryString('followerAmount') != null && parseInt(QueryString('followerAmount')) > 0) {
+                        var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));
+                        amount = amount <= 0 ? 0 : amount;
+                        $("#total_amount span").eq(0).html('¥' + amount);
+                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>优惠：<span class="red">¥' + QueryString('followerAmount') + '</span></a><a class="pd10">合计: <span class="red">¥' + amount + '</span></a></li>';
+                    }
+
                     $('#prodlist').html(prodhtml + totalHtml);
                 }
             }
@@ -267,12 +270,10 @@
         }
 
         var emailReg = /^[-._A-Za-z0-9]+@([_A-Za-z0-9]+\.)+[A-Za-z0-9]{2,3}$/;
-        if ($("#parentEmail").val().Trim() != "") {
-            if (!emailReg.test($("#parentEmail").val().Trim())) {
-                $("#ModalContent").html("请输入正确的电子邮箱");
-                $('#myModal').modal('show');
-                return;
-            }
+        if (!emailReg.test($("#parentEmail").val().Trim())) {
+            $("#ModalContent").html("请输入正确的电子邮箱");
+            $('#myModal').modal('show');
+            return;
         }
 
         GetOpenidToken();

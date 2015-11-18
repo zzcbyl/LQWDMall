@@ -61,8 +61,8 @@
                             else
                                 strprice = '<span class="red mgleft">¥' + price / 100 + '</span>';
                         }
-                        else if (prodlist[i].prodid == 26) {
-                            strprice = '<span class="red mgleft">¥' + parseInt(prodlist[i].originalprice) / 100 + '</span>';
+                        else if (prodlist[i].prodid == 30) {
+                             strprice = '<span class="red mgleft"></span>';
                         }
                         else {
                             if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
