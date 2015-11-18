@@ -421,8 +421,8 @@ function so_fillProvince() {
                 for (var i = 0; i < obj.area.length; i++) {
                     $("#province").append("<option value='" + obj.area[i].id + "'>" + obj.area[i].name + "</option>");
                 }
-                totalFeight($("#province option:selected").text(), pcount);
                 so_fillAddress();
+                totalFeight($("#province option:selected").text(), pcount);
             }
         }
     });
