@@ -522,7 +522,7 @@ function orderState(state, oid, number) {
             str_state = "已发货　" + number;
             break;
         case 3:
-            str_state = "已收货";
+            str_state = "已退款";
             break;
     }
     return str_state;

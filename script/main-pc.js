@@ -504,10 +504,10 @@ function orderState(state, oid) {
             str_state = "已付款 未发货";
             break;
         case 2:
-            str_state = "已发货";
+            str_state = "已发货　" + number;
             break;
         case 3:
-            str_state = "已收货";
+            str_state = "已退款";
             break;
     }
     return str_state;
