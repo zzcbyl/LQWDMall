@@ -20,8 +20,11 @@
             string orderDetailJsonStr = "";
             foreach (DataColumn c in dt.Columns)
             {
-                orderDetailJsonStr = orderDetailJsonStr + ",\"" + c.Caption.Trim() + "\" : \""
-                    + dr[c].ToString().Trim().Replace("\"", "”").Replace(",","，").Trim() + "\" ";
+                if (!c.Caption.Trim().Equals("product_description"))
+                {
+                    orderDetailJsonStr = orderDetailJsonStr + ",\"" + c.Caption.Trim() + "\" : \""
+                        + dr[c].ToString().Trim().Replace("\"", "”").Replace(",", "，").Trim() + "\" ";
+                }
             }
             if (orderDetailJsonStr.StartsWith(","))
                 orderDetailJsonStr = orderDetailJsonStr.Remove(0, 1);
