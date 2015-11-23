@@ -16,6 +16,9 @@ public class Handler : IHttpHandler {
                 case "gettoken":
                     GetToken(context);
                     break;
+                case "forcegettoken":
+                    ForceGetToken(context);
+                    break;
             }
         }
     }
@@ -28,6 +31,24 @@ public class Handler : IHttpHandler {
         }
         context.Response.Write("-1");
     }
+
+    public void ForceGetToken(HttpContext context)
+    {
+        if (context.Request["openid"] != null && !context.Request["openid"].Equals(""))
+        {
+            JavaScriptSerializer json = new JavaScriptSerializer();
+            string tokenUrl = Util.ApiDomainString + "api/user_get_token.aspx?username=" + context.Request["openid"].ToString();
+            string tokenResult = HTTPHelper.Get_Http(tokenUrl);
+            Dictionary<string, object> tokendic = (Dictionary<string, object>)json.DeserializeObject(tokenResult);
+            if (tokendic["status"].Equals("1"))
+                ForceGetToken(context);
+
+            context.Response.Write(tokendic["token"].ToString());
+            return;
+        }
+        context.Response.Write("-1");
+    }
+    
     public bool IsReusable {
         get {
             return false;

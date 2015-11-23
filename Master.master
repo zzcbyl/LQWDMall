@@ -54,7 +54,7 @@
 
                     if (Request["openid"] != null && this.Session["RepeatCustomer"] == null)
                     {
-                        string token = MyToken.GetToken(Request["openid"].ToString());
+                        string token = MyToken.ForceGetToken(Request["openid"].ToString());
                         JavaScriptSerializer json = new JavaScriptSerializer();
                         string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=1000";
                         string orderlist = HTTPHelper.Get_Http(getorderurl);

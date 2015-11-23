@@ -102,7 +102,7 @@
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == -1)
         {
-            submitOrder(MyToken.GetToken(Request.Form["myOpenid"].ToString()));
+            submitOrder(MyToken.ForceGetToken(Request.Form["myOpenid"].ToString()));
         }
         else
         {

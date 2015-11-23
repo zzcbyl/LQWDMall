@@ -56,7 +56,7 @@ function GetToken() {
         type: "get",
         async: false,
         url: "/Handler.ashx",
-        data: { method: "gettoken", openid: openid, random: Math.random() },
+        data: { method: "forcegettoken", openid: openid, random: Math.random() },
         success: function (data, textStatus) {
             if (data != null && data != "-1") {
                 //alert(obj.token);
@@ -169,7 +169,7 @@ function totalcart(id) {
         data: { token: token, random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 totalcart(id);
                 return;
@@ -202,7 +202,7 @@ function detailAddCart(pid, isshow) {
         data: { token: token, productid: pid, count: 1, random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 detailAddCart(pid, isshow);
                 return;
@@ -234,7 +234,7 @@ function fillcart() {
         data: { token: token, random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 fillcart();
                 return;
@@ -333,7 +333,7 @@ function dealCartCount(pid, count) {
         data: { token: token, productid: pid, count: count, random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 dealCartCount(pid, count);
             }
@@ -350,7 +350,7 @@ function so_fillProd() {
         data: { token: token, random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 so_fillProd();
             }
@@ -397,7 +397,7 @@ function so_fillProvince() {
         data: { random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 so_fillProvince();
             }
@@ -422,7 +422,7 @@ function so_fillCity(pid, city) {
         data: { parentid: pid, random: Math.random() },
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 so_fillCity(pid, city);
             }
@@ -444,7 +444,7 @@ function so_fillCity(pid, city) {
 
 function so_fillAddress() {
     $.post(domain + 'api/user_get_address.aspx', { token: token, random: Math.random() }, function (data) {
-        if (data.status == -1) {
+        if (data.status == 1) {
             GetToken();
             so_fillAddress();
         }
@@ -476,7 +476,7 @@ function totalFeight(province, count) {
         data: { province: province, count: count, random: Math.random() },
         success: function (data, textStatus) {
             var obj = JSON.parse(data);
-            if (obj.status == -1) {
+            if (obj.status == 1) {
                 GetToken();
                 totalFeight(province, count);
             }
@@ -504,10 +504,10 @@ function orderState(state, oid) {
             str_state = "已付款 未发货";
             break;
         case 2:
-            str_state = "已发货";
+            str_state = "已发货　" + number;
             break;
         case 3:
-            str_state = "已收货";
+            str_state = "已退款";
             break;
     }
     return str_state;
