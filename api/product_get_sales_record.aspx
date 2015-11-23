@@ -28,7 +28,7 @@
             }
             if (orderDetailJsonStr.StartsWith(","))
                 orderDetailJsonStr = orderDetailJsonStr.Remove(0, 1);
-            orderJsonStr = orderJsonStr + "," + orderDetailJsonStr.Trim();
+            orderJsonStr = orderJsonStr + ",{" + orderDetailJsonStr.Trim()+"}";
         }
         if (orderJsonStr.StartsWith(","))
             orderJsonStr = orderJsonStr.Remove(0, 1);
