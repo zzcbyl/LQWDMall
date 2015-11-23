@@ -67,6 +67,10 @@
             values.TryGetValue("name", out name);
             values.TryGetValue("cell", out cell);
             values.TryGetValue("ctime1", out ctime1);
+            
+            //string weixinJsonStr = Util.GetWebContent("http://weixin.luqinwenda.com/dingyue/get_user_info.aspx?openid=" + 
+            
+            
             dr["weixin_nick"] = name.ToString();
             dr["weixin_head_image"] = "";
             dr["cell"] = cell.ToString();
