@@ -6,9 +6,62 @@
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        Response.Write(GetMaxOrderIdFromDonateList().ToString());
-        int maxOrderId = GetMaxOrderIdFromDonateList();
-        InsertOrders(maxOrderId);
+        //Response.Write(GetMaxOrderIdFromDonateList().ToString());
+        try
+        {
+            int maxOrderId = GetMaxOrderIdFromDonateList();
+            InsertOrders(maxOrderId);
+        }
+        catch
+        { 
+        
+        }
+
+        DataTable dt = DBHelper.GetDataTable(" select * from donate_list order by create_time desc", Util.ConnectionString.Trim());
+        DataTable dtResult = dt.Clone();
+
+        int topNum = 3;
+
+        DataRow[] drBuyArr = dt.Select(" type = 'buy' ");
+        for (int i = 0; i < topNum && i < drBuyArr.Length ; i++)
+        {
+            DataRow drResult = dtResult.NewRow();
+            foreach(DataColumn c in dtResult.Columns)
+            {
+                drResult[c] = drBuyArr[i][c.Caption];
+                
+            }
+            dtResult.Rows.Add(drResult);
+            dt.Rows.Remove(drBuyArr[i]);
+        }
+
+        foreach (DataRow dr in dt.Rows)
+        {
+            DataRow drResult = dtResult.NewRow();
+            foreach (DataColumn c in dtResult.Columns)
+            {
+                drResult[c] = dr[c.Caption];
+                //dt.Rows.Remove(drBuyArr[i]);
+            }
+            dtResult.Rows.Add(drResult);
+        }
+
+        string jsonRecordCollection = "";
+        foreach (DataRow dr in dtResult.Rows)
+        {
+            string jsonPerRecord = "";
+            foreach (DataColumn c in dtResult.Columns)
+            {
+                jsonPerRecord = jsonPerRecord + " , \"" + c.Caption.Trim() + "\" : \""
+                    + dr[c].ToString().Replace("'", "”").Replace(",", "，").Trim() + "\"  ";
+            }
+            if (jsonPerRecord.Trim().StartsWith(","))
+                jsonPerRecord = jsonPerRecord.Trim().Remove(0, 1);
+            jsonRecordCollection = jsonRecordCollection + ", {" + jsonPerRecord.Trim() + "} ";
+        }
+        if (jsonRecordCollection.Trim().StartsWith(","))
+            jsonRecordCollection = jsonRecordCollection.Trim().Remove(0, 1);
+        Response.Write("{\"status\":0, donate_list:[" + jsonRecordCollection + "]}");
         
     }
 
@@ -25,13 +78,13 @@
             object orderId;
             Dictionary<string, object> orderDict = (Dictionary<string, object>)orderArr[i];
             orderDict.TryGetValue("oid", out orderId);
-            if ((int)orderId > maxOrderId)
+            if (int.Parse(orderId.ToString()) > maxOrderId)
             {
                 try
                 {
                     object userId;
                     orderDict.TryGetValue("uid", out userId);
-                    Users user = new Users((int)userId);
+                    Users user = new Users(int.Parse(userId.ToString()));
                     string userInfoJSONStr = GetUserinfoJSONStringByOpenId(user._fields["uname"].ToString().Trim());
                     
                     object nick;
@@ -55,13 +108,19 @@
                     }
                     if (nick.ToString().Equals(""))
                         orderDict.TryGetValue("name", out nick);
-                    
-                    orderDict.TryGetValue("ctime1", out orderDate);
-                    InsertIntoList(nick.ToString(), headImageUrl.ToString(), cell.ToString(), "buy", (int)orderId, (DateTime)orderDate);
+                    try
+                    {
+                        orderDict.TryGetValue("ctime1", out orderDate);
+                    }
+                    catch
+                    {
+                        orderDate = (object)DateTime.Now;
+                    }
+                    InsertIntoList(nick.ToString(), headImageUrl.ToString(), cell.ToString(), "buy", int.Parse(orderId.ToString()), DateTime.Parse(orderDate.ToString()));
                 }
-                catch
-                { 
-                
+                catch(Exception err)
+                {
+                    System.Console.WriteLine(err.ToString());
                 }
             }
             else
@@ -83,15 +142,15 @@
             = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>[6];
         insertParameterArray[0] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("type",
             new KeyValuePair<SqlDbType, object>(SqlDbType.VarChar, (object)"buy"));
-        insertParameterArray[0] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("order_id",
+        insertParameterArray[1] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("order_id",
             new KeyValuePair<SqlDbType, object>(SqlDbType.Int, (object)orderId));
-        insertParameterArray[0] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("weixin_nick",
+        insertParameterArray[2] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("weixin_nick",
             new KeyValuePair<SqlDbType, object>(SqlDbType.VarChar, (object)nick));
-        insertParameterArray[0] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("weixin_head_image",
+        insertParameterArray[3] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("weixin_head_image",
             new KeyValuePair<SqlDbType, object>(SqlDbType.VarChar, (object)headImage));
-        insertParameterArray[0] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("cell",
+        insertParameterArray[4] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("cell",
             new KeyValuePair<SqlDbType, object>(SqlDbType.VarChar, (object)cell));
-        insertParameterArray[0] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("create_time",
+        insertParameterArray[5] = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>("create_time",
             new KeyValuePair<SqlDbType, object>(SqlDbType.DateTime, (object)date));
         DBHelper.InsertData("donate_list", insertParameterArray, Util.ConnectionString);
     }
