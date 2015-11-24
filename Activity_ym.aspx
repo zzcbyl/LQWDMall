@@ -186,8 +186,10 @@
             GetLoveList();
         }
         function nextPage() {
-            currentpage += 1;
-            GetLoveList();
+            if (currentpage < 4) {
+                currentpage += 1;
+                GetLoveList();
+            }
         }
 
         function GetLoveList() {
