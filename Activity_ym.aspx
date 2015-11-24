@@ -58,6 +58,14 @@
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
+            <h5>助梦对象：</h5>
+            <div style="margin-top:5px; text-align:center;">
+                <a href="Activity_ym_Content.aspx?obj=1"><img src="images/wangguoliang_1.jpg" width="50%" style="float:left; margin-left:-2px;" /></a>
+                <a href="Activity_ym_Content.aspx?obj=2"><img src="images/dengyun_1.jpg" width="50%" style="float:right; margin-right:-2px;" /></a>
+            </div>
+            <br style="clear:both;" />
+        </div>
+        <div style="background:#fff; padding:10px; margin-top:10px;">
             <h5>活动介绍：</h5>
             <div style="margin-top:5px;">
                 　他们都是来自贫困山区的留守儿童，他们都热爱演说，他们渴望在今年寒假走出大山，希望能够像城里的孩子一样参加一次冬令营，和电视上的明星老师们面对面过一个难忘的寒假，圆一个演说家的梦想！<br />
@@ -72,11 +80,11 @@
             <div style="margin-top:5px;">
                 以下助梦方式您可任选其一，也可同时选择。<br />
                 <div style="margin-left:10px;">
-                    <div>1、点击<a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123' style="color:#0B659D; text-decoration:underline; font-weight:bold;">“爱要拍”</a>，拍下一套“家庭教育专题讲座”，您支付的全款我们将全部用于助梦活动；</div>
+                    <div>1、点击<a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123' style="color:#0B659D; text-decoration:underline; font-weight:bold;">“义卖”</a>，拍下一套“家庭教育专题讲座”，您支付的全款我们将全部用于助梦活动；</div>
                     <div style="text-align:center; padding:5px;">
                         <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123'><img src="http://mall.luqinwenda.com/upload/prodimg/act_yimai.jpg" width="500px" /></a>
                     </div>
-                    <div>2、点击<a href="javascript:void(0);" onclick="ActiveService();" style="color:#0B659D; text-decoration:underline; font-weight:bold;">“爱转发”</a>，成功转发当前活动页面后并截图，然后通过卢勤问答平台公众号把截图发给我们，您转发一次我们就为该活动捐助一元钱；</div>
+                    <div>2、点击<a href="javascript:void(0);" onclick="ActiveService();" style="color:#0B659D; text-decoration:underline; font-weight:bold;">“转发”</a>，成功转发当前活动页面后并截图，然后通过卢勤问答平台公众号把截图发给我们，您转发一次我们就为该活动捐助一元钱；</div>
                     <div>3、筹款总额度19600元；</div>
                     <div>4、活动截止日期：以捐款满额为截止点；</div>
                 </div>
@@ -116,17 +124,18 @@
                 　　由卢勤问答平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
                 　　知心姐姐卢勤欢迎你的加入！
             </div>
+            <div style="text-align:center; margin-top:10px;"><img src="images/dyh_code.jpg" width="80%" /></div>
         </div>
 
         <div class="clear" style="height:60px;"></div>
         <div class="m-bottom">
             <div id="footermenu">
                     <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
-                        爱转发
+                        转发
                     </span>
                     <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123'>
                     <span class="barmaigin_btn rightbtn btnwith">
-                        爱要拍
+                        义卖
                     </span></a>
                 <div class="clear"></div>
             </div>

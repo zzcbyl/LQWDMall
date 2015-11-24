@@ -73,7 +73,7 @@
         </div>
 
         <div id="div_dy" style="background:#fff; padding:10px; margin-top:10px; display:none;">
-            <div style="text-align:center;"><img src="" /></div>
+            <div style="text-align:center;"><img src="images/dengyun.jpg" /></div>
             <div style="margin-top:10px; line-height:23px;">
                 <div style="font-size:14px; font-weight:bold;">江西省兴国县埠头中心小学 六（1）班邓芸：</div>
                 <div style="text-indent:30px;">今年，知心姐姐在江西的一个小学和孩子们分享梦想的力量时，孩子们争先恐后地站起来告诉知心姐姐自己的梦想是什么。这时我发现有一个女孩站起来又坐下，想说话却又很胆怯的样子，并且反复了好几次。于是，我让大家安静，点名让这个女孩子站起来，大声的告诉大家她的梦想是什么？她用低弱的声音很不自信的说“知心姐姐，我想要一个生日蛋糕”。这个女孩就是邓芸。</div>
@@ -90,6 +90,7 @@
                 　　由卢勤问答平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
                 　　知心姐姐卢勤欢迎你的加入！
             </div>
+            <div style="text-align:center; margin-top:10px;"><img src="images/dyh_code.jpg" width="80%" /></div>
         </div>
     </div>
 
@@ -99,7 +100,7 @@
         var descContent = "一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_ym.aspx"; //链接
         $(document).ready(function () {
-            
+            showDiv(QueryString('obj'));
         });
 
         function showDiv(m) {
