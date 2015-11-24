@@ -35,7 +35,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>“关爱留守儿童”爱心公益活动公益活动</title>
+    <title>“关爱留守儿童”爱心公益活动</title>
     <script src="script/config.js" type="text/javascript"></script>
     <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="style/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -94,7 +94,7 @@
     </div>
 
     <script type="text/javascript">
-        var shareTitle = "“关爱留守儿童”爱心公益活动公益活动"; //标题
+        var shareTitle = "“关爱留守儿童”爱心公益活动"; //标题
         var imgUrl = "http://mall.luqinwenda.com/images/activity_ym_icon.jpg"; //图片
         var descContent = "一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_ym.aspx"; //链接
