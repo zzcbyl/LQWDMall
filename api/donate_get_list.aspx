@@ -185,8 +185,25 @@
 
     public static string GetUserinfoJSONStringByOpenId(string openId)
     {
+        string jsonStr = Util.GetWebContent("http://weixin.luqinwenda.com/get_user_info.aspx?openid=" + openId.Trim(),
+            "get", "", "html/json");
+        string nick = "";
+        try
+        {
+            nick = Util.GetSimpleJsonValueByKey(jsonStr, "nickname");
+        }
+        catch
+        {
+            jsonStr = Util.GetWebContent("http://weixin.luqinwenda.com/get_user_info.aspx?openid=" + openId.Trim(),
+                "get", "", "html/json");
+            nick = Util.GetSimpleJsonValueByKey(jsonStr, "nickname");
+            
         
-        return "";
+        }
+        if (nick.Trim().Equals(""))
+            return "";
+        else
+            return jsonStr;
     }
 
     public static void InsertIntoList(string nick, string headImage, string cell, string type, int orderId, DateTime date)
