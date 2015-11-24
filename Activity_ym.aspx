@@ -225,11 +225,11 @@
             //alert(document.documentElement.scrollTop);
             if (document.documentElement.scrollTop == 0) {
                 $(".arrowDiv").css({ top: document.body.scrollTop + "px" });
-                $(".promptDiv").css({ top: document.body.scrollTop + 80 + "px" });
+                $(".promptDiv").css({ top: document.body.scrollTop + 40 + "px" });
             }
             else {
                 $(".arrowDiv").css({ top: document.documentElement.scrollTop + "px" });
-                $(".promptDiv").css({ top: document.documentElement.scrollTop + 80 + "px" });
+                $(".promptDiv").css({ top: document.documentElement.scrollTop + 40 + "px" });
             }
             $("#showShare").show();
             return;
