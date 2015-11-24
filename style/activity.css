@@ -89,4 +89,4 @@ body{ font: normal 14px/1.5 Arial, "Lucida Grande", Verdana, "Microsoft YaHei", 
 #popdiv1 { position: absolute; top:10px; left:0; background:#FF9900; width:100%; max-width:650px; z-index:100; display:none; }
 
 .arrowDiv { width:170px; height:200px;  color:#000; position:absolute;  right:2pt; top:0pt; z-index:10; font-size:20pt;  background:url(../images/jiantou.png) no-repeat }
-.promptDiv { width:149px; height:200px;  color:#000; position:absolute; top:50pt; margin-left:70pt; z-index:20; font-size:14pt; line-height:30pt; text-align:center;}
+.promptDiv { width:180px; height:200px;  color:#000; position:absolute; top:50pt; margin-left:70pt; z-index:20; font-size:14pt; line-height:30pt; text-align:center;}
