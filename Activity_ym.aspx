@@ -54,7 +54,7 @@
     <div class="mainpage">
         <div class="m-dcontent" style="margin-top:10px;">
             <div id="prodimg" style="border:1px solid #ccc;">
-                <img src="images/activity_bj_banner.jpg" width="100%" />
+                <img src="images/activity_ym_banner.jpg" width="100%" />
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
@@ -63,7 +63,7 @@
                 　他们都是来自贫困山区的留守儿童，他们都热爱演说，他们渴望在今年寒假走出大山，希望能够像城里的孩子一样参加一次冬令营，和电视上的明星老师们面对面过一个难忘的寒假，圆一个演说家的梦想！<br />
                 　一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！
             </div>
-            <div><a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block; float:right;" href='#'>详细介绍>></a></div>
+            <div><a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block; float:right;" href="Activity_ym_Content.aspx">详细介绍>></a></div>
             <br style="clear:both;" />
         </div>
         <div style="clear:both; height:1px;"></div>
@@ -103,6 +103,10 @@
                 <ul id="bargainlist" class="bargain_list_info">
                     
                 </ul>
+                <div id="pageDiv" style="text-align:center; margin-top:10px;">
+                    <button class="btn btn-danger" onclick="prevPage();">上一页</button>　
+                    <button class="btn btn-danger" onclick="nextPage();">下一页</button>
+                </div>
             </div>
         </div>
         
@@ -136,18 +140,77 @@
 
     <script type="text/javascript">
         var shareTitle = "“关爱留守儿童”爱心公益活动公益活动"; //标题
-        var imgUrl = "http://mall.luqinwenda.com/images/activity_bj_icon.jpg"; //图片
+        var imgUrl = "http://mall.luqinwenda.com/images/activity_ym_icon.jpg"; //图片
         var descContent = "一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_ym.aspx"; //链接
+        var currentpage = 1;
+        var pagesize = 20;
         $(document).ready(function () {
             if (QueryString('openid') != null) {
-                fillbarmaigin(QueryString('openid'));
+                GetLoveList();
             }
             else {
                 var encodeDomain = encodeURIComponent(document.URL);
                 location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
             }
+
+
         });
+
+        function prevPage() {
+            currentpage -= 1;
+            if (currentpage <= 0) {
+                currentpage = 1;
+            }
+            bindVoteList();
+        }
+        function nextPage() {
+            currentpage += 1;
+            bindVoteList();
+        }
+
+        function GetLoveList() {
+            if (currentpage <= 0)
+                return;
+            $('#bargainlist').html('<li class="loading"><img src="http://mall.luqinwenda.com/images/loading.gif" /><br />加载中...</li>');
+
+            $.ajax({
+                type: 'post',
+                url: domain + 'api/donate_get_list.aspx',
+                data: { productid: 5, currentpage: currentpage, pagesize: pagesize },
+                success: function (data, textStatus) {
+                    data = data.replace(/\n/g, '');
+                    var json = eval("(" + data + ")");
+                    var html = '';
+                    var name = '';
+                    var price = '1';
+                    for (var i = 0; i < json.donate_list.length; i++) {
+                        name = json.donate_list[i].weixin_nick;
+                        if (name.length > 0) {
+                            name = '** ' + name.substring(name.length - 1, name.length);
+                        }
+                        if (json.donate_list[i].type == 'buy')
+                            price = '218';
+                        else
+                            price = '&nbsp;&nbsp;&nbsp;&nbsp;1';
+                        html += '<li><span class="bargain_price" style="width:100px; margin-right:20px; padding-top:0px; font-size:14px">爱心 ' + price + '元</span><p class="bargain_name" style="font-size:14px; padding-top:0px; margin-left:20px;">' + name + '</p></li>';
+                    }
+                    $('#bargainlist').html(html);
+
+                    if (currentpage == 1 && json.donate_list.length < pagesize) {
+                        $('#pageDiv').hide();
+                    }
+                    else
+                        $('#pageDiv').show();
+
+                    if ($('#bargainlist').html() == "") {
+                        currentpage--;
+                        GetLoveList();
+                    }
+                }
+            });
+
+        }
 
         function ActiveService() {
             //alert(document.documentElement.scrollTop);
@@ -162,51 +225,7 @@
             $("#showShare").show();
             return;
         }
-
-
-        function fillbarmaigin(open_id) {
-            $('#bargainlist').html('<li class="loading"><img src="images/loading.gif" /><br />加载中...</li>');
-            //alert(open_id);
-            $.ajax({
-                type: "get",
-                async: false,
-                url: domain + 'api/promote_get_sub_users.aspx',
-                data: { openid: open_id, random: Math.random() },
-                success: function (data, textStatus) {
-                    //alert(data);
-                    var obj = eval('(' + data + ')');
-                    var innerHtml = '';
-                    if (obj != null) {
-                        //alert(obj['sub-open-id-info'].length);
-                        var infoObj;
-                        var infoDate;
-                        for (var i = 0; i < obj['sub-open-id-info'].length; i++) {
-                            infoObj = obj['sub-open-id-info'][i];
-
-                            infoObj['join-date'] = infoObj['join-date'].replace(/\//g, "-");
-                            if (infoObj.info.nickname == undefined) {
-                                infoObj.info.nickname = "匿名网友";
-                            }
-                            else if (infoObj.info.nickname.length < 4) {
-                                infoObj.info.nickname = infoObj.info.nickname + "**";
-                            }
-                            else
-                                infoObj.info.nickname = infoObj.info.nickname.substring(0, 3) + "**";
-                            innerHtml += '<li><span class="bargain_price" style="width:80px">砍一刀</span><p class="bargain_name">' + infoObj.info.nickname + '</p><p class="bargain_time">' + infoObj['join-date'] + '</p></li>';
-                        }
-
-                        var amount = obj['sub-open-id-info'].length * 10;
-
-                        $("#bargainCount").html(obj['sub-open-id-info'].length);
-                        $("#bargainAmount").html(amount);
-                        $("#bargainTotal").html(amount);
-
-                        $('#prodprice').html((parseFloat($('#prodprice').html()) - parseFloat(amount)) <= 0 ? "0" : (parseFloat($('#prodprice').html()) - parseFloat(amount)));
-                    }
-                    $("#bargainlist").html(innerHtml);
-                }
-            });
-        }
+       
     </script>
     </form>
 </body>
