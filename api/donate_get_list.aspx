@@ -37,7 +37,6 @@
 
         foreach (DataRow dr in dt.Rows)
         {
-<<<<<<< HEAD
             DataRow drResult = dtResult.NewRow();
             foreach (DataColumn c in dtResult.Columns)
             {
@@ -45,26 +44,6 @@
                 //dt.Rows.Remove(drBuyArr[i]);
             }
             dtResult.Rows.Add(drResult);
-=======
-            DataRow dr = dtResult.NewRow();
-            Dictionary<string, object> values = (Dictionary<string, object>)vArr[i];
-            object name;
-            object cell;
-            object ctime1;
-            values.TryGetValue("name", out name);
-            values.TryGetValue("cell", out cell);
-            values.TryGetValue("ctime1", out ctime1);
-            
-            //string weixinJsonStr = Util.GetWebContent("http://weixin.luqinwenda.com/dingyue/get_user_info.aspx?openid=" + 
-            
-            
-            dr["weixin_nick"] = name.ToString();
-            dr["weixin_head_image"] = "";
-            dr["cell"] = cell.ToString();
-            dr["date"] = ctime1.ToString();
-            dr["donate_type"] = "buy";
-            dtResult.Rows.Add(dr);
->>>>>>> e3733b40bf84fac5f7fc5cd82e3dd4bc8170780e
         }
 
         string jsonRecordCollection = "";
