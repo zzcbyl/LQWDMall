@@ -37,7 +37,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>“关爱留守儿童”爱心公益活动</title>
+    <title>“助梦留守儿童”爱心义卖活动</title>
     <script src="script/config.js" type="text/javascript"></script>
     <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="style/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -119,7 +119,7 @@
         </div>
         
         <div style="background:#fff; padding:10px; margin-top:10px;">
-            <h5>“关爱留守儿童”爱心公益活动：</h5>
+            <h5>“助梦留守儿童”爱心义卖活动：</h5>
             <div style="margin-top:5px;">
                 　　由卢勤问答平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
                 　　知心姐姐卢勤欢迎你的加入！
@@ -148,7 +148,7 @@
         <div class="promptDiv">点击右上角“┇”<br />分享到朋友圈并截图</div>
 
     <script type="text/javascript">
-        var shareTitle = "“关爱留守儿童”爱心公益活动"; //标题
+        var shareTitle = "“助梦留守儿童”爱心义卖活动"; //标题
         var imgUrl = "http://mall.luqinwenda.com/images/activity_ym_icon.jpg"; //图片
         var descContent = "一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_ym.aspx"; //链接
