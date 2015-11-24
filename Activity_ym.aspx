@@ -63,13 +63,13 @@
                 <div style="float:left; width:48%;">
                     <a href="Activity_ym_Content.aspx?obj=1">
                         <img src="images/wangguoliang_1.jpg" width="100%" /><br/>
-                        山东省临沂市费县大田庄乡堂子小学王国梁
+                        山东省临沂市费县大田庄乡堂子小学<br/>王国梁
                     </a>
                 </div>
                 <div style="float:right; width:48%;">
                     <a href="Activity_ym_Content.aspx?obj=2">
                         <img src="images/dengyun_1.jpg" width="100%" /><br/>
-                        江西省兴国县埠头中心小学六（1）班邓芸
+                        江西省兴国县埠头中心小学<br/>邓芸
                     </a>
                 </div>
             </div>
@@ -79,9 +79,9 @@
             <h5>活动介绍：</h5>
             <div style="margin-top:5px;">
                 　他们都是来自贫困山区的留守儿童，他们都热爱演说，他们渴望在今年寒假走出大山，希望能够像城里的孩子一样参加一次冬令营，和电视上的明星老师们面对面过一个难忘的寒假，圆一个演说家的梦想！<br />
-                　一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！
+                　<span style="color:#EC3E35; font-weight:bold;">一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！</span>
             </div>
-            <div><a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block; float:right;" href="Activity_ym_Content.aspx">详细介绍>></a></div>
+            <div><a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block; float:right;" href="Activity_ym_Content.aspx">查看详情>></a></div>
             <br style="clear:both;" />
         </div>
         <div style="clear:both; height:1px;"></div>
@@ -90,13 +90,13 @@
             <div style="margin-top:5px;">
                 以下助梦方式您可任选其一，也可同时选择。<br />
                 <div style="margin-left:10px;">
-                    <div>1、点击<a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123' style="color:#0B659D; text-decoration:underline; font-weight:bold;">“义卖”</a>，拍下一套“家庭教育专题讲座”，您支付的全款我们将全部用于助梦活动；</div>
+                    <div>1、点击<a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=<%=Request["openid"] %>' style="color:#0B659D; text-decoration:underline; font-weight:bold;">“义卖”</a>，拍下一套“家庭教育专题讲座”，您支付的全款我们将全部用于助梦活动；</div>
                     <div style="text-align:center; padding:5px;">
-                        <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123'><img src="http://mall.luqinwenda.com/upload/prodimg/act_yimai.jpg" width="500px" /></a>
+                        <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=<%=Request["openid"] %>'><img src="http://mall.luqinwenda.com/upload/prodimg/act_yimai.jpg" width="500px" /></a>
                     </div>
                     <div>2、点击<a href="javascript:void(0);" onclick="ActiveService();" style="color:#0B659D; text-decoration:underline; font-weight:bold;">“转发”</a>，成功转发当前活动页面后并截图，然后通过卢勤问答平台公众号把截图发给我们，您转发一次我们就为该活动捐助一元钱；</div>
                     <div>3、筹款总额度19600元；</div>
-                    <div>4、活动截止日期：以捐款满额为截止点；</div>
+                    <div>4、活动截止日期：以捐款满额为截止点。</div>
                 </div>
             </div>
         </div>
@@ -104,14 +104,13 @@
             <h5>演讲营介绍：</h5>
             <div style="margin-top:5px;">
                 <div style="text-align:center; padding:0 5px 5px;">
-                    <a href='http://mall.luqinwenda.com/Detail_xly.aspx?productid=28&openid=123'><img src="http://mall.luqinwenda.com/upload/prodimg/ying_ys3.jpg" width="500px" /></a>
+                    <a href='http://mall.luqinwenda.com/Detail_xly.aspx?productid=28&openid=<%=Request["openid"] %>'><img src="http://mall.luqinwenda.com/upload/prodimg/ying_ys3.jpg" width="500px" /></a>
                 </div>
                 <div>　　让孩子敢说话，会说话，说自己的话，善于运用语言的力量！</div>
                 <div>　　想学说话，就要找会说话的人！</div>
                 <div>　　2016年 1月29日——2月3日，《我要学演说》少年口才培训营特邀北京人民广播电台的金话筒节目主持人“小雨姐姐”和“知心姐姐”卢勤老师联合倾力策划，全程陪伴；邀请著名少儿节目主持人鞠萍姐姐、深圳卫视著名节目主持人强子哥哥倾情分享，名师带领，为8-18岁的青少年带来终身难忘的演说特训营！</div>
-                <div>　　给孩子一个舞台，点燃孩子的激情；名师专家口传心授，释放孩子的潜能；星光璀璨，展示孩子的才华。在这里，表达自己不再是埋藏在心里的一个冲动，话语权也不再是少数人的特权，舞台聚光灯将属于勇于挑战自我的你！</div>
                 <div><a style="font-size:12px; color:#0B659D; text-decoration:underline; display:inline-block; float:right;" 
-                        href='http://mall.luqinwenda.com/Detail_xly.aspx?productid=28&openid=123'>详细介绍>></a></div>
+                        href='http://mall.luqinwenda.com/Detail_xly.aspx?productid=28&openid=<%=Request["openid"] %>'>查看详情>></a></div>
                 <br style="clear:both;" />
             </div>
         </div>
@@ -132,6 +131,7 @@
             <h5>“助梦留守儿童”爱心义卖活动：</h5>
             <div style="margin-top:5px;">
                 　　由卢勤问答平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
+                　　<span style="color:#EC3E35; font-weight:bold;">一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！</span><br />
                 　　知心姐姐卢勤欢迎你的加入！
             </div>
             <div style="text-align:center; margin-top:10px;"><img src="images/dyh_code.jpg" width="80%" /></div>
@@ -143,7 +143,7 @@
                     <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
                         转发
                     </span>
-                    <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=123'>
+                    <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=<%=Request["openid"] %>'>
                     <span class="barmaigin_btn rightbtn btnwith">
                         义卖
                     </span></a>
