@@ -97,8 +97,6 @@
                         <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=<%=Request["openid"] %>'><img src="http://mall.luqinwenda.com/upload/prodimg/act_yimai.jpg" width="500px" /></a>
                     </div>
                     <div>2、点击<a href="javascript:void(0);" onclick="ActiveService();" style="color:#0B659D; text-decoration:underline; font-weight:bold;">“转发”</a>，成功转发当前活动页面后并截图，然后通过卢勤问答平台公众号把截图发给我们，您转发一次我们就为该活动捐助一元钱；</div>
-                    <div>3、筹款总额度19600元；</div>
-                    <div>4、活动截止日期：以捐款满额为截止点。</div>
                 </div>
             </div>
         </div>
