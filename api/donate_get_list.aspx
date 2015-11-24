@@ -1,7 +1,14 @@
 ﻿<%@ Page Language="C#" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.Web.Script.Serialization" %>
+<%@ Import Namespace="System.Threading" %>
 <script runat="server">
+
+    public static void FillData()
+    {
+        int maxOrderId = GetMaxOrderIdFromDonateList();
+        InsertOrders(maxOrderId);
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -9,8 +16,9 @@
         //Response.Write(GetMaxOrderIdFromDonateList().ToString());
         try
         {
-            int maxOrderId = GetMaxOrderIdFromDonateList();
-            InsertOrders(maxOrderId);
+            ThreadStart threadStart = new ThreadStart(FillData);
+            
+            
         }
         catch
         { 
@@ -65,7 +73,7 @@
         
     }
 
-    public void InsertOrders(int maxOrderId)
+    public static void InsertOrders(int maxOrderId)
     {
         string jsonStr = Util.GetWebContent("http://mall.luqinwenda.com/api/product_get_sales_record.aspx?productid=5", "get", "", "html/json");
         JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -130,13 +138,13 @@
         }
     }
 
-    public string GetUserinfoJSONStringByOpenId(string openId)
+    public static string GetUserinfoJSONStringByOpenId(string openId)
     {
         
         return "";
     }
-    
-    public void InsertIntoList(string nick, string headImage, string cell, string type, int orderId, DateTime date)
+
+    public static void InsertIntoList(string nick, string headImage, string cell, string type, int orderId, DateTime date)
     {
         KeyValuePair<string, KeyValuePair<SqlDbType, object>>[] insertParameterArray
             = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>[6];
@@ -155,7 +163,7 @@
         DBHelper.InsertData("donate_list", insertParameterArray, Util.ConnectionString);
     }
     
-    public int GetMaxOrderIdFromDonateList()
+    public static int GetMaxOrderIdFromDonateList()
     {
         DataTable dt = DBHelper.GetDataTable("select max(order_id) from donate_list where type = 'buy' ", Util.ConnectionString);
         int maxId = 0;
