@@ -17,7 +17,8 @@
         try
         {
             ThreadStart threadStart = new ThreadStart(FillData);
-            
+            Thread thread = new Thread(threadStart);
+            thread.Start();
             
         }
         catch
@@ -54,11 +55,53 @@
             dtResult.Rows.Add(drResult);
         }
 
+        DataTable dtResultPaged = dtResult.Clone();
+        
+        int pageSize = 20;
+        try
+        {
+            pageSize = int.Parse(Util.GetSafeRequestValue(Request, "pagesize", "20"));
+        }
+        catch
+        { 
+        
+        }
+        
+        int currentPage = 1;
+        try
+        {
+            currentPage = int.Parse(Util.GetSafeRequestValue(Request, "currentpage", "1"));
+        }
+        catch
+        {
+
+        }
+
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = startIndex + pageSize;
+        endIndex = (dtResult.Rows.Count < endIndex) ? dtResult.Rows.Count : endIndex;
+        int pageCount = dtResult.Rows.Count / pageSize;
+        if (pageSize * pageCount < dtResult.Rows.Count)
+        {
+            pageCount++;
+        }
+
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            DataRow drPaged = dtResultPaged.NewRow();
+            foreach (DataColumn c in dtResultPaged.Columns)
+            {
+                drPaged[c] = dtResult.Rows[i][c.Caption.Trim()];
+            }
+            dtResultPaged.Rows.Add(drPaged);
+        }
+        
+
         string jsonRecordCollection = "";
-        foreach (DataRow dr in dtResult.Rows)
+        foreach (DataRow dr in dtResultPaged.Rows)
         {
             string jsonPerRecord = "";
-            foreach (DataColumn c in dtResult.Columns)
+            foreach (DataColumn c in dtResultPaged.Columns)
             {
                 jsonPerRecord = jsonPerRecord + " , \"" + c.Caption.Trim() + "\" : \""
                     + dr[c].ToString().Replace("'", "”").Replace(",", "，").Trim() + "\"  ";
@@ -69,7 +112,9 @@
         }
         if (jsonRecordCollection.Trim().StartsWith(","))
             jsonRecordCollection = jsonRecordCollection.Trim().Remove(0, 1);
-        Response.Write("{\"status\":0, donate_list:[" + jsonRecordCollection + "]}");
+        Response.Write("{\"status\":0, \"count\":" + dtResult.Rows.Count.ToString() + " , " 
+            + "  \"page_size\": " + pageSize.ToString() + ", \"page_count\" : " + pageCount.ToString() + ", "
+            + " \"current_page\": " + currentPage.ToString() + " , donate_list:[" + jsonRecordCollection + "]}");
         
     }
 
