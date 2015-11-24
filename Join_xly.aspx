@@ -15,6 +15,22 @@
             <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
         </p>
         <p class="add_list_p rel">
+            <select id="childAge" name="childAge">
+                <option value="">请选择孩子年龄</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+            </select>
+        </p>
+        <p class="add_list_p rel">
             <input type="text" id="childIDcard" maxlength="50" name="childIDcard" placeholder="请输入孩子身份证" />
         </p>
         <p class="add_list_p rel">
@@ -78,7 +94,7 @@
     }
     private void submitOrder(string token)
     {
-        string memo = "孩子姓名：" + Request.Form["childName"].ToString() + "，孩子身份证：" + Request.Form["childIDcard"].ToString()
+        string memo = "孩子姓名：" + Request.Form["childName"].ToString() + "，孩子年龄：" + Request.Form["childAge"].ToString() + "岁，孩子身份证：" + Request.Form["childIDcard"].ToString()
                     + "，家长姓名：" + Request.Form["parentName"].ToString() + "，手机号码：" + Request.Form["parentMobile"].ToString()
                     + "，电子邮箱：" + Request.Form["parentEmail"].ToString();
         string parms = "token=" + token + "&name=&cell=&province=&city=&address=&zip=&productid=" + Request["productid"].ToString() + "&count=1|1&memo=" + memo + "&wechatid=";
@@ -310,6 +326,11 @@
             $('#myModal').modal('show');
             return;
         }
+        if ($("#childAge").val().Trim() == "") {
+            $("#ModalContent").html("请选择孩子年龄");
+            $('#myModal').modal('show');
+            return;
+        }
         var result = isIdCardNo($("#childIDcard").val().Trim());
         if (result != "") {
             $("#ModalContent").html("请输入正确的身份证");
@@ -344,7 +365,7 @@
             $('#myModal').modal('show');
             return;
         }
-        
+
         GetOpenidToken();
         $("#myToken").val(token);
         $("#myOpenid").val(openid);
