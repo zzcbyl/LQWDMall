@@ -1,7 +1,14 @@
 ﻿<%@ Page Language="C#" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="System.Web.Script.Serialization" %>
+<%@ Import Namespace="System.Threading" %>
 <script runat="server">
+
+    public static void FillData()
+    {
+        int maxOrderId = GetMaxOrderIdFromDonateList();
+        InsertOrders(maxOrderId);
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -9,8 +16,10 @@
         //Response.Write(GetMaxOrderIdFromDonateList().ToString());
         try
         {
-            int maxOrderId = GetMaxOrderIdFromDonateList();
-            InsertOrders(maxOrderId);
+            ThreadStart threadStart = new ThreadStart(FillData);
+            Thread thread = new Thread(threadStart);
+            thread.Start();
+            
         }
         catch
         { 
@@ -46,11 +55,53 @@
             dtResult.Rows.Add(drResult);
         }
 
+        DataTable dtResultPaged = dtResult.Clone();
+        
+        int pageSize = 20;
+        try
+        {
+            pageSize = int.Parse(Util.GetSafeRequestValue(Request, "pagesize", "20"));
+        }
+        catch
+        { 
+        
+        }
+        
+        int currentPage = 1;
+        try
+        {
+            currentPage = int.Parse(Util.GetSafeRequestValue(Request, "currentpage", "1"));
+        }
+        catch
+        {
+
+        }
+
+        int startIndex = (currentPage - 1) * pageSize;
+        int endIndex = startIndex + pageSize;
+        endIndex = (dtResult.Rows.Count < endIndex) ? dtResult.Rows.Count : endIndex;
+        int pageCount = dtResult.Rows.Count / pageSize;
+        if (pageSize * pageCount < dtResult.Rows.Count)
+        {
+            pageCount++;
+        }
+
+        for (int i = startIndex; i < endIndex; i++)
+        {
+            DataRow drPaged = dtResultPaged.NewRow();
+            foreach (DataColumn c in dtResultPaged.Columns)
+            {
+                drPaged[c] = dtResult.Rows[i][c.Caption.Trim()];
+            }
+            dtResultPaged.Rows.Add(drPaged);
+        }
+        
+
         string jsonRecordCollection = "";
-        foreach (DataRow dr in dtResult.Rows)
+        foreach (DataRow dr in dtResultPaged.Rows)
         {
             string jsonPerRecord = "";
-            foreach (DataColumn c in dtResult.Columns)
+            foreach (DataColumn c in dtResultPaged.Columns)
             {
                 jsonPerRecord = jsonPerRecord + " , \"" + c.Caption.Trim() + "\" : \""
                     + dr[c].ToString().Replace("'", "”").Replace(",", "，").Trim() + "\"  ";
@@ -61,11 +112,13 @@
         }
         if (jsonRecordCollection.Trim().StartsWith(","))
             jsonRecordCollection = jsonRecordCollection.Trim().Remove(0, 1);
-        Response.Write("{\"status\":0, donate_list:[" + jsonRecordCollection + "]}");
+        Response.Write("{\"status\":0, \"count\":" + dtResult.Rows.Count.ToString() + " , " 
+            + "  \"page_size\": " + pageSize.ToString() + ", \"page_count\" : " + pageCount.ToString() + ", "
+            + " \"current_page\": " + currentPage.ToString() + " , donate_list:[" + jsonRecordCollection + "]}");
         
     }
 
-    public void InsertOrders(int maxOrderId)
+    public static void InsertOrders(int maxOrderId)
     {
         string jsonStr = Util.GetWebContent("http://mall.luqinwenda.com/api/product_get_sales_record.aspx?productid=5", "get", "", "html/json");
         JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -130,13 +183,13 @@
         }
     }
 
-    public string GetUserinfoJSONStringByOpenId(string openId)
+    public static string GetUserinfoJSONStringByOpenId(string openId)
     {
         
         return "";
     }
-    
-    public void InsertIntoList(string nick, string headImage, string cell, string type, int orderId, DateTime date)
+
+    public static void InsertIntoList(string nick, string headImage, string cell, string type, int orderId, DateTime date)
     {
         KeyValuePair<string, KeyValuePair<SqlDbType, object>>[] insertParameterArray
             = new KeyValuePair<string, KeyValuePair<SqlDbType, object>>[6];
@@ -155,7 +208,7 @@
         DBHelper.InsertData("donate_list", insertParameterArray, Util.ConnectionString);
     }
     
-    public int GetMaxOrderIdFromDonateList()
+    public static int GetMaxOrderIdFromDonateList()
     {
         DataTable dt = DBHelper.GetDataTable("select max(order_id) from donate_list where type = 'buy' ", Util.ConnectionString);
         int maxId = 0;
