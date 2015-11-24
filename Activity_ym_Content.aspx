@@ -99,13 +99,7 @@
         var descContent = "一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！"; //简介
         var lineLink = "http://mall.luqinwenda.com/Activity_ym.aspx"; //链接
         $(document).ready(function () {
-            if (QueryString('openid') != null) {
-                
-            }
-            else {
-                var encodeDomain = encodeURIComponent(document.URL);
-                location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
-            }
+            
         });
 
         function showDiv(m) {
