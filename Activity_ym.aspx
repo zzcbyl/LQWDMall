@@ -59,9 +59,19 @@
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
             <h5>助梦对象：</h5>
-            <div style="margin-top:5px; text-align:center;">
-                <a href="Activity_ym_Content.aspx?obj=1"><img src="images/wangguoliang_1.jpg" width="50%" style="float:left; margin-left:-2px;" /></a>
-                <a href="Activity_ym_Content.aspx?obj=2"><img src="images/dengyun_1.jpg" width="50%" style="float:right; margin-right:-2px;" /></a>
+            <div style="margin-top:5px; text-align:center; padding:0 5px;">
+                <div style="float:left; width:48%;">
+                    <a href="Activity_ym_Content.aspx?obj=1">
+                        <img src="images/wangguoliang_1.jpg" width="100%" /><br/>
+                        山东省临沂市费县大田庄乡堂子小学王国梁
+                    </a>
+                </div>
+                <div style="float:right; width:48%;">
+                    <a href="Activity_ym_Content.aspx?obj=2">
+                        <img src="images/dengyun_1.jpg" width="100%" /><br/>
+                        江西省兴国县埠头中心小学六（1）班邓芸
+                    </a>
+                </div>
             </div>
             <br style="clear:both;" />
         </div>
@@ -112,8 +122,8 @@
                     
                 </ul>
                 <div id="pageDiv" style="text-align:center; margin-top:10px;">
-                    <button class="btn btn-danger" onclick="prevPage();">上一页</button>　
-                    <button class="btn btn-danger" onclick="nextPage();">下一页</button>
+                    <input type="button" class="btn btn-danger" onclick="prevPage();" value="上一页" />
+                    <input type="button" class="btn btn-danger" onclick="nextPage();" value="下一页" />
                 </div>
             </div>
         </div>
@@ -171,18 +181,17 @@
             if (currentpage <= 0) {
                 currentpage = 1;
             }
-            bindVoteList();
+            GetLoveList();
         }
         function nextPage() {
             currentpage += 1;
-            bindVoteList();
+            GetLoveList();
         }
 
         function GetLoveList() {
             if (currentpage <= 0)
                 return;
             $('#bargainlist').html('<li class="loading"><img src="http://mall.luqinwenda.com/images/loading.gif" /><br />加载中...</li>');
-
             $.ajax({
                 type: 'post',
                 url: domain + 'api/donate_get_list.aspx',
