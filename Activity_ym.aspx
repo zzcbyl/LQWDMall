@@ -145,7 +145,7 @@
     <div id="showShare" style="display:none;" onclick="javascript:document.getElementById('showShare').style.display='none';">
         <div style="width:100%; height:100%; background:#ccc; color:#000; position:absolute; top:-10px; left:0px; text-align:center; filter:alpha(opacity=90); -moz-opacity:0.9;-khtml-opacity: 0.9; opacity: 0.9;  z-index:9;"></div>
         <div class="arrowDiv"></div>
-        <div class="promptDiv" style="margin-left:40pt; font-size:12pt; width:200px; top:40px;">点击右上角“┇”<br />分享到朋友圈并截图<br />发送给卢勤问答平台公众号</div>
+        <div class="promptDiv" style="margin-left:40pt; font-size:12pt; width:200px; top:20pt;">点击右上角“┇”<br />分享到朋友圈并截图<br />发送给卢勤问答平台公众号</div>
 
     <script type="text/javascript">
         var shareTitle = "“助梦留守儿童”爱心义卖活动"; //标题
