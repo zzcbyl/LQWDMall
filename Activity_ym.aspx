@@ -63,13 +63,15 @@
                 <div style="float:left; width:48%;">
                     <a href="Activity_ym_Content.aspx?obj=1">
                         <img src="images/wangguoliang_1.jpg" width="100%" /><br/>
-                        山东省临沂市费县大田庄乡堂子小学<br/>王国梁
+                        <div style="margin-top:5px;"><span style="color:#0B659D; text-decoration:underline;">王国梁</span><br />
+                        山东临沂留守儿童</div>
                     </a>
                 </div>
                 <div style="float:right; width:48%;">
                     <a href="Activity_ym_Content.aspx?obj=2">
                         <img src="images/dengyun_1.jpg" width="100%" /><br/>
-                        江西省兴国县埠头中心小学<br/>邓芸
+                        <div style="margin-top:5px;"><span style="color:#0B659D; text-decoration:underline;">邓芸</span><br/>
+                        江西兴国留守儿童</div>
                     </a>
                 </div>
             </div>
