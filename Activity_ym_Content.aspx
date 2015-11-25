@@ -75,7 +75,7 @@
         <div id="div_dy" style="background:#fff; padding:10px; margin-top:10px; display:none;">
             <div style="text-align:center;"><img src="images/dengyun.jpg" /></div>
             <div style="margin-top:10px; line-height:23px;">
-                <div style="font-size:14px; font-weight:bold;">江西省兴国县埠头中心小学 六（1）班邓芸：</div>
+                <div style="font-size:14px; font-weight:bold;">江西省兴国县埠头中心小学邓芸：</div>
                 <div style="text-indent:30px;">今年，知心姐姐在江西的一个小学和孩子们分享梦想的力量时，孩子们争先恐后地站起来告诉知心姐姐自己的梦想是什么。这时我发现有一个女孩站起来又坐下，想说话却又很胆怯的样子，并且反复了好几次。于是，我让大家安静，点名让这个女孩子站起来，大声的告诉大家她的梦想是什么？她用低弱的声音很不自信的说“知心姐姐，我想要一个生日蛋糕”。这个女孩就是邓芸。</div>
                 <div style="text-indent:30px;">通过邓芸讲述，我们大致了解到：家里的弟弟每次过生日奶奶都给煮碗面，以示庆贺，可邓芸长这么大从来没有过过生日，所以她很希望也有人能给她过生日，并且能像电视里那样，还有生日蛋糕！</div>
                 <div style="text-indent:30px;">我当时就答应邓芸：6月份过生日时，我一定会送你生日蛋糕！等到她过生日的时候，我掏钱给她买了生日蛋糕，在学校里，老师和全班同学帮我给她过了一个难忘的生日，而更让她惊喜的是晚上回家，奶奶竟然给她煮了一碗面，说祝她生日快乐！</div>
@@ -88,6 +88,7 @@
             <h5>“助梦留守儿童”爱心义卖活动：</h5>
             <div style="margin-top:5px;">
                 　　由卢勤问答平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
+                　　<span style="color:#EC3E35; font-weight:bold;">一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！</span><br />
                 　　知心姐姐卢勤欢迎你的加入！
             </div>
             <div style="text-align:center; margin-top:10px;"><img src="images/dyh_code.jpg" width="80%" /></div>

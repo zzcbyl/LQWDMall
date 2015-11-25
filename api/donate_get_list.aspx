@@ -150,7 +150,7 @@
                     {
                         Dictionary<string, object> userInfoJson = (Dictionary<string, object>)serializer.DeserializeObject(userInfoJSONStr);
                         userInfoJson.TryGetValue("nickname", out nick);
-                        userInfoJson.TryGetValue("headimageurl", out headImageUrl);
+                        userInfoJson.TryGetValue("headimgurl", out headImageUrl);
                         cell = (object)"";
                     }
                     catch
