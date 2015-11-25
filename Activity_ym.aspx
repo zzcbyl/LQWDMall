@@ -206,8 +206,8 @@
                     var price = '1';
                     for (var i = 0; i < json.donate_list.length; i++) {
                         name = json.donate_list[i].weixin_nick;
-                        if (name.length > 0) {
-                            name = '** ' + name.substring(name.length - 1, name.length);
+                        if (name.length >= 2) {
+                            name = name.substring(0, 2) + "**";
                         }
                         if (json.donate_list[i].type == 'buy')
                             price = '218';
