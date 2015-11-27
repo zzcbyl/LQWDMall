@@ -41,7 +41,7 @@
         </ul>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; position:relative;">
-        <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="（选填）请输入优惠码" maxlength="20" />
+        <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="优惠码" maxlength="20" />
         <button type="button" class="btn" onclick="useCoupon();">使用</button>
         <span id="conponErrorMsg" class="red right" style="padding-top: 5px;"></span>
     </div>
