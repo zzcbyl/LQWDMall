@@ -11,7 +11,7 @@
         string sql = " select  *  from m_order_detail left join m_order on oid = order_id  where product_id = " + productId.ToString()
             +  ((isPaid!=-1) ? ((isPaid!=0)? " and paystate in (1,2)  " : " and state = 0 ") :"  " )
             + " and  m_order_detail.ctime >= '" + startDate.ToString() + "'   and m_order_detail.ctime <=  '" + endDate.ToString() 
-            + "'   order by  oid desc  ";
+            + "'   order by  oid   ";
         DataTable dt = DBHelper.GetDataTable(sql,  Util.ConnectionString);
         string orderJsonStr = "";
 

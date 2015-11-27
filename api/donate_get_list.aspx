@@ -138,7 +138,7 @@
                     object userId;
                     orderDict.TryGetValue("uid", out userId);
                     Users user = new Users(int.Parse(userId.ToString()));
-                    string userInfoJSONStr = GetUserinfoJSONStringByOpenId(user._fields["uname"].ToString().Trim());
+                    
                     
                     object nick;
                     object headImageUrl;
@@ -148,6 +148,7 @@
                     
                     try
                     {
+                        string userInfoJSONStr = GetUserinfoJSONStringByOpenId(user._fields["uname"].ToString().Trim());
                         Dictionary<string, object> userInfoJson = (Dictionary<string, object>)serializer.DeserializeObject(userInfoJSONStr);
                         userInfoJson.TryGetValue("nickname", out nick);
                         userInfoJson.TryGetValue("headimgurl", out headImageUrl);
@@ -178,7 +179,7 @@
             }
             else
             {
-                break;
+                //break;
             }
         }
     }
