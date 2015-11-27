@@ -14,7 +14,7 @@
 
     }
     
-    public static void AddCoupon(int num, int amount, 
+    //public static void AddCoupon(int num, int amount, 
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
