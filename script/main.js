@@ -40,7 +40,6 @@ function GetOpenidToken() {
             encodeDomain = encodeURIComponent(jumpurl);
         }
         location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
-        return;
     }
     else {
         var jumpurl = document.URL;
@@ -236,12 +235,14 @@ function detailAddCart(pid, isshow) {
 //填充购物车
 function fillcart() {
     //$('#proditems').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
+    //alert('123');
     $.ajax({
         type: "get",
         async: false,
         url: domain + 'api/cart.aspx',
         data: { token: token, random: Math.random() },
         success: function (data, textStatus) {
+            //alert(data);
             var obj = eval('(' + data + ')');
             if (obj.status == 1) {
                 GetToken();
@@ -356,6 +357,7 @@ function so_fillProd() {
         url: domain + 'api/cart.aspx',
         data: { token: token, random: Math.random() },
         success: function (data, textStatus) {
+            //alert(data);
             var obj = eval('(' + data + ')');
             if (obj.status == 1) {
                 GetToken();
@@ -485,7 +487,6 @@ function so_fillAddress() {
 }
 
 function totalFeight(province, count) {
-    var freight_fee = "--";
     $.ajax({
         type: "get",
         async: false,
@@ -529,3 +530,48 @@ function orderState(state, oid, number) {
 }
 
 
+//使用优惠券
+function useCoupon() {
+    if ($('#conponTxt').val().Trim() == "") {
+        $('#conponErrorMsg').html("");
+        $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
+        return true;
+    }
+    $.ajax({
+        type: "get",
+        async: true,
+        url: domain + 'api/coupon_check.aspx',
+        data: { code: $('#conponTxt').val(), random: Math.random() },
+        success: function (data, textStatus) {
+            var obj = JSON.parse(data);
+            if (obj.status == 1) {
+                $('#conponErrorMsg').html("优惠券不存在");
+                $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
+                return false;
+            }
+            else {
+                if (obj.used == 1) {
+                    $('#conponErrorMsg').html("优惠券已使用");
+                    $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
+                    return false;
+                }
+                var stringTime = obj.expire_date;
+                var timestamp = Date.parse(new Date(stringTime));
+                timestamp = timestamp / 1000;
+
+                var currenttimestamp = Date.parse(new Date());
+                currenttimestamp = currenttimestamp / 1000;
+
+                if (currenttimestamp > timestamp) {
+                    $('#conponErrorMsg').html("优惠券已过期");
+                    $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
+                    return false;
+                }
+
+                $('#conponErrorMsg').html("<span style='color:#666;'>优惠:</span>￥" + (obj.amount / 100).toString());
+                $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice - obj.amount) / 100).toString());
+                return true;
+            }
+        }
+    });
+}

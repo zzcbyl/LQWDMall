@@ -40,6 +40,11 @@
             <li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>
         </ul>
     </div>
+    <div style="background:#fff; margin:10px; padding:10px; position:relative;">
+        <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="（选填）请输入优惠码" maxlength="20" />
+        <button type="button" class="btn" onclick="useCoupon();">使用</button>
+        <span id="conponErrorMsg" class="red right" style="padding-top: 5px;"></span>
+    </div>
     <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
         <div style="padding-right:10px; height:60px;" class="rel">   
             <textarea id="memo" name="memo" style="width:100%; padding:5px; height:40px; line-height:20px;" placeholder="（选填）留言：如果您需要卢勤老师亲笔签名，请留下需要被签名者姓名以及签名要求。"></textarea>
@@ -62,6 +67,7 @@
                 <input type="hidden" name="counts" id="counts" value="" />
                 <a href="javascript:SubOrder();" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger" onclick="SubOrder();">提交订单</button></a>
                 <a style="float:right; margin-right:10px;"><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
+                <span id="errorMsg_Server" runat="server" class="red right mgright"></span>
             </li>
         </ul>
         <div class="clear"></div>
@@ -87,6 +93,32 @@
     }
     private void submitOrder(string token)
     {
+        JavaScriptSerializer json = new JavaScriptSerializer();
+        int couponAmount = 0;
+        if (!Request.Form["conponTxt"].ToString().Equals(string.Empty))
+        {
+            string couponUrl = Util.ApiDomainString + "api/coupon_check.aspx?code=" + Request.Form["conponTxt"].ToString();
+            string couponResult = HTTPHelper.Get_Http(couponUrl);
+            Dictionary<string, object> dicCoupon = (Dictionary<string, object>)json.DeserializeObject(couponResult);
+            if (dicCoupon["status"].ToString() == "1")
+            {
+                this.errorMsg_Server.InnerText = "优惠券不存在";
+                return;
+            }
+            else if (dicCoupon["used"].ToString() == "1")
+            {
+                this.errorMsg_Server.InnerText = "优惠券已使用";
+                return;
+            }
+            else if (Convert.ToDateTime(dicCoupon["expire_date"].ToString()) < DateTime.Now)
+            {
+                this.errorMsg_Server.InnerText = "优惠券已过期";
+                return;
+            }
+            else
+                couponAmount = Convert.ToInt32(dicCoupon["amount"].ToString());
+        }
+        
         string parms = "token=" + token + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
                 + "&province=" + Request.Form["myProvince"].ToString() + "&city=" + Request.Form["myCity"].ToString() + "&address=" + Request.Form["address"].ToString()
                 + "&zip=&productid=" + Request.Form["prodids"].ToString() + "&count=" + Request.Form["counts"].ToString() + "&memo=" + Request.Form["memo"].ToString() 
@@ -95,59 +127,84 @@
         
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
         string result = HTTPHelper.Get_Http(getUrl);
-        JavaScriptSerializer json = new JavaScriptSerializer();
         ReturnOrder jsonorder = json.Deserialize<ReturnOrder>(result);
         if (jsonorder.status == 1)
         {
-            submitOrder(MyToken.ForceGetToken(Request.Form["myOpenid"].ToString()));
+            //submitOrder(MyToken.ForceGetToken(Request.Form["myOpenid"].ToString()));
+            Response.Redirect("Default.aspx");
         }
         else
         {
-            if (Request.Form["myOpenid"] != null)
-            {
-                if (Users.IsExistsUser("username", Request.Form["myOpenid"]))
-                {
-                    Users user = Users.GetUser("username", Request.Form["myOpenid"]);
-                    if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
-                    {
-                        Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-01-01"), Convert.ToDateTime("2015-06-30"));
-                        int index = 0;
-                        for (int i = 0; i < orderArr.Length; i++)
-                        {
-                            if (int.Parse(orderArr[i]._fields["ajustfee"].ToString()) != 0)
-                            {
-                                index = 1;
-                                break;
-                            }
-                        }
-                        if (index == 0)
-                        {
-                            string bargainUrl = Util.ApiDomainString + "api/promote_get_sub_users.aspx?grouponid=1&openid=" + Request.Form["myOpenid"].ToString();
-                            string bargainResult = HTTPHelper.Get_Http(bargainUrl);
-                            Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(bargainResult);
-                            if ((int)dicBargain["count"] > 0)
-                            {
-                                Object[] objList = (Object[])dicBargain["sub-open-id-info"];
-                                int objCount = objList.Count<object>();
-                                int TotalAmount = objCount * 100 * 1;
-                                Order myorder = new Order(int.Parse(jsonorder.order_id));
-                                if (TotalAmount > int.Parse(myorder._fields["orderprice"].ToString()))
-                                {
-                                    TotalAmount = int.Parse(myorder._fields["orderprice"].ToString());
-                                }
-                                string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + TotalAmount;
-                                string discountResult = HTTPHelper.Get_Http(discountUrl);
-                                Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
-                                if (dicDiscount["status"].ToString() == "1")
-                                {
-                                    Response.Write("优惠金额错误,请重新支付");
-                                    Response.End();
-                                    return;
-                                }
 
-                            }
-                        }
-                    }
+            #region 夏令营优惠（砍价活动）
+            //if (Request.Form["myOpenid"] != null)
+            //{
+            //    if (Users.IsExistsUser("username", Request.Form["myOpenid"]))
+            //    {
+            //        Users user = Users.GetUser("username", Request.Form["myOpenid"]);
+            //        if (user != null && int.Parse(user._fields["uid"].ToString()) > 0)
+            //        {
+            //            Order[] orderArr = Order.GetOrders(int.Parse(user._fields["uid"].ToString()), Convert.ToDateTime("2015-01-01"), Convert.ToDateTime("2015-06-30"));
+            //            int index = 0;
+            //            for (int i = 0; i < orderArr.Length; i++)
+            //            {
+            //                if (int.Parse(orderArr[i]._fields["ajustfee"].ToString()) != 0)
+            //                {
+            //                    index = 1;
+            //                    break;
+            //                }
+            //            }
+            //            if (index == 0)
+            //            {
+            //                string bargainUrl = Util.ApiDomainString + "api/promote_get_sub_users.aspx?grouponid=1&openid=" + Request.Form["myOpenid"].ToString();
+            //                string bargainResult = HTTPHelper.Get_Http(bargainUrl);
+            //                Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(bargainResult);
+            //                if ((int)dicBargain["count"] > 0)
+            //                {
+            //                    Object[] objList = (Object[])dicBargain["sub-open-id-info"];
+            //                    int objCount = objList.Count<object>();
+            //                    int TotalAmount = objCount * 100 * 1;
+            //                    Order myorder = new Order(int.Parse(jsonorder.order_id));
+            //                    if (TotalAmount > int.Parse(myorder._fields["orderprice"].ToString()))
+            //                    {
+            //                        TotalAmount = int.Parse(myorder._fields["orderprice"].ToString());
+            //                    }
+            //                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + TotalAmount;
+            //                    string discountResult = HTTPHelper.Get_Http(discountUrl);
+            //                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+            //                    if (dicDiscount["status"].ToString() == "1")
+            //                    {
+            //                        Response.Write("优惠金额错误,请重新支付");
+            //                        Response.End();
+            //                        return;
+            //                    }
+
+            //                }
+            //            }
+            //        }
+            //    }
+            //} 
+            #endregion
+
+            if (couponAmount > 0)
+            {
+                string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + couponAmount;
+                string discountResult = HTTPHelper.Get_Http(discountUrl);
+                Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                if (dicDiscount["status"].ToString() == "1")
+                {
+                    Response.Write("优惠金额错误,请重新支付");
+                    Response.End();
+                    return;
+                }
+
+                string couponUrl = Util.ApiDomainString + "api/coupon_use.aspx?orderid=" + jsonorder.order_id + "&code=" + Request.Form["conponTxt"].ToString() + "&token=" + token;
+                string couponResult = HTTPHelper.Get_Http(couponUrl);
+                Dictionary<string, object> dicCoupon = (Dictionary<string, object>)json.DeserializeObject(couponResult);
+                if (dicCoupon["status"].ToString() == "1")
+                {
+                    //submitOrder(MyToken.ForceGetToken(Request.Form["myOpenid"].ToString()));
+                    Response.Redirect("Default.aspx");
                 }
             }
 
@@ -189,6 +246,7 @@
     var pcount = 0;
     var t_prod_price = 0;
     var t_prePrice = 0;
+    var freight_fee = "--";
     $(document).ready(function () {
         so_fillProd();
 
@@ -196,6 +254,16 @@
             totalFeight($("#province option:selected").text(), pcount);
             so_fillCity($(this).val());
         });
+
+
+        GetOpenidToken();
+        $("#myToken").val(token);
+        $("#myOpenid").val(openid);
+        $("#myFrom").val(from);
+        $("#prodids").val(str_productids);
+        $("#counts").val(str_counts);
+        $("#myProvince").val($("#province option:selected").text());
+        $("#myCity").val($("#city option:selected").text());
 
     });
 
@@ -226,17 +294,10 @@
             return;
         }
 
-        GetOpenidToken();
-        $("#myToken").val(token);
-        $("#myOpenid").val(openid);
-        $("#myFrom").val(from);
-        $("#prodids").val(str_productids);
-        $("#counts").val(str_counts);
-        $("#myProvince").val($("#province option:selected").text());
-        $("#myCity").val($("#city option:selected").text());
         delCookie("followerAmount");
         document.forms[0].submit();
     }
+
 </script>
 
 </asp:Content>
