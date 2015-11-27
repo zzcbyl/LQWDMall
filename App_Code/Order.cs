@@ -76,6 +76,22 @@ public class Order
         }
     }
 
+    public int Amount
+    {
+        get
+        {
+            return int.Parse(_fields["orderprice"].ToString());
+        }
+    }
+
+    public int UserId
+    {
+        get
+        {
+            return int.Parse(_fields["uid"].ToString());
+        }
+    }
+
     public DateTime OrderDate
     {
         get
