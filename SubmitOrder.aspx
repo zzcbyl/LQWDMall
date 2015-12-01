@@ -293,7 +293,16 @@
             $('#myModal').modal('show');
             return;
         }
-
+        if ($("#province").val().Trim() == "0") {
+            $("#ModalContent").html("请选择省份");
+            $('#myModal').modal('show');
+            return;
+        }
+        if ($("#city").val().Trim() == "0") {
+            $("#ModalContent").html("请选择城市");
+            $('#myModal').modal('show');
+            return;
+        }
         delCookie("followerAmount");
         document.forms[0].submit();
     }
