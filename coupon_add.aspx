@@ -11,10 +11,17 @@
 
     protected void Button1_Click(object sender, EventArgs e)
     {
-
+        for (int i = 0; i < 50; i++)
+        {
+            Coupon.AddCoupon(200);
+            Coupon.AddCoupon(500);
+        }
     }
-    
-    //public static void AddCoupon(int num, int amount, 
+
+    public static void AddCoupon(int num, int amount)
+    {
+        
+    }
 </script>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
