@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<div id="myModal" class="modal hide fade" style="left:auto" >
+<div id="myModal" class="modal hide fade" style="left:inherit" >
     <div class="modal-body">
         <p id="ModalContent"></p>
     </div>
