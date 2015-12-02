@@ -303,6 +303,9 @@
             $('#myModal').modal('show');
             return;
         }
+
+        $("#myProvince").val($("#province option:selected").text());
+        $("#myCity").val($("#city option:selected").text());
         delCookie("followerAmount");
         document.forms[0].submit();
     }
