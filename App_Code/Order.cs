@@ -212,7 +212,7 @@ public class Order
 
     public int updPayState(int orderid, string paymethod)
     {
-        string sqlUpdPay = "update m_order set paystate = 1, paysuccesstime = '" + DateTime.Now.ToString() + "', paymethod='" + paymethod + "' where oid = " + orderid + "and paystate = 0";
+        string sqlUpdPay = "update m_order set paystate = 1, paysuccesstime = '" + DateTime.Now.ToString() + "', paymethod='" + paymethod + "' where oid = " + orderid + " and paystate = 0";
         SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
         SqlCommand cmdUpdPayOrder = new SqlCommand(sqlUpdPay, conn);
         conn.Open();
