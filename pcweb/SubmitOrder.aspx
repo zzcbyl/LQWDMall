@@ -165,6 +165,16 @@
             $('#myModal').modal('show');
             return;
         }
+        if ($("#province").val().Trim() == "0") {
+            $("#ModalContent").html("请选择省份");
+            $('#myModal').modal('show');
+            return;
+        }
+        if ($("#city").val().Trim() == "0") {
+            $("#ModalContent").html("请选择城市");
+            $('#myModal').modal('show');
+            return;
+        }
 
         GetOpenidToken();
         $("#myToken").val(token);
@@ -174,7 +184,7 @@
         $("#counts").val(str_counts);
         $("#myProvince").val($("#province option:selected").text());
         $("#myCity").val($("#city option:selected").text());
-
+        delCookie("followerAmount");
         document.forms[0].submit();
     }
 </script>

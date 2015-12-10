@@ -404,11 +404,12 @@ function so_fillProvince() {
             else {
                 $("#province").empty();
                 //$("#province").append("<option value='-1'>--省份--</option>");
+                $("#province").append("<option value='0' >请选择省份……</option>");
                 for (var i = 0; i < obj.area.length; i++) {
                     $("#province").append("<option value='" + obj.area[i].id + "'>" + obj.area[i].name + "</option>");
                 }
-                totalFeight($("#province option:selected").text(), pcount);
                 so_fillAddress();
+                totalFeight($("#province option:selected").text(), pcount);
             }
         }
     });
@@ -429,6 +430,7 @@ function so_fillCity(pid, city) {
             else {
                 $("#city").empty();
                 //$("#city").append("<option value='-1'>--城市--</option>");
+                $("#city").append("<option value='0' >请选择城市……</option>");
                 var seltxt = "";
                 for (var i = 0; i < obj.area.length; i++) {
                     if (city != "" && obj.area[i].name == city)
