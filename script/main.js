@@ -8,6 +8,7 @@ var lineLink = "http://mall.luqinwenda.com/index.aspx?source=1"; //链接
 var deadline_28 = (Date.parse(new Date("2015/12/1"))) / 1000;
 var deadline_30 = (Date.parse(new Date("2015/12/1"))) / 1000;
 var currentDT = (Date.parse(new Date())) / 1000;
+var couponCode = '';
 function GetOpenidToken() {
     openid = QueryString('openid');
     if (openid != null) {

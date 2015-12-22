@@ -1,5 +1,15 @@
 ﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/Master.master" %>
 
+<script runat="server">
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Request["couponCode"] != null && Request["couponCode"] != "")
+        {
+            this.Session["couponCode"] = Request["couponCode"].ToString();
+        }
+    }
+</script>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">

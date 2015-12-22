@@ -41,7 +41,7 @@
         </ul>
     </div>
     <div style="background:#fff; margin:10px; padding:10px; position:relative;">
-        <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="优惠码" maxlength="20" />
+        <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="优惠码" maxlength="20" value="<%=couponStr %>" />
         <button type="button" class="btn" onclick="useCoupon();">使用</button>
         <span id="conponErrorMsg" class="red right" style="padding-top: 5px;"></span>
     </div>
@@ -84,11 +84,16 @@
 </div>
 
 <script runat="server">
+    public string couponStr = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
             submitOrder(Request.Form["myToken"].ToString());
+        }
+        if (this.Session["couponCode"] != null)
+        {
+            couponStr = this.Session["couponCode"].ToString();
         }
     }
     private void submitOrder(string token)
@@ -265,6 +270,7 @@
         $("#myProvince").val($("#province option:selected").text());
         $("#myCity").val($("#city option:selected").text());
 
+        useCoupon();
     });
 
     function SubOrder() {

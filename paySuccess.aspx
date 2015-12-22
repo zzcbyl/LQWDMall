@@ -22,6 +22,7 @@
     {
         if (Request["product_id"] != null && Request["product_id"] != "" && int.Parse(Request["product_id"]) > 0)
         {
+            this.Session["couponCode"] = null;
             //paymethod=wechat
             string paymethod = "";
             if (Request["paymethod"] != null && !Request["paymethod"].ToString().Equals(""))
