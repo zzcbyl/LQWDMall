@@ -43,9 +43,8 @@
     <ul class="prod_item">
         <li class="list_hd">
             <div id="prod_item_a">商品名称</div>
-            <div id="prod_item_b">型号</div>
-            <div id="prod_item_c">价格</div>
             <div id="prod_item_d">数量</div>
+            <div id="prod_item_c">价格</div>
         </li>
         <% if (detailDT.Rows.Count > 0)
            {
@@ -56,9 +55,8 @@
                 <a id="prodimg"><img src='<%=Util.ApiDomainString + detailDT.Rows[i]["imgsrc"].ToString()%>' /></a>
                 <a id="prodtitle"><%=detailDT.Rows[i]["product_name"].ToString()%></a>
             </div>
-            <div class="dashline" id="prod_item_b">无型号</div>
-            <div class="dashline" id="prod_item_c"><%=Math.Round(decimal.Parse(detailDT.Rows[i]["price"].ToString()) / 100, 2) %></div>
             <div class="dashline" id="prod_item_d"><%=detailDT.Rows[i]["product_count"].ToString()%></div>
+            <div class="dashline" id="prod_item_c"><%=Math.Round(decimal.Parse(detailDT.Rows[i]["price"].ToString()) / 100, 2) %></div>
         </li>
         <%}
            } %>
