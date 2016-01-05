@@ -11,6 +11,7 @@
 <script runat="server">
     public string repeatCustomer = "0";
     public string StartDate = "";
+    public string showDate = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Session["RepeatCustomer"] != null)
@@ -23,6 +24,11 @@
         if (dic.Keys.Contains("startTime"))
         {
             StartDate = dic["startTime"].ToString().Replace("/", "-").Split(' ')[0];
+            showDate = Convert.ToDateTime(StartDate).ToString("MM月dd日");
+            if (showDate.Substring(0, 1) == "0")
+            {
+                showDate = showDate.Substring(1);
+            }
         }
     }
 </script>
@@ -38,7 +44,7 @@
         <div id="prodtitle" style="line-height:22px; font-size:16pt; padding:10px 0;">
         </div>
         <div class="article_time">
-            <i></i><span>1月29日</span>
+            <i></i><span><%=showDate %></span>
             <span style="float:right; margin-right:20px; font-size:12pt;" onclick='dateChange();'>日期选择 ></span>
             <br style="clear:both;" />
         </div>
