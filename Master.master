@@ -24,6 +24,7 @@
     <link href="style/main.css" rel="stylesheet" type="text/css" />
     <script src="script/common.js" type="text/javascript"></script>
     <script src="script/main.js?20151127" type="text/javascript"></script>
+    <script src="script/calendar.js"></script>
     <script type="text/javascript">
         GetOpenidToken();
     </script>

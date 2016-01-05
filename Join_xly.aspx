@@ -10,7 +10,87 @@
         <a onclick="returnxly();" class="returnA"> </a>
         <span class="titleSpan">报名表</span>
     </div>
-    <div class="sc-address-block rel">
+    <div class="sc-address-block rel" style="margin-bottom:0; padding-bottom:0;">
+        <!-- 日历部分 -->		
+	    <div class="Calendar" style="display:block;">
+          <div id="idCalendarPre">&lt;&lt;</div>
+          <div id="idCalendarNext">&gt;&gt;</div>
+          <span id="idCalendarYear"></span>年 <span id="idCalendarMonth"></span>月
+          <table cellspacing="0">
+            <thead>
+              <tr>
+                <td>日</td>
+                <td>一</td>
+                <td>二</td>
+                <td>三</td>
+                <td>四</td>
+                <td>五</td>
+                <td>六</td>
+              </tr>
+            </thead>
+            <tbody id="idCalendar">
+            </tbody>
+          </table>
+        </div>
+        <script language="JavaScript">
+            var startDate = '<%=StartDate %>';
+            var flag = [];
+
+            flag.push(startDate + "-775-9800-1000-10");
+
+            flag.sort();
+
+            var calendarDay = startDate;
+            var dtArr = calendarDay.split("-");
+            var stateDate = new Date(dtArr[0] + "/" + dtArr[1] + "/" + dtArr[2]);
+
+            var cale = new Calendar("idCalendar", {
+                Year: stateDate.getFullYear(),
+                Month: stateDate.getMonth() + 1,
+                SelectDay: stateDate,
+                //  onSelectDay: function(o){ o.className = "onSelect"; },
+                // onToday: function(o){ o.className = "onToday"; },
+                onFinish: function () {
+                    element("idCalendarYear").innerHTML = this.Year; element("idCalendarMonth").innerHTML = this.Month;
+                    
+                    for (var i = 0, len = flag.length; i < len; i++) {
+                        var y_select = parseInt(flag[i].split("-")[0]);
+                        var m_select = parseInt(flag[i].split("-")[1]);
+                        var d_select = parseInt(flag[i].split("-")[2]);
+                        var id = parseInt(flag[i].split("-")[3]);
+                        var price = parseFloat(flag[i].split("-")[4]);
+                        var inventory = parseInt(flag[i].split("-")[5]);
+                        
+                        var arr1 = flag[i].split("-");
+                        var dateNum = arr1[0] + arr1[1] + arr1[2];
+                        
+                        if (this.Year == y_select && this.Month == m_select) {
+                            this.Days[d_select].innerHTML = "<a href='javascript:void(0);'  style='color:#FFFFFF' onclick=\"selectDay('" + this.Month + "月" + d_select + "日','" + id + "',this,'" + dateNum + "','" + inventory + "');return false;\"><ul style=\"line-height:1rem;\"><li>" + d_select + "</li><li>" + price + "</li></ul></a>";
+
+                            //if (20160105 > dateNum || inventory <= 0) {
+                            //    this.Days[d_select].bgColor = "#D6D6D6";
+                            //} else {
+                            //    this.Days[d_select].bgColor = "#0897F2";
+                            //}
+
+                            if (inventory > 0 && flag[i].indexOf(calendarDay) > -1) {
+                                this.Days[d_select].bgColor = "#cc0000";
+                            }
+
+                            this.Days[d_select].width = " 14.4% ";
+                        }
+
+
+                    }
+                }
+            });
+
+            element("idCalendarPre").onclick = function () { cale.PreMonth(); }
+            element("idCalendarNext").onclick = function () { cale.NextMonth(); }
+        </script>
+        <!-- 日历部分 -->	
+    </div>
+    <div class="sc-address-block rel" style="margin-top:0; padding-top:10px;">
         <p class="add_list_p rel">
             <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
         </p>
@@ -83,6 +163,7 @@
 
 <script runat="server">
     public string repeatCustomer = "0";
+    public string StartDate = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Session["RepeatCustomer"] != null)
@@ -90,6 +171,14 @@
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
             submitOrder(Request.Form["myToken"].ToString());
+        }
+
+        string result = HTTPHelper.Get_Http(System.Configuration.ConfigurationManager.AppSettings["apiDomain"].ToString() + "api/product_get_detail.aspx?productid=" + Request["productid"]);
+        JavaScriptSerializer json = new JavaScriptSerializer();
+        Dictionary<string, object> dic = json.Deserialize<Dictionary<string, object>>(result);
+        if (dic.Keys.Contains("startTime"))
+        {
+            StartDate = dic["startTime"].ToString().Replace("/", "-").Split(' ')[0];
         }
     }
     private void submitOrder(string token)

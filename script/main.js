@@ -121,7 +121,9 @@ function filldetail(pid) {
         success: function (data, textStatus) {
             var obj = eval('(' + data + ')');
             if (obj != null) {
-                $('#prodtitle').html(obj.prodname);
+                startDate = obj.startTime.replace(/\//g, "-").split(' ')[0];
+                
+                $('#prodtitle').html(obj.prodname.replace('<br />', '　'));
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);

@@ -51,6 +51,17 @@ a.btn-primary { color:#fff;}
 .m-dprice { height:22px; line-height:22px; font-size:16px;}
 .m-ddescription { margin-top:10px; background:#fff; padding:10px;}
 
+.m-description { margin:10px 0; background:#fff;  }
+.m-description .description-menu { height:35px; border-bottom: 1px solid #DF212F; background:#fff; }
+.m-description .description-menu li { float:left; width:33%; height:35px; line-height:35px; text-align:center; }
+.m-description .description-menu .active-controller { background:#BF1924; color:#fff; }
+.m-description .description-item { padding:15px 20px; }
+.m-description .description-item li { display:none; }
+.m-description .description-item .active-controller { display:block; }
+
+.article_time { height:25px; line-height:25px; font-size:16pt; }
+.article_time i { background:url('../images/time_icon.jpg') no-repeat scroll 0 0; width:21px; height:22px; margin:0 10px; display:inline-block; }
+
 #my-cart .abs {  background-color: #f00; border-radius: 8px; color: #fff; display: none; font-size: 14px; height: 16px; line-height: 16px; right: 0px; text-align: center; top: 1px; width: 16px; position:absolute;}
 
 .cart-prod-num { line-height:30px; width:30%;}
@@ -147,3 +158,48 @@ a.btn-primary { color:#fff;}
 .ico-ok-big{background-position:-80px 0;width:38px;height:38px;vertical-align:middle;margin:0 10px 0 0;}
 .ico-error-big{background-position:-80px -48px;width:38px;height:38px;vertical-align:middle;margin:0 10px 0 0;}
 .bgtitle,.bgtitle1{ font-weight:bold;}
+
+
+
+.Calendar {
+    background-color: #f3f3f3;
+    display:none;
+    font-family: Verdana;
+    font-size: 1rem;
+    line-height: 2.5rem;
+    padding: 0.5rem 0;
+    text-align: center;
+    width: 90%;
+    margin:0 auto;
+}
+.Calendar a {
+    color: #1e5494;
+}
+.Calendar table {
+    border: 0 none;
+    width: 100%;
+}
+.Calendar table thead {
+    color: #acacac;
+}
+.Calendar table td {
+    font-size: 1rem;
+    padding: 1px;
+}
+#idCalendarPre {
+    cursor: pointer;
+    float: left;
+    padding-left: 0.5rem;
+}
+#idCalendarNext {
+    cursor: pointer;
+    float: right;
+    padding-right: 0.5rem;
+}
+#idCalendar td.onToday {
+    color: #c60;
+    font-weight: bold;
+}
+#idCalendar td.onSelect {
+    font-weight: bold;
+}
