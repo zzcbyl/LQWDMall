@@ -7,7 +7,7 @@
     public string nonceStr = "e4b6e0dd1f0bfu3nf2cab93b165ef";
     public string ticket = "";
     public string shaParam = "";
-    public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid"];
+    public string appId = System.Configuration.ConfigurationSettings.AppSettings["wxappid_dingyue"];
 
     protected void Page_Load(object sender, EventArgs e)
     {
