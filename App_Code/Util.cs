@@ -347,4 +347,9 @@ public class Util
         bmpOut2.Dispose();
         lastbmp.Dispose();
     }
+
+    public static string GetTicket()
+    {
+        return GetWebContent("http://game.luqinwenda.com/api/get_ticket.aspx", "get", "", "html/xml");
+    }
 }
