@@ -118,7 +118,7 @@ function filldetail(pid) {
                 $('#prodtitle').html(obj.prodname.replace("<br />", "　"));
                 obj.description = obj.description.replace(/width=\"300px\"/g, 'width="500px"');
                 $('#proddescription').html(obj.description);
-                $('#prodimg').html('<img src="' + domain + obj.images[0].src + '" width="100%" />');
+                $('#prodimg').html('<img src="' + domain + obj.imgsrc + '" width="100%" />');
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
                 if (pid == 28) {
                     var price_1 = parseInt(obj.price);
