@@ -28,13 +28,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        filllist();
+        filllist(2);
         $("#bk_li").attr("class", "current");
         $("#xly_li").attr("class", "");
 
     });
 
-    function filllist() {
+    function filllist(typeid) {
         $('#prodlistul').html('<li><div class="loading"><img src="../images/loading.gif" /><br />加载中...</div></li>');
         $.ajax({
             type: "post",
@@ -47,7 +47,7 @@
                     var prodlist = obj.data;
                     var html = "";
                     for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid != 1 && prodlist[i].prodtypeid != 2)
+                        if (typeid != 0 && prodlist[i].prodtypeid != typeid)
                             continue;
                         var strprice = '';
                         var iconjiu = '';
