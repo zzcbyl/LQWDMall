@@ -303,16 +303,16 @@
             total = total <= 0 ? 0 : total;
             string param = "?body=卢勤问答平台官方夏令营&detail=卢勤问答平台官方夏令营&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
-            if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
-            {
+            //if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
+            //{
                 //微信支付
                 payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
-            }
-            else
-            {
-                //易宝支付
-                payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
-            }
+            //}
+            //else
+            //{
+            //    //易宝支付
+            //    payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
+            //}
             if (Request["productid"].ToString() == "27")
             {
                 if (total == 0)
