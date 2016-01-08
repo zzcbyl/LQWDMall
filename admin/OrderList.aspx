@@ -14,7 +14,7 @@
 
     private void BindOrderList(int currentPage)
     {
-        DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
+        DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2015-10-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
         string where = string.Empty;
         if (Request["state"] != null && Request["state"] == "1")
