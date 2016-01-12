@@ -135,7 +135,7 @@
                         }
                     }
 
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xiaoxue' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>小学</a></li>";
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xiaoxue' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄期/少年期</a></li>";
                     for (var i = 0; i < prodlist.length; i++) {
                         if (prodlist[i].prodtypeid == 5) {
                             var strprice = '';
