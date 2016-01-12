@@ -147,10 +147,13 @@ a.btn-primary { color:#fff;}
 .prod-list-btn #buyProd_xly { width:25%; float:right; font-size:75%; min-width:60px; padding-left:0; padding-right:0; margin-right:5px;}
 
 .nav-default { text-align:center; font-size:16px; }
-.nav-default li { float:left; height:40px; text-align:center; background:#FDF8D2; }
+.nav-default li { float:left; height:40px; text-align:center; background:#FDF8D2; font-weight:bold; font-family:微软雅黑; font-size:11pt; }
 .nav-default li img{ height:40px;}
-.nav-default #type-single { width:50%; }
-.nav-default #type-suit  { width:50%;}
+.nav-default #type-single { width:50%;  line-height:40px; color:#46484A; }
+.nav-default #type-suit  { width:50%; line-height:40px; color:#FDF8D2;}
+.type_menu_list { width:100%; margin:0 auto; position:absolute; top:40px; left:0%; line-height:35px; z-index:9999; background:#D83337; color:#FCF9D4; display:none;}
+.type_menu_list div { border-top:1px solid #FCF9D4; }
+.type_menu_list a { color:#FCF9D4; }
 
 .ico-error, .ico-ok,.ico-ok-big,.ico-error-big{background:url(/images/ico-tips.png) no-repeat 0 0;display:inline-block;_background:url(/images/ico-tips.gif) no-repeat 0 0;}
 .ico-error{background-position:-39px 0;width:24px;height:24px;margin:0 5px 0 0;vertical-align:middle}
@@ -158,8 +161,6 @@ a.btn-primary { color:#fff;}
 .ico-ok-big{background-position:-80px 0;width:38px;height:38px;vertical-align:middle;margin:0 10px 0 0;}
 .ico-error-big{background-position:-80px -48px;width:38px;height:38px;vertical-align:middle;margin:0 10px 0 0;}
 .bgtitle,.bgtitle1{ font-weight:bold;}
-
-
 
 .Calendar {
     background-color: #f3f3f3;
