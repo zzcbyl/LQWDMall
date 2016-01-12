@@ -30,7 +30,7 @@
             给孩子看的书
             <div class="type_menu_list">
                 <div><a href="#xuelingqian">学龄前</a></div>
-                <div><a href="#xiaoxue">小学</a></div>
+                <div><a href="#xiaoxue">学龄期</a></div>
             </div>
         </li>
     </ul>
