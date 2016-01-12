@@ -4,7 +4,7 @@ var from = '';
 var shareTitle = "卢勤问答平台官方商城"; //标题
 var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
 var descContent = "卢勤问答平台官方认证商城，包括卢勤老师认证的正版书籍以及家庭教育相关产品。"; //简介
-var lineLink = "http://mall.luqinwenda.com/index.aspx?source=1"; //链接
+var lineLink = "http://mall.luqinwenda.com/default.aspx"; //链接
 var deadline_28 = (Date.parse(new Date("2015/12/1"))) / 1000;
 var deadline_30 = (Date.parse(new Date("2015/12/1"))) / 1000;
 var currentDT = (Date.parse(new Date())) / 1000;
@@ -19,18 +19,18 @@ function GetOpenidToken() {
         openid = getCookie('openid');
     }
 
-    from = QueryString('source');
-    if (from != null) {
-        setCookie('from', from);
-    }
-    else {
-        from = getCookie('from');
-    }
-    var refer = document.referrer;
-    if (QueryString('source') == null && refer == '') {
-        delCookie("from");
-        from = null;
-    }
+    //from = QueryString('source');
+    //if (from != null) {
+    //    setCookie('from', from);
+    //}
+    //else {
+    //    from = getCookie('from');
+    //}
+    //var refer = document.referrer;
+    //if (QueryString('source') == null && refer == '') {
+    //    delCookie("from");
+    //    from = null;
+    //}
     if (openid == null || openid == '' || openid == 'undefined') {
         var encodeDomain = encodeURIComponent(domain + 'default.aspx');
         if (QueryString('productid') != null) {
