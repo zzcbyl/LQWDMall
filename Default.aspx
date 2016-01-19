@@ -30,7 +30,16 @@
             给孩子看的书
             <div class="type_menu_list">
                 <div><a href="#xuelingqian">学龄前</a></div>
-                <div><a href="#xiaoxue">学龄期/少年期</a></div>
+                <div><a href="#xiaoxue">学龄期</a></div>
+            </div>
+        </li>
+        <li id="type-toys">
+            玩具
+            <div class="type_toys_list">
+                <div><a href="#ajxdz">精细动作技能</a></div>
+                <div><a href="#aswcz">思维创造训练</a></div>
+                <div><a href="#akjlj">空间逻辑训练</a></div>
+                <div><a href="#ayzty">益智体验</a></div>
             </div>
         </li>
     </ul>
@@ -76,11 +85,25 @@
         setCookie('source', 1);
 
         $("#type-single").click(function () {
+            $('.nav-default li').each(function () {
+                $(this).css("background", "#FDF8D2");
+                $(this).css("color", "#46484A");
+            });
             $("#type-single").css("background", "#D83337");
             $("#type-single").css("color", "#FDF8D2");
-            $("#type-suit").css("background", "#FDF8D2");
-            $("#type-suit").css("color", "#46484A");
+            $('.type_toys_list').hide();
             $('.type_menu_list').show();
+        });
+
+        $("#type-toys").click(function () {
+            $('.nav-default li').each(function () {
+                $(this).css("background", "#FDF8D2");
+                $(this).css("color", "#46484A");
+            });
+            $("#type-toys").css("background", "#D83337");
+            $("#type-toys").css("color", "#FDF8D2");
+            $('.type_menu_list').hide();
+            $('.type_toys_list').show();
         });
 
         $("#type-suit").click(function () {
@@ -89,11 +112,15 @@
     });
 
     function filllist(typeid) {
+        $('.nav-default li').each(function () {
+            $(this).css("background", "#FDF8D2");
+            $(this).css("color", "#46484A");
+        });
         $("#type-suit").css("background", "#D83337");
-        $("#type-single").css("background", "#FDF8D2");
         $("#type-suit").css("color", "#FDF8D2");
-        $("#type-single").css("color", "#46484A");
         $('.type_menu_list').hide();
+        $('.type_toys_list').hide();
+
         //$('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
         $.ajax({
             type: "post",
@@ -135,9 +162,71 @@
                         }
                     }
 
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xiaoxue' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄期/少年期</a></li>";
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xiaoxue' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄期</a></li>";
                     for (var i = 0; i < prodlist.length; i++) {
                         if (prodlist[i].prodtypeid == 5) {
+                            var strprice = '';
+                            var iconjiu = '';
+                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                            }
+                            else {
+                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
+                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                        }
+                    }
+
+
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ajxdz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>精细动作技能</a></li>";
+                    for (var i = 0; i < prodlist.length; i++) {
+                        if (prodlist[i].prodtypeid == 6) {
+                            var strprice = '';
+                            var iconjiu = '';
+                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                            }
+                            else {
+                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
+                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                        }
+                    }
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='aswcz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>思维创造训练</a></li>";
+                    for (var i = 0; i < prodlist.length; i++) {
+                        if (prodlist[i].prodtypeid == 7) {
+                            var strprice = '';
+                            var iconjiu = '';
+                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                            }
+                            else {
+                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
+                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                        }
+                    }
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='akjlj' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>空间逻辑训练</a></li>";
+                    for (var i = 0; i < prodlist.length; i++) {
+                        if (prodlist[i].prodtypeid == 8) {
+                            var strprice = '';
+                            var iconjiu = '';
+                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                            }
+                            else {
+                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
+                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                        }
+                    }
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ayzty' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>益智体验</a></li>";
+                    for (var i = 0; i < prodlist.length; i++) {
+                        if (prodlist[i].prodtypeid == 9) {
                             var strprice = '';
                             var iconjiu = '';
                             if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {

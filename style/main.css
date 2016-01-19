@@ -149,11 +149,12 @@ a.btn-primary { color:#fff;}
 .nav-default { text-align:center; font-size:16px; }
 .nav-default li { float:left; height:40px; text-align:center; background:#FDF8D2; font-weight:bold; font-family:微软雅黑; font-size:11pt; }
 .nav-default li img{ height:40px;}
-.nav-default #type-single { width:50%;  line-height:40px; color:#46484A; }
-.nav-default #type-suit  { width:50%; line-height:40px; color:#FDF8D2;}
-.type_menu_list { width:100%; margin:0 auto; position:absolute; top:40px; left:0%; line-height:35px; z-index:9999; background:#D83337; color:#FCF9D4; display:none;}
-.type_menu_list div { border-top:1px solid #FCF9D4; }
-.type_menu_list a { color:#FCF9D4; }
+.nav-default #type-single { width:35%;  line-height:40px; color:#46484A; }
+.nav-default #type-suit  { width:35%; line-height:40px; color:#FDF8D2;}
+.nav-default #type-toys  { width:30%; line-height:40px; background: #fdf8d2; color: #46484a; position: relative;}
+.type_menu_list, .type_toys_list { width:100%; margin:0 auto; position:absolute; top:40px; left:0%; line-height:35px; z-index:9999; background:#D83337; color:#FCF9D4; display:none;}
+.type_menu_list div, .type_toys_list div { border-top:1px solid #FCF9D4; }
+.type_menu_list a, .type_toys_list a { color:#FCF9D4; }
 
 .ico-error, .ico-ok,.ico-ok-big,.ico-error-big{background:url(/images/ico-tips.png) no-repeat 0 0;display:inline-block;_background:url(/images/ico-tips.gif) no-repeat 0 0;}
 .ico-error{background-position:-39px 0;width:24px;height:24px;margin:0 5px 0 0;vertical-align:middle}
