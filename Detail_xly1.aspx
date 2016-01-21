@@ -46,6 +46,7 @@
             alert('商品参数有误');
             return;
         }
+        lineLink = document.URL.toString();
         filldetail(prodid);
     });
 
