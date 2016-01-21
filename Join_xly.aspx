@@ -96,6 +96,13 @@
             <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
         </p>
         <p class="add_list_p rel">
+            <select id="childSex" name="childSex">
+                <option value="">请选择孩子性别</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </p>
+        <p class="add_list_p rel">
             <select id="childAge" name="childAge">
                 <option value="">请选择孩子年龄</option>
                 <option value="8">8</option>
@@ -186,7 +193,7 @@
     }
     private void submitOrder(string token)
     {
-        string memo = "孩子姓名：" + Request.Form["childName"].ToString() + "，孩子年龄：" + Request.Form["childAge"].ToString() + "岁，孩子身份证：" + Request.Form["childIDcard"].ToString()
+        string memo = "孩子姓名：" + Request.Form["childName"].ToString() + "，孩子性别：" + Request.Form["childSex"].ToString() + "，孩子年龄：" + Request.Form["childAge"].ToString() + "岁，孩子身份证：" + Request.Form["childIDcard"].ToString()
                     + "，家长姓名：" + Request.Form["parentName"].ToString() + "，手机号码：" + Request.Form["parentMobile"].ToString()
                     + "，电子邮箱：" + Request.Form["parentEmail"].ToString();
         string parms = "token=" + token + "&name=&cell=&province=&city=&address=&zip=&productid=" + Request["productid"].ToString() + "&count=1|1&memo=" + memo + "&wechatid=";
@@ -410,6 +417,11 @@
     function SubOrder() {
         if ($("#childName").val().Trim() == "") {
             $("#ModalContent").html("请输入孩子姓名");
+            $('#myModal').modal('show');
+            return;
+        }
+        if ($("#childSex").val().Trim() == "") {
+            $("#ModalContent").html("请选择孩子性别");
             $('#myModal').modal('show');
             return;
         }
