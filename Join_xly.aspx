@@ -34,9 +34,10 @@
         </div>
         <script language="JavaScript">
             var startDate = '<%=StartDate %>';
+            var yprice = '<%=Yprice %>';
             var flag = [];
 
-            flag.push(startDate + "-775-9800-1000-10");
+            flag.push(startDate + "-775-" + yprice + "-1000-10");
 
             flag.sort();
 
@@ -164,6 +165,7 @@
 <script runat="server">
     public string repeatCustomer = "0";
     public string StartDate = "";
+    public string Yprice = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Session["RepeatCustomer"] != null)
@@ -179,6 +181,7 @@
         if (dic.Keys.Contains("startTime"))
         {
             StartDate = dic["startTime"].ToString().Replace("/", "-").Split(' ')[0];
+            Yprice = (Convert.ToInt64(dic["price"].ToString()) / 100).ToString();
         }
     }
     private void submitOrder(string token)
