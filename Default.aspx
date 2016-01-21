@@ -34,9 +34,10 @@
             </div>
         </li>
         <li id="type-toys">
-            玩具
+            儿童乐园
             <div class="type_toys_list">
-                <div><a href="#ajxdz">精细动作技能</a></div>
+                <div><a href="#etaq">儿童安全</a></div>
+                <div><a href="#ajxdz">精细动作培养</a></div>
                 <div><a href="#aswcz">思维创造训练</a></div>
                 <div><a href="#akjlj">空间逻辑训练</a></div>
                 <div><a href="#ayzty">益智体验</a></div>
@@ -178,8 +179,22 @@
                         }
                     }
 
-
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ajxdz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>精细动作技能</a></li>";
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='etaq' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>儿童安全</a></li>";
+                    for (var i = 0; i < prodlist.length; i++) {
+                        if (prodlist[i].prodtypeid == 10) {
+                            var strprice = '';
+                            var iconjiu = '';
+                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                            }
+                            else {
+                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                            }
+                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                        }
+                    }
+                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ajxdz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>精细动作培养</a></li>";
                     for (var i = 0; i < prodlist.length; i++) {
                         if (prodlist[i].prodtypeid == 6) {
                             var strprice = '';
