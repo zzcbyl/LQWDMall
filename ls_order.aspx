@@ -8,9 +8,9 @@
         <a href="javascript:Previous();" class="returnA"> </a>
         <span class="titleSpan">我的订单</span>
     </div>
-    <div style="margin-top:10px; background:#fff; padding:5px 15px; color:#ff0000;">
+    <%--<div style="margin-top:10px; background:#fff; padding:5px 15px; color:#ff0000;">
         <span>由于卢勤老师最近一直在出差，需要签名的订单要延后到下周发货，如果不需要签名的订单请联系微信客服，我们会安排立即发出，请大家谅解。</span>
-    </div>
+    </div>--%>
     <%--<div style="background:#f0f0f0; margin:10px; padding:10px;">
         <ul class="ls-order-ul">
             <li><a class="ok">全部</a></li>
