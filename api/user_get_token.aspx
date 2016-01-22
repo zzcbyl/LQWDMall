@@ -3,7 +3,7 @@
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        string type = (Request["type"]==null)? "username" :  Request["type"].Trim();
+        string type = (Request["type"]==null)? "openid" :  Request["type"].Trim();
         string userName = Request["username"] == null ? "oqrMvt6yRAWFu3DmhGe4Td0nKZRo" : Request["username"].Trim();
         DateTime expireDate = DateTime.Now.AddHours(2);
         
