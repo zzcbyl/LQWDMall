@@ -63,6 +63,20 @@ public class Users
     public string Name { get; set; }
     public string Sex { get; set; }
 
+    public string DingyueOpenid
+    {
+        get
+        {
+            return _fields["openid"].ToString().Trim();
+        }
+        set
+        {
+            string[,] updateParameter = new string[,] { { "dingyue_openid", "varchar", value.Trim() } };
+            string[,] keyParameter = new string[,] { { "uid", "int", _fields["uid"].ToString().Trim() } };
+            DBHelper.UpdateData("m_user", updateParameter, keyParameter, Util.ConnectionString);
+        }
+    }
+
     public static int CheckToken(string token)
     {
         int ret = 0;
