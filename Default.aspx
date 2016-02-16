@@ -16,10 +16,10 @@
 <div style="width:100%;">
     <img src="images/mall-banner.jpg" width="100%" />
 </div>
-<div style="background:#fff; padding:5px 20px; margin-top:10px; font-size:14px; font-weight:bold; color:#ff0000; line-height:25px; position:relative;">
-    <%--<p>　　因春节快递放假，从1月27日起所有订单将在春节上班后按照付款顺序发货！</p>
-    <div style="position:absolute; right:20px; bottom:5px; font-size:14px;"><a style="color:#bbb;" href="Activity11.aspx">活动详情>></a></div>--%>
-</div>
+<%--<div style="background:#fff; padding:5px 20px; margin-top:10px; font-size:14px; font-weight:bold; color:#ff0000; line-height:25px; position:relative;">
+    <p>　　因春节快递放假，从1月27日起所有订单将在春节上班后按照付款顺序发货！</p>
+    <div style="position:absolute; right:20px; bottom:5px; font-size:14px;"><a style="color:#bbb;" href="Activity11.aspx">活动详情>></a></div>
+</div>--%>
 <div style="background:#fff; padding:10px; margin-top:10px;">
     1、本店为卢勤问答平台官方书城，所有图书均有现货。2、本店的运费遵循市场规则，您可以自行拍下。
 </div>
