@@ -127,6 +127,11 @@ function filldetail(pid) {
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.imgsrc + '" width="100%" />');
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
+                if (pid == 69) {
+                    $('#point_li').html(obj.description);
+                    $('#trip_li').html(obj.desc_trip);
+                    $('#cost_li').html(obj.desc_cost);
+                }
                 if (pid == 28) {
                     var price_1 = parseInt(obj.price);
                     if (repeat == 1) {
@@ -142,17 +147,6 @@ function filldetail(pid) {
                     $('#prodprice').html('¥' + price_1 / 100);
                 }
                 else if (pid == 30) {
-//                    var price_1 = parseInt(obj.price);
-//                    if (repeat == 1) {
-//                        price_1 -= 100000;
-//                    }
-//                    if (currentDT <= deadline_30) {
-//                        price_1 -= 80000;
-//                    }
-//                    if (parseInt(obj.originalprice) != price_1) {
-//                        $('#originalprice').show();
-//                        $('#originalprice').html('¥' + parseInt(obj.originalprice) / 100);
-                    //                    }
                     $('#originalprice').html('');
                     $('#prodprice').html('');
                 }
