@@ -12,6 +12,7 @@
     public string repeatCustomer = "0";
     public string StartDate = "";
     public string showDate = "";
+    public string price = "";
     protected void Page_Load(object sender, EventArgs e)
     {
         if (this.Session["RepeatCustomer"] != null)
@@ -29,6 +30,7 @@
             {
                 showDate = showDate.Substring(1);
             }
+            price = (Convert.ToInt32(dic["price"].ToString()) / 100).ToString();
         }
     }
 </script>
@@ -82,7 +84,7 @@
             var startDate = '<%=StartDate %>';
             var flag = [];
 
-            flag.push(startDate + "-775-9800-1000-10");
+            flag.push(startDate + "-775-<%=price%>-1000-10");
 
             flag.sort();
 
