@@ -51,7 +51,7 @@
     });
 
     function joinxly() {
-        location.href = 'Join_xly.aspx?productid=' + prodid + "#ATable";
+        location.href = 'Join_xly.aspx?productid=' + prodid + '#ATable';
     }
 </script>
 </asp:Content>
