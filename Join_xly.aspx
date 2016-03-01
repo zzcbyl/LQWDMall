@@ -92,6 +92,7 @@
         <!-- 日历部分 -->	
     </div>
     <div class="sc-address-block rel" style="margin-top:0; padding-top:10px;">
+        <a name="ATable"></a>
         <p class="add_list_p rel">
             <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
         </p>
