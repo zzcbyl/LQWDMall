@@ -180,10 +180,10 @@ public class Order
         return orderArray;
     }
 
-    public static Order[] GetOrdersByPages(int userId, DateTime startDate, DateTime endDate, int currentPage, int pageSize, string where)
+    public static Order[] GetOrdersByPages(int userId, DateTime startDate, DateTime endDate, int currentPage, int pageSize, string where, string orderby)
     {
         int intop = pageSize * (currentPage - 1);
-        string sql = "SELECT TOP " + pageSize + " * FROM m_order WHERE oid NOT IN (SELECT TOP " + intop + " oid FROM m_order where ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY oid desc) and ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY paysuccesstime desc, oid desc";
+        string sql = "SELECT TOP " + pageSize + " * FROM m_order WHERE oid NOT IN (SELECT TOP " + intop + " oid FROM m_order where ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY oid desc) and ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY " + orderby;
         SqlDataAdapter da = new SqlDataAdapter(sql, Util.ConnectionString.Trim());
         DataTable dt = new DataTable();
         da.Fill(dt);
@@ -222,7 +222,7 @@ public class Order
 
     public int updPayState(int orderid, int paystate, string shipNumber)
     {
-        string sqlUpdPay = "update m_order set paystate = " + paystate + ", paysuccesstime = '" + DateTime.Now.ToString() + "', shipNumber='" + shipNumber + "' where oid = " + orderid;
+        string sqlUpdPay = "update m_order set paystate = " + paystate + ", shipNumber='" + shipNumber + "' where oid = " + orderid;
         SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
         SqlCommand cmdUpdPayOrder = new SqlCommand(sqlUpdPay, conn);
         conn.Open();

@@ -17,11 +17,18 @@
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2015-10-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
         string where = string.Empty;
+        string orderby = "oid desc";
         if (Request["state"] != null && Request["state"] == "1")
+        {
             where = " and paystate in (1,2) ";
+            orderby = "paysuccesstime desc, oid desc";
+        }
         else if (Request["state"] != null && Request["state"] == "2")
+        {
             where = " and paystate in (1) and name <> '' ";
-        orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize, where);
+            orderby = "paysuccesstime desc, oid desc";
+        }
+        orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize, where, orderby);
         this.AspNetPager1.RecordCount = Order.GetOrdersCount(0, startDate, endDate, where);
         this.lbl_count.Text = this.AspNetPager1.RecordCount.ToString();
     }
