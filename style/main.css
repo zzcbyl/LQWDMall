@@ -75,7 +75,7 @@ a.btn-primary { color:#fff;}
 .add_del { background:url(../images/addressset.png) no-repeat 19px 3px; display: block; height: 2.1875rem; width: 2.8125rem;}
 .add_list_p { padding:5px 30px 5px 10px; }
 .add_list_p label { position:absolute; left:10px; top:10px; margin-bottom:0; }
-.add_list_p input,.add_list_p select { width:100%; margin-bottom:0; height:30px; line-height:30px; font-size:14px; box-shadow:none;}
+.add_list_p input,.add_list_p select { width:100%; margin-bottom:0; height:25px; line-height:25px; font-size:14px; box-shadow:none;}
 .add_list_p input:focus { box-shadow:none;}
 .list_pdl { padding-left:90px;}
 
