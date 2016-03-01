@@ -152,8 +152,8 @@
                 <input type="hidden" name="myToken" id="myToken" value="" />
                 <input type="hidden" name="myOpenid" id="myOpenid" value="" />
                 <input type="hidden" name="myFrom" id="myFrom" value="" />
-                <a href="javascript:SubOrder();" style="float:right; margin:8px 10px 0 0;"><button type="button" class="btn btn-danger" onclick="SubOrder();">提交报名</button></a>
-                <a style="float:right; margin-right:10px;"><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
+                <a href="javascript:SubOrder();" style="display:block; margin-top:5px;" ><button type="button" style="width:90%; padding:6px 0;" class="btn btn-danger" onclick="SubOrder();">微信安全支付</button></a>
+                <a style="float:right; margin-right:10px; display:none"><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
             </li>
         </ul>
         <div class="clear"></div>
@@ -376,7 +376,7 @@
                 var obj = eval('(' + data + ')');
                 if (obj != null) {
                     var price_1 = parseInt(obj.price);
-                    var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
+                    var strprice = '<span class="">￥' + price_1 / 100 + '</span>';
                     if (obj.prodid == 28) {
                         if (repeat == 1) {
                             price_1 -= 30000;
@@ -384,12 +384,12 @@
                         if (currentDT <= deadline_28) {
                             price_1 -= 30000;
                         }
-                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
+                        strprice = '<span class="">￥' + price_1 / 100 + '</span>';
                     }
 
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
                     $("#total_amount span").eq(0).html('¥' + price_1 / 100);
-                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
+                    var totalHtml = '<li class="sub-total" style="height:20px; text-align:center; font-weight:bold; padding:15px 0;"><a class="pd10"><span class="red">需支付：￥' + price_1 / 100 + '</span></a></li>';
 
                     if (obj.prodid == 30) {
                         prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price"></a><a class="prod-count"></a></li>';
@@ -400,7 +400,7 @@
                         var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));
                         amount = amount <= 0 ? 0 : amount;
                         $("#total_amount span").eq(0).html('¥' + amount);
-                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a>优惠：<span class="red">¥' + QueryString('followerAmount') + '</span></a><a class="pd10">合计: <span class="red">¥' + amount + '</span></a></li>';
+                        totalHtml = '<li class="sub-total" style="height:20px; text-align:center; font-weight:bold; padding:15px 0;"><a>优惠：<span class="red">￥' + QueryString('followerAmount') + '</span></a><a class="pd10"><span class="red">需支付：¥' + amount + '</span></a></li>';
                     }
 
                     $('#prodlist').html(prodhtml + totalHtml);
