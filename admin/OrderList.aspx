@@ -23,6 +23,7 @@
             where = " and paystate in (1) and name <> '' ";
         orderArray = Order.GetOrdersByPages(0, startDate, endDate, currentPage, PageSize, where);
         this.AspNetPager1.RecordCount = Order.GetOrdersCount(0, startDate, endDate, where);
+        this.lbl_count.Text = this.AspNetPager1.RecordCount.ToString();
     }
     protected void AspNetPager1_PageChanged(object src, EventArgs e)
     {
@@ -36,6 +37,7 @@
         <a style='padding:3px 10px; margin-right:10px; <%= (Request["state"] == null || Request["state"].Equals("")) ? "background:#55798C; color:#fff;" : "background:#ccc; color:#666;"%>' href="OrderList.aspx">全部</a>
         <a style='padding:3px 10px; <%= (Request["state"] != null && Request["state"].Equals("1")) ? "background:#55798C; color:#fff;" : "background:#ccc; color:#666;" %>' href="OrderList.aspx?state=1">已付款</a>　
         <a style='padding:3px 10px; <%= (Request["state"] != null && Request["state"].Equals("2")) ? "background:#55798C; color:#fff;" : "background:#ccc; color:#666;" %>' href="OrderList.aspx?state=2">未发货</a>
+        <a style='padding:3px 10px;'>总计：<asp:Label ID="lbl_count" runat="server" Text=""></asp:Label></a>
     </div>
     <ul class="tabletitle">
         <li id="product_li">商品</li>
