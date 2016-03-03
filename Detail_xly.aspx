@@ -208,6 +208,8 @@
             alert('商品参数有误');
             return;
         }
+
+        lineLink = "http://mall.luqinwenda.com/Detail_xly.aspx?productid=" + prodid;
         filldetail(prodid);
 
         $('.description-menu li').click(function () {
