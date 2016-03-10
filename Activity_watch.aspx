@@ -15,17 +15,17 @@
     public string appId = System.Configuration.ConfigurationManager.AppSettings["wxappid_dingyue"];
     protected void Page_Load(object sender, EventArgs e)
     {
-        //token = Util.GetSafeRequestValue(Request, "token", "");
-        //if (token.Trim().Equals(""))
-        //    if (Session["watch_token"] != null)
-        //        token = Session["watch_token"].ToString().Trim();
+        token = Util.GetSafeRequestValue(Request, "token", "");
+        if (token.Trim().Equals(""))
+            if (Session["watch_token"] != null)
+                token = Session["watch_token"].ToString().Trim();
 
-        //userId = Users.CheckToken(token);
-        //if (userId <= 0)
-        //{
-        //    Response.Redirect("http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + Server.UrlEncode(Request.Url.ToString()), true);
-        //}
-        //Session["watch_token"] = token;
+        userId = Users.CheckToken(token);
+        if (userId <= 0)
+        {
+            Response.Redirect("http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + Server.UrlEncode(Request.Url.ToString()), true);
+        }
+        Session["watch_token"] = token;
 
         try
         {
