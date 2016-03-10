@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" %>
-
 <%@ Import Namespace="System.Web.Script.Serialization" %>
 <%@ Import Namespace="System.Threading" %>
 
@@ -10,17 +9,17 @@
     public int userId = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
-        //token = Util.GetSafeRequestValue(Request, "token", "");
-        //if (token.Trim().Equals(""))
-        //    if (Session["watch_token"] != null)
-        //        token = Session["watch_token"].ToString().Trim();
+        token = Util.GetSafeRequestValue(Request, "token", "");
+        if (token.Trim().Equals(""))
+            if (Session["watch_token"] != null)
+                token = Session["watch_token"].ToString().Trim();
 
-        //userId = Users.CheckToken(token);
-        //if (userId <= 0)
-        //{
-        //    Response.Redirect("http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + Server.UrlEncode(Request.Url.ToString()), true);
-        //}
-        //Session["watch_token"] = token;
+        userId = Users.CheckToken(token);
+        if (userId <= 0)
+        {
+            Response.Redirect("http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + Server.UrlEncode(Request.Url.ToString()), true);
+        }
+        Session["watch_token"] = token;
 
 
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
@@ -50,7 +49,7 @@
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = (order.OrderPriceToPay < 0 ? 0 : order.OrderPriceToPay);
-            string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
+            string param = "?body=卢勤问答平台官方商城&detail=手表&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
             //微信支付
             payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
