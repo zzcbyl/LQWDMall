@@ -143,12 +143,12 @@
                 <img src="http://img.wfenxiao.com.cn/static/js/ueditor/jsp/upload/image/20151211/1449821529496085775.png" width="100%" />
             </div>
             <div style="background: #fff; margin-top: 10px; padding: 10px; text-align: center; line-height: 25px;">
-                <div style="width: 200px; margin: 10px auto;">
+                <div style="width: 180px; margin: 10px auto;">
                     <a id="color_1" class="watch_color_left watch_blue" onclick="changeColor(1);">星空蓝</a>
                     <a id="color_2" class="watch_color_right" onclick="changeColor(2);">仙女红</a>
                     <div class="clear" style="height: 20px;"></div>
                 </div>
-                <div style="width: 200px; margin: 10px auto;">
+                <div style="width: 180px; margin: 10px auto;">
                     <div style="float: left;">单价：<span class="red">￥299</span></div>
                     <div style="float: left; margin-left: 20px;">
                         <input type="text" class="spinner" />
