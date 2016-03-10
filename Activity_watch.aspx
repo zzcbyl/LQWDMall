@@ -311,14 +311,14 @@
         function SubOrder() {
             var inCount = $('#in_count').val();
             $('#hidCount').val(inCount);
-            alert($('#hidColor').val());
+            //alert($('#hidColor').val());
             $.ajax({
                 type: "get",
                 async: false,
                 url: '/api/cart.aspx',
                 data: { token: token, productid: $('#hidColor').val(), count: inCount, random: Math.random() },
                 success: function (data, textStatus) {
-                    alert(data);
+                    //alert(data);
                     var obj = eval('(' + data + ')');
                     if (obj.status == 1) {
                         SubOrder();
