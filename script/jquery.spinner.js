@@ -85,6 +85,7 @@
 
       function totalAmount() {
           $('#total_amount span:first').html('￥' + (parseInt($('#in_count').val()) * 299).toString());
+          $('#couponVal').html('￥-' + (parseInt($('#in_count').val()) * 100).toString());
           $('#hidCount').val($('#in_count').val());
       }
     })

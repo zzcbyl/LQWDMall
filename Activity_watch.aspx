@@ -164,7 +164,7 @@
                     <div class="clear" style="height: 10px;"></div>
                 </div>
                 <div style="width: 300px; margin: 0px auto; text-align:center;">
-                    <div style="">原价：<span class="red">￥399</span><br />　优惠券：<span class="red">￥-100</span></div>
+                    <div style="">原价：<span class="red">￥399</span><br />　优惠券：<span class="red" id="couponVal">￥-100</span></div>
                     <div style="width:72px; margin:10px auto;">
                         <input type="text" class="spinner" />
                     </div>
