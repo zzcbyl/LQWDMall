@@ -15,17 +15,17 @@
     public string appId = System.Configuration.ConfigurationManager.AppSettings["wxappid_dingyue"];
     protected void Page_Load(object sender, EventArgs e)
     {
-        token = Util.GetSafeRequestValue(Request, "token", "");
-        if (token.Trim().Equals(""))
-            if (Session["watch_token"] != null)
-                token = Session["watch_token"].ToString().Trim();
+        //token = Util.GetSafeRequestValue(Request, "token", "");
+        //if (token.Trim().Equals(""))
+        //    if (Session["watch_token"] != null)
+        //        token = Session["watch_token"].ToString().Trim();
 
-        userId = Users.CheckToken(token);
-        if (userId <= 0)
-        {
-            Response.Redirect("http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + Server.UrlEncode(Request.Url.ToString()), true);
-        }
-        Session["watch_token"] = token;
+        //userId = Users.CheckToken(token);
+        //if (userId <= 0)
+        //{
+        //    Response.Redirect("http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + Server.UrlEncode(Request.Url.ToString()), true);
+        //}
+        //Session["watch_token"] = token;
 
         try
         {
@@ -161,15 +161,15 @@
                 <div style="width: 180px; margin: 10px auto;">
                     <a id="color_1" class="watch_color_left watch_blue" onclick="changeColor(1);">星空蓝</a>
                     <a id="color_2" class="watch_color_right" onclick="changeColor(2);">仙女红</a>
-                    <div class="clear" style="height: 20px;"></div>
+                    <div class="clear" style="height: 10px;"></div>
                 </div>
-                <div style="width: 180px; margin: 10px auto;">
-                    <div style="float: left;">单价：<span class="red">￥299</span></div>
-                    <div style="float: left; margin-left: 20px;">
+                <div style="width: 300px; margin: 0px auto; text-align:center;">
+                    <div style="">原价：<span class="red">￥399</span><br />　优惠券：<span class="red">￥-100</span></div>
+                    <div style="width:72px; margin:10px auto;">
                         <input type="text" class="spinner" />
                     </div>
                 </div>
-                <div class="clear" style="height: 20px;"></div>
+                <div class="clear" style="height: 10px;"></div>
                 <a><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
             </div>
 
