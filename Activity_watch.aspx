@@ -7,6 +7,12 @@
 <script runat="server">
     public string token = "";
     public int userId = 0;
+    
+    public string timeStamp = "";
+    public string nonceStr = "fd4e2f0br01sa12dfasdf23fcw5ba9fa2d";
+    public string ticket = "";
+    public string shaParam = "";
+    public string appId = System.Configuration.ConfigurationManager.AppSettings["wxappid_dingyue"];
     protected void Page_Load(object sender, EventArgs e)
     {
         token = Util.GetSafeRequestValue(Request, "token", "");
@@ -21,6 +27,15 @@
         }
         Session["watch_token"] = token;
 
+        try
+        {
+            timeStamp = Util.GetTimeStamp();
+            ticket = Util.GetTicket();
+            string shaString = "jsapi_ticket=" + ticket.Trim() + "&noncestr=" + nonceStr.Trim()
+                + "&timestamp=" + timeStamp.Trim() + "&url=" + Request.Url.ToString().Trim();
+            shaParam = Util.GetSHA1(shaString);
+        }
+        catch (Exception ex) { }
 
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
@@ -229,12 +244,52 @@
         </div>
     </form>
 
-
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript">
+
+        var shareTitle = "恭喜你获得100元【星空侠安全电话手表】代金券"; //标题
+        var shareImg = "http://img.wfenxiao.com.cn/static/js/ueditor/jsp/upload/image/20151211/1449821529496085775.png"; //图片
+        var shareContent = '恭喜你获得100元【星空侠安全电话手表】代金券。代金券有效期为2016年3月10日23点59分。'; //简介
+        var shareLink = 'http://mall.luqinwenda.com/Activity_watch.aspx'; //链接
+        wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: '<%=appId%>', // 必填，公众号的唯一标识
+            timestamp: '<%=timeStamp%>', // 必填，生成签名的时间戳
+            nonceStr: '<%=nonceStr%>', // 必填，生成签名的随机串
+            signature: '<%=shaParam %>', // 必填，签名，见附录1
+            jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage']
+        });
 
         $(document).ready(function () {
             $('.spinner').spinner({});
 
+
+            wx.ready(function () {
+                //分享到朋友圈
+                wx.onMenuShareTimeline({
+                    title: shareTitle, // 分享标题
+                    link: shareLink, // 分享链接
+                    imgUrl: shareImg, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+                        shareSuccess();
+                    }
+                });
+
+                //分享给朋友
+                wx.onMenuShareAppMessage({
+                    title: shareTitle, // 分享标题
+                    desc: shareContent, // 分享描述
+                    link: shareLink, // 分享链接
+                    imgUrl: shareImg, // 分享图标
+                    success: function () {
+                        // 用户确认分享后执行的回调函数
+
+                    }
+                });
+            });
         });
 
         function changeColor(o) {
