@@ -185,7 +185,6 @@
                 </p>
             </div>--%>
             <div style="background: #fff; margin-top: 10px; padding: 10px; text-align: left; line-height: 25px;">
-                <h3>手表介绍：</h3>
                 <p>
                     <br />
                 </p>
