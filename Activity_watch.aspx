@@ -37,10 +37,10 @@
         }
         catch (Exception ex) { }
 
-        if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
-        {
-            submitOrder(token);
-        }
+        //if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
+        //{
+        //    submitOrder(token);
+        //}
     }
     private void submitOrder(string token)
     {
@@ -173,7 +173,7 @@
                 <a><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
             </div>
 
-            <div class="sc-address-block rel" style="margin: 10px 0 0;">
+            <%--<div class="sc-address-block rel" style="margin: 10px 0 0;">
                 <p class="add_list_p rel">
                     <input type="text" id="consignee" name="consignee" placeholder="请输入收货人姓名" />
                 </p>
@@ -183,7 +183,7 @@
                 <p class="add_list_p rel">
                     <input type="text" id="address" name="address" placeholder="请输入地址" />
                 </p>
-            </div>
+            </div>--%>
             <div style="background: #fff; margin-top: 10px; padding: 10px; text-align: left; line-height: 25px;">
                 <h3>手表介绍：</h3>
                 <p>
@@ -225,7 +225,7 @@
                     <li style="width: 100%;">
                         <input type="hidden" name="hidIndex" id="hidIndex" value="1" />
                         <input type="hidden" name="hidCount" id="hidCount" />
-                        <input type="hidden" name="hidColor" id="hidColor" value="星空蓝" />
+                        <input type="hidden" name="hidColor" id="hidColor" value="72" />
                         <a href="javascript:SubOrder();" style="display: block;">
                             <button type="button" style="width: 90%; padding: 6px 0;" class="btn btn-danger">微信安全支付</button>
                         </a>
@@ -246,7 +246,7 @@
 
     <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script type="text/javascript">
-
+        var token = '<%=token %>';
         var shareTitle = "恭喜你获得100元【星空侠安全电话手表】代金券"; //标题
         var shareImg = "http://img.wfenxiao.com.cn/static/js/ueditor/jsp/upload/image/20151211/1449821529496085775.png"; //图片
         var shareContent = '恭喜你获得100元【星空侠安全电话手表】代金券。代金券有效期为2016年3月10日23点59分。'; //简介
@@ -293,9 +293,11 @@
         });
 
         function changeColor(o) {
-            var str = '星空蓝';
+            //蓝色
+            var str = '72';
             if (o == 2) {
-                str = '仙女红';
+                //红色
+                str = '71';
                 $('#color_1').removeClass('watch_blue');
                 $('#color_2').addClass('watch_red');
             }
@@ -307,25 +309,24 @@
         }
 
         function SubOrder() {
-
-            if ($("#consignee").val().Trim() == "") {
-                alert("请输入收件人姓名");
-                return;
-            }
-            if ($("#mobile").val().Trim() == "") {
-                alert("请输入手机号");
-                return;
-            }
-            if (!$("#mobile").val().isMobile()) {
-                alert("请输入正确的手机号");
-                return;
-            }
-            if ($("#address").val().Trim() == "") {
-                alert("请输入地址");
-                return;
-            }
-            $('#hidCount').val($('#in_count').val());
-            document.forms[0].submit();
+            var inCount = $('#in_count').val();
+            $('#hidCount').val(inCount);
+            alert($('#hidColor').val());
+            $.ajax({
+                type: "get",
+                async: false,
+                url: '/api/cart.aspx',
+                data: { token: token, productid: $('#hidColor').val(), count: inCount, random: Math.random() },
+                success: function (data, textStatus) {
+                    alert(data);
+                    var obj = eval('(' + data + ')');
+                    if (obj.status == 1) {
+                        SubOrder();
+                        return;
+                    }
+                    location.href = "http://mall.luqinwenda.com/SubmitOrder.aspx?prodids=" + $('#hidColor').val();
+                }
+            });
         }
 
     </script>
