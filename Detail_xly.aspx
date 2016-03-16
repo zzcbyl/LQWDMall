@@ -191,7 +191,7 @@
             </li>
             <li id="ftm-cart" style="width:80%;">
                 <div>
-                    <a style="color:#fff;" id="my-cart" href="javascript:void(0);"  onclick="javascript:joinxly();">出发日期及价格
+                    <a style="color:#fff;" id="my-cart" href="javascript:void(0);"  onclick="javascript:joinxly();">报名
                     <em id="my_cart_em" class="abs" style="display: none; right:35%;"></em>
                 </a></div>
             </li>
