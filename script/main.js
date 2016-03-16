@@ -165,7 +165,7 @@ function filldetail(pid) {
 
 
                 shareTitle = delHtmlTag(obj.prodname); //标题
-                imgUrl = domain + obj.images[0].src; //图片
+                imgUrl = domain + obj.imgsrc; //图片
                 descContent = obj.summary; //简介
                 lineLink = document.URL + "&source=1"; //链接
             }
