@@ -183,7 +183,7 @@ public class Order
     public static Order[] GetOrdersByPages(int userId, DateTime startDate, DateTime endDate, int currentPage, int pageSize, string where, string orderby)
     {
         int intop = pageSize * (currentPage - 1);
-        string sql = "SELECT TOP " + pageSize + " * FROM m_order WHERE oid NOT IN (SELECT TOP " + intop + " oid FROM m_order where ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY oid desc) and ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY " + orderby;
+        string sql = "SELECT TOP " + pageSize + " * FROM m_order WHERE oid NOT IN (SELECT TOP " + intop + " oid FROM m_order where ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY " + orderby + ") and ctime > '" + startDate.ToString() + "' and ctime < '" + endDate.AddDays(1).ToString() + "'  " + ((userId == 0) ? "" : " and uid = " + userId.ToString()) + where + " ORDER BY " + orderby;
         SqlDataAdapter da = new SqlDataAdapter(sql, Util.ConnectionString.Trim());
         DataTable dt = new DataTable();
         da.Fill(dt);
