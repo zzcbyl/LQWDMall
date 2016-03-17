@@ -14,7 +14,7 @@
         <img src="upload/prodimg/51ying_bai.jpg" width="100%" />
         <div style="line-height:30px; margin-top:10px; font-weight:bold;">
             <h4>《用眼光创造财富》五一亲子特训营</h4>
-            <div> 2016年4月30日-5月2日（五一假期）</div></div>
+            <div> 2016年4月30日-5月2日（五一假期）　北京</div></div>
     </div>
     <div class="sc-address-block rel" style="margin-top:10px; padding-top:10px;">
         <a name="ATable"></a>
@@ -33,15 +33,15 @@
             <li id="prodLi" class="sub-cart-prod"></li>
             <li id="totalLi" class="sub-total" style="text-align:center; font-weight:bold; padding:15px 0;">
                 <div style="clear:both; border:1px solid #ccc; height:22px; width:86px; line-height:22px; margin:5px auto; vertical-align:middle; ">
-                    <a style="width:22px; height:22px; border-right:1px solid #ccc; line-height:22px; text-align:center; display:block; float:left;" onclick="subANum();">－</a>
-                    <input type="text" id="txtCount" name="txtCount" style="width:40px; text-align:center; border:none; display:block; float:left; height:22px; line-height:22px; padding:0; margin:0;" maxlength="3" value="1" onkeyup="updANum();" />
-                    <a style="width:22px; height:22px;border-left:1px solid #ccc; line-height:22px; text-align:center; display:block; float:left;" onclick="addANum();">＋</a>
+                    <a style="width:22px; height:22px; border-right:1px solid #ccc; line-height:23px; text-align:center; display:block; float:left;" onclick="subANum();">－</a>
+                    <input type="text" id="txtCount" name="txtCount" style="width:40px; text-align:center; border:none; display:block; float:left; height:22px; line-height:23px; padding:0; margin:0;" maxlength="3" value="1" onkeyup="updANum();" />
+                    <a style="width:22px; height:22px;border-left:1px solid #ccc; line-height:23px; text-align:center; display:block; float:left;" onclick="addANum();">＋</a>
+                    <a style="display:block; margin-right:-30px;">人</a>
                 </div>
                 <div><a class="pd10"><span class="red">需支付：￥<span id="prod_price"></span></span></a></div>
                 <div style="clear:both;"></div>
             </li>
         </ul>
-        
     </div>
     <%--<div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
         <div style="padding-right:10px; height:60px;" class="rel">   
@@ -270,6 +270,7 @@
             alert('商品参数有误');
             return;
         }
+        lineLink = "http://mall.luqinwenda.com/join_xly1.aspx?productid=" + prodid;
         so_fillProd_xly();
 
     });
