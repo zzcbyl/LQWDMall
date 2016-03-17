@@ -7,7 +7,6 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MasterContent" Runat="Server">
 <div class="mainpage">
     <div class="titleNav">
-        <a onclick="returnxly();" class="returnA"> </a>
         <span class="titleSpan">报名表</span>
     </div>
     <div class="sc-address-block rel" style="margin-bottom:0; padding-bottom:10px;">
