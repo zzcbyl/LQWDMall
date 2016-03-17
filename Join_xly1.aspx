@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.master" %>
+﻿<%@ Page Title="《用眼光创造财富》五一亲子特训营" Language="C#" MasterPageFile="~/Master.master" %>
 <%@ Import Namespace="System.Web.Script.Serialization" %>
 <%@ Import Namespace="System.Threading" %>
 
