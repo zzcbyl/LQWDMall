@@ -332,3 +332,10 @@ function isIdCardNo(num) {
 function delHtmlTag(str) {
     return str.replace(/<[^>]+>/g, ""); //去掉所有的html标记
 }
+
+// 判断输入是否是一个整数
+function isint(str) {
+    var result = str.match(/^[0-9]+$/);
+    if (result == null) return false;
+    return true;
+}
