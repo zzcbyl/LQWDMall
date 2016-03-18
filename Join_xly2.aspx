@@ -33,7 +33,7 @@
             <li id="totalLi" class="sub-total" style="text-align:center; font-weight:bold; padding:15px 0;">
                 <div style="clear:both; border:1px solid #ccc; height:22px; width:86px; line-height:22px; margin:5px auto; vertical-align:middle; ">
                     <a style="width:22px; height:22px; border-right:1px solid #ccc; line-height:23px; text-align:center; display:block; float:left;" onclick="subANum();">－</a>
-                    <input type="text" id="txtCount" name="txtCount" style="width:40px; text-align:center; border:none; display:block; float:left; height:22px; line-height:23px; padding:0; margin:0;" maxlength="3" value="1" onkeyup="updANum();" />
+                    <input type="text" id="txtCount" name="txtCount" style="width:40px; text-align:center; border:none; display:block; float:left; height:22px; line-height:23px; padding:0; margin:0;" maxlength="3" value="1" onblur="updANum();" />
                     <a style="width:22px; height:22px;border-left:1px solid #ccc; line-height:23px; text-align:center; display:block; float:left;" onclick="addANum();">＋</a>
                     <a style="display:block; margin-right:-30px;">人</a>
                 </div>
