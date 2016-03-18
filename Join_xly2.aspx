@@ -200,7 +200,7 @@
             return;
         }
         shareTitle = "《用眼光创造财富》五一亲子特训营"; //标题
-        imgUrl = "http://mall.luqinwenda.com/upload/prodimg/51ying_bai.jpg"; //图片
+        imgUrl = "http://mall.luqinwenda.com/upload/prodimg/51ying_icon.jpg"; //图片
         descContent = "2016年4月30日-5月2日（五一假期）　北京"; //简介
         lineLink = "http://mall.luqinwenda.com/join_xly2.aspx?productid=" + prodid;
         so_fillProd_xly();
