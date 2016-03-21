@@ -30,7 +30,16 @@
     <div style="background:#fff; margin:10px; padding:10px; line-height:22px;">
         <ul id="prodlist">
             <li id="prodLi" class="sub-cart-prod"></li>
-            
+            <li id="totalLi" class="sub-total" style="text-align:center; font-weight:bold; padding:15px 0;">
+                <div style="clear:both; border:1px solid #ccc; height:22px; width:86px; line-height:22px; margin:5px auto; vertical-align:middle; ">
+                    <a style="width:22px; height:22px; border-right:1px solid #ccc; line-height:23px; text-align:center; display:block; float:left;" onclick="subANum();">－</a>
+                    <input type="text" id="txtCount" name="txtCount" style="width:40px; text-align:center; border:none; display:block; float:left; height:22px; line-height:23px; padding:0; margin:0;" maxlength="3" value="1" onblur="updANum();" />
+                    <a style="width:22px; height:22px;border-left:1px solid #ccc; line-height:23px; text-align:center; display:block; float:left;" onclick="addANum();">＋</a>
+                    <a style="display:block; margin-right:-30px;">人</a>
+                </div>
+                
+                <div style="clear:both;"></div>
+            </li>
         </ul>
     </div>
     <%--<div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
@@ -84,7 +93,7 @@
     {
         int count = (Request.Form["txtCount"] == null ? 1 : int.Parse(Request.Form["txtCount"].ToString().Trim()));
         string memo = "姓名：" + Request.Form["childName"].ToString() + "，手机号码：" + Request.Form["parentMobile"].ToString()
-                    + "，电子邮箱：" + Request.Form["parentEmail"].ToString();
+                    + "，电子邮箱：" + Request.Form["parentEmail"].ToString() + "，报名人数：" + count;
         string parms = "token=" + token + "&name=&cell=&province=&city=&address=&zip=&productid=" + Request["productid"].ToString() + "&count=" + count + "|1&memo=" + memo + "&wechatid=";
 
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
@@ -148,7 +157,7 @@
                     price_1 = parseInt(obj.price);
                     var strprice = '<span class="">￥' + price_1 / 100 + '</span>';
                     
-                    var prodhtml = '<a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count"></a>';
+                    var prodhtml = '<a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price"></a><a class="prod-count"></a>';
                     $("#total_amount span").eq(0).html('¥' + price_1 / 100);
 
                     $('#prodLi').html(prodhtml);
@@ -208,19 +217,17 @@
         else {
             $("#txtCount").val(pCount - 1);
         }
-        fillPrice();
     }
 
     function addANum()
     {
         pCount = parseInt($("#txtCount").val());
-        if (pCount >= 4) {
-            $("#txtCount").val("4");
+        if (pCount >= 10) {
+            $("#txtCount").val("10");
         }
         else {
             $("#txtCount").val(pCount + 1);
         }
-        fillPrice();
     }
 
     function updANum() {
@@ -230,34 +237,16 @@
             $("#txtCount").val("1");
         }
         else {
-            if (pCount >= 4) {
-                $("#txtCount").val("4");
+            if (pCount >= 10) {
+                $("#txtCount").val("10");
             }
             if (pCount <= 1) {
                 $("#txtCount").val("1");
             }
         }
-        fillPrice();
 
     }
 
-    function fillPrice() {
-        var price = 650000;
-        if (parseInt($("#txtCount").val()) == 1) {
-            price = 650000;
-        }
-        else if (parseInt($("#txtCount").val()) == 2) {
-            price = 1250000;
-        }
-        else if (parseInt($("#txtCount").val()) == 3) {
-            price = 1800000;
-        }
-        else if (parseInt($("#txtCount").val()) == 4) {
-            price = 2400000;
-        }
-
-        $("#prod_price").html(price / 100);
-    }
 
 </script>
 
