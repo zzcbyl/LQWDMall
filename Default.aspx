@@ -81,6 +81,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        lineLink = "http://mall.luqinwenda.com/Default.aspx"; //链接
         filllist(2);
         totalcart('my_cart_em');
         setCookie('source', 1);
