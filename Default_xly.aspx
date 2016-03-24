@@ -72,9 +72,12 @@
 
                         
                         var sDt =new Date(Date.parse(prodlist[i].startTime.replace(/-/g, "/")));
-                        var eDt =new Date(Date.parse(prodlist[i].endTime.replace(/-/g, "/")));
-                        var dtTitle =(sDt.getFullYear()).toString()+'年'+(sDt.getMonth()+1).toString()+'月'+(sDt.getDate()).toString()+'日'+
-                            '－'+(eDt.getMonth()+1).toString()+'月'+(eDt.getDate()).toString()+'日';
+                        var dtTitle =(sDt.getFullYear()).toString()+'年'+(sDt.getMonth()+1).toString()+'月'+(sDt.getDate()).toString()+'日';
+                        if(prodlist[i].endTime!='')
+                        {
+                            var eDt =new Date(Date.parse(prodlist[i].endTime.replace(/-/g, "/")));
+                            dtTitle += '－'+(eDt.getMonth()+1).toString()+'月'+(eDt.getDate()).toString()+'日';
+                        }
                         
                         var buybtn = '<a id="buyProd_xly" onclick="location.href=\'Join_xly.aspx?productid=' + prodlist[i].prodid + '&#ATable\';" class="btn btn-danger">我要报名</a>';
                         html += '<li class="m-li left rel" style="width:100%"><a href="Detail_xly.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" /></div><div class="m-txt" style="line-height:20px; height:auto;">' + prodlist[i].prodname + '<br />' + dtTitle + '</div><div class="m-price" style="font-size:14px;">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>-->' + buybtn + '</div></li>';
