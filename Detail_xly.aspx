@@ -11,6 +11,7 @@
 <script runat="server">
     public string repeatCustomer = "0";
     public string StartDate = "";
+    public string EndDate = "";
     public string showDate = "";
     public string price = "";
     protected void Page_Load(object sender, EventArgs e)
@@ -24,13 +25,15 @@
         Dictionary<string, object> dic = json.Deserialize<Dictionary<string, object>>(result);
         if (dic.Keys.Contains("startTime"))
         {
-            StartDate = dic["startTime"].ToString().Replace("/", "-").Split(' ')[0];
-            showDate = Convert.ToDateTime(StartDate).ToString("MM月dd日");
-            if (showDate.Substring(0, 1) == "0")
-            {
-                showDate = showDate.Substring(1);
-            }
-            price = (Convert.ToInt32(dic["price"].ToString()) / 100).ToString();
+            StartDate = dic["startTime"].ToString(); //dic["startTime"].ToString().Replace("/", "-").Split(' ')[0];
+            showDate = Convert.ToDateTime(StartDate).Month.ToString() + "月" + Convert.ToDateTime(StartDate).Day.ToString() + "日";
+            EndDate = dic["endTime"].ToString();
+            showDate += "－" + Convert.ToDateTime(EndDate).Month.ToString() + "月" + Convert.ToDateTime(EndDate).Day.ToString() + "日";
+            //if (showDate.Substring(0, 1) == "0")
+            //{
+            //    showDate = showDate.Substring(1);
+            //}
+            //price = (Convert.ToInt32(dic["price"].ToString()) / 100).ToString();
         }
     }
 </script>
@@ -47,7 +50,7 @@
         </div>
         <div class="article_time">
             <i></i><span><%=showDate %></span>
-            <span style="float:right; margin-right:20px; font-size:12pt;" onclick='dateChange();'>日期选择 ></span>
+            <%--<span style="float:right; margin-right:20px; font-size:12pt;" onclick='dateChange();'>日期选择 ></span>--%>
             <br style="clear:both;" />
         </div>
         <%--<div class="m-dprice rel">
@@ -58,7 +61,7 @@
     <%--<div id="proddescription" class="m-ddescription">
     </div>--%>
 
-    <div style="margin:0; background:#fff; font-size:30px; padding-bottom:10px;">
+    <%--<div style="margin:0; background:#fff; font-size:30px; padding-bottom:10px;">
         <!-- 日历部分 -->		
 	    <div class="Calendar">
           <div id="idCalendarPre">&lt;&lt;</div>
@@ -159,7 +162,7 @@
             }
         </script>
         <!-- 日历部分 -->	
-    </div>
+    </div>--%>
     </div>
 
     <div class="m-description">
