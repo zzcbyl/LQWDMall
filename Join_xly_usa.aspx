@@ -133,6 +133,7 @@
         if (dic.Keys.Contains("prodname"))
         {
             Title = dic["prodname"].ToString();
+            Page.Title = Title;
         }
         if (dic.Keys.Contains("yingplace"))
         {
