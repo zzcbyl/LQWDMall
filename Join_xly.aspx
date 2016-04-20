@@ -165,7 +165,7 @@
                 string server = System.Configuration.ConfigurationManager.AppSettings["mail_host"].ToString();
 
                 string body = "<div style=\"padding:20px;\">" +
-                            "<div>您好，欢迎您参加知心姐姐假日营！</div>" +
+                            "<div>您好，欢迎您参加2016年假日营！</div>" +
                             "<div style=\"margin-top:10px;\">有任何关于假日营的问题，请联系：18601016361 新老师</div>" +
                             "<div style=\"margin-top:10px;\">请按如下要求认真填写报名表：</div>" +
                             "<div style=\"margin-left:20px; color:Red;\">" +
@@ -173,8 +173,8 @@
                             "<div>2. 填写好请以孩子姓名命名，并报名表请发送到xly@luqinwenda.com；</div>" +
                             "<div>3. 请家长把孩子的身份证或户口本页拍一张照片附在报名表里，便于后勤老师为孩子购买有效保险；</div>" +
                             "</div></div>";
-                string subject = "2016假日营报名表";
-                string attach = Server.MapPath(@"/upload/file/知心姐姐假日营报名表2016.docx");
+                string subject = "2016年假日营报名表";
+                string attach = Server.MapPath(@"/upload/file/假日营报名表2016.docx");
 
                 string[] para = new string[]{
                     reciveUser, recivePwd, Request.Form["parentEmail"].ToString(), subject, body, server, attach
