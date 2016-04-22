@@ -73,10 +73,27 @@
 
 <script runat="server">
     public string repeatCustomer = "0";
+    public string openid = "";
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (this.Session["RepeatCustomer"] != null)
-            repeatCustomer = this.Session["RepeatCustomer"].ToString();
+        if (Request.Cookies["openid"] != null)
+            openid = Request.Cookies["openid"].Value;
+        else
+            if (Request["openid"] != null)
+                openid = Request["openid"].ToString();
+
+        JavaScriptSerializer json = new JavaScriptSerializer();
+        if (openid != "")
+        {
+            string token = MyToken.ForceGetToken(Request["openid"].ToString());
+            string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3,1000";
+            string orderlist = HTTPHelper.Get_Http(getorderurl);
+            Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
+            object[] orderArr = (object[])dicBargain["orders"];
+            if (orderArr.Length > 0)
+                repeatCustomer = "1";
+        }
+        
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
             submitOrder(Request.Form["myToken"].ToString());
@@ -124,31 +141,37 @@
                 Thread th = new Thread(Mail.SendMailAsyn);
                 th.Start(para);
             }
-            
-            if (Request["productid"].ToString().Equals("28"))
+
+            try
             {
-                int discount = 0;
-                if (this.Session["RepeatCustomer"] != null && this.Session["RepeatCustomer"].ToString().Equals("1"))
+                Product product = new Product(int.Parse(Request["productid"].ToString()));
+                if (product._fields != null)
                 {
-                    discount += 30000;
-                }
-                if (DateTime.Now <= Convert.ToDateTime("2015-12-1"))
-                {
-                    discount += 30000;
-                }
-                if (!discount.Equals(0))
-                {
-                    string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
-                    string discountResult = HTTPHelper.Get_Http(discountUrl);
-                    Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
-                    if (dicDiscount["status"].ToString() == "1")
+                    int discount = 0;
+                    if (product._fields["discount_deadline"] != null && DateTime.Now <= Convert.ToDateTime(product._fields["discount_deadline"].ToString()))
                     {
-                        Response.Write("优惠金额错误,请重新支付");
-                        Response.End();
-                        return;
+                        discount += int.Parse(product._fields["discount_price"].ToString());
+                    }
+                    if (repeatCustomer.Equals("1"))
+                    {
+                        discount += int.Parse(product._fields["discount_oldcamp_price"].ToString());
+                    }
+                    if (!discount.Equals(0))
+                    {
+                        string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
+                        string discountResult = HTTPHelper.Get_Http(discountUrl);
+                        Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                        if (dicDiscount["status"].ToString() == "1")
+                        {
+                            Response.Write("优惠金额错误,请重新支付");
+                            Response.End();
+                            return;
+                        }
                     }
                 }
             }
+            catch { }
+            
 
             if (Request["productid"].ToString().Equals("30"))
             {
@@ -174,7 +197,7 @@
 </script>
 
 <script type="text/javascript">
-    var repeat = <%=repeatCustomer %>;
+    var repeat = '<%=repeatCustomer %>';
     var prodid = QueryString('productid');
     $(document).ready(function () {
         if (prodid == null) {
@@ -197,25 +220,18 @@
                 var obj = eval('(' + data + ')');
                 if (obj != null) {
                     var price_1 = parseInt(obj.price);
-                    var strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
-                    if (obj.prodid == 28) {
-                        if (repeat == 1) {
-                            price_1 -= 30000;
-                        }
-                        if (currentDT <= deadline_28) {
-                            price_1 -= 30000;
-                        }
-                        strprice = '<span class="red">¥' + price_1 / 100 + '</span>';
+                    var strprice = '';
+                    if (repeat == '1') {
+                        price_1 -= parseInt(obj.discount_oldcamp_price);
                     }
+                    if (obj.discount_deadline != '' && ((Date.parse(new Date())) / 1000) <= ((Date.parse(new Date(obj.discount_deadline))) / 1000)) {
+                        price_1 -= parseInt(obj.discount_price);
+                    }
+                    strprice = '<span class="">￥' + price_1 / 100 + '</span>';
+
                     var prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price">' + strprice + '</a><a class="prod-count">X 1</a></li>';
                     $("#total_amount span").eq(0).html('¥' + price_1 / 100);
                     var totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"><a class="pd10">合计: <span class="red">¥' + price_1 / 100 + '</span></a></li>';
-
-                    if (obj.prodid == 30) {
-                        prodhtml = '<li class="sub-cart-prod"><a class="prod-img" href="Detail_xly.aspx?productid=' + obj.prodid + '"><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title" href="Detail_xly.aspx?productid=' + obj.prodid + '">' + obj.prodname + '</a><a class="prod-price"></a><a class="prod-count"></a></li>';
-                        $("#total_amount").html('');
-                        totalHtml = '<li class="sub-total" style="height:20px; text-align:right; padding:15px 0;"></li>';
-                    }
 
                     if (QueryString('followerAmount') != null && parseInt(QueryString('followerAmount')) > 0) {
                         var amount = (parseInt(obj.price) / 100) - parseInt(QueryString('followerAmount'));

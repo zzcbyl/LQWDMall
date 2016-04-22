@@ -14,38 +14,31 @@
             Response.End();
         }
         
-        int typeId = ((Request["typeid"] == null) ? 0 : int.Parse(Request["typeid"].Trim()));
+        string typeId = ((Request["typeid"] == null) ? "0" : Request["typeid"].Trim());
         DateTime startDate = (Request["startdate"] == null) ? DateTime.Parse("2001-1-1") : DateTime.Parse(Request["startdate"].Trim());
         DateTime endDate = (Request["enddate"] == null) ? DateTime.Parse("2999-1-1") : DateTime.Parse(Request["enddate"].Trim());
         int isPaid = ((Request["paid"] == null) ? -1 : int.Parse(Request["paid"].Trim()));
 
         //isPaid = 1;
         //typeId = 3;
-        
-        
+
         Order[] orderArray = Order.GetOrders(userId, startDate, endDate);
         string orderJsonStr = "";
         foreach (Order order in orderArray)
         {
-
-           
-            
-            
             if (isPaid != -1 && !order._fields["paystate"].ToString().Trim().Equals(isPaid.ToString()) )
             {
                 continue;
             }
-
-            
             bool isTypeValid = true;
-            if (typeId != 0)
+            if (typeId != "0")
             {
                 isTypeValid = false;
 
                 foreach (DataRow dr in order.GetOrderDetails().Rows)
                 {
                     Product product = new Product(int.Parse(dr["product_id"].ToString().Trim()));
-                    if (int.Parse(product._fields["prodtypeid"].ToString().Trim()) == typeId)
+                    if (Array.IndexOf(typeId.ToString().Split(','), product._fields["prodtypeid"].ToString().Trim()) >= 0)
                     {
                         isTypeValid = true;
                         break;
