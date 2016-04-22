@@ -112,10 +112,11 @@
         else
             if (Request["openid"] != null)
                 openid = Request["openid"].ToString();
+        
+        JavaScriptSerializer json = new JavaScriptSerializer();
         if (openid != "")
         {
             string token = MyToken.ForceGetToken(Request["openid"].ToString());
-            JavaScriptSerializer json = new JavaScriptSerializer();
             string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3";
             string orderlist = HTTPHelper.Get_Http(getorderurl);
             Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
