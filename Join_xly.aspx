@@ -296,7 +296,6 @@
     });
 
     function so_fillProd_xly() {
-        alert(repeat);
         $('#prodlist').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
         $.ajax({
             type: "get",
