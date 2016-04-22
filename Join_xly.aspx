@@ -107,14 +107,14 @@
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        string token = MyToken.ForceGetToken(Request["openid"].ToString());
-        JavaScriptSerializer json = new JavaScriptSerializer();
-        string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3";
-        string orderlist = HTTPHelper.Get_Http(getorderurl);
-        Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
-        object[] orderArr = (object[])dicBargain["orders"];
-        if (orderArr.Length > 0)
-            repeatCustomer = "1";
+        //string token = MyToken.ForceGetToken(Request["openid"].ToString());
+        //JavaScriptSerializer json = new JavaScriptSerializer();
+        //string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3";
+        //string orderlist = HTTPHelper.Get_Http(getorderurl);
+        //Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
+        //object[] orderArr = (object[])dicBargain["orders"];
+        //if (orderArr.Length > 0)
+        //    repeatCustomer = "1";
         
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
