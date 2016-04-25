@@ -244,6 +244,19 @@ public class Order
 
     }
 
+    public int updOrderPrice(int orderprice)
+    {
+        SqlConnection conn = new SqlConnection(Util.ConnectionString.Trim());
+        SqlCommand cmd = new SqlCommand(" update m_order set orderprice = " + orderprice.ToString()
+            + "  where oid = " + _fields["oid"].ToString(), conn);
+        conn.Open();
+        int i = cmd.ExecuteNonQuery();
+        conn.Close();
+        cmd.Dispose();
+        conn.Dispose();
+        return i;
+    }
+
     public int OrderPriceToPay
     {
         get
