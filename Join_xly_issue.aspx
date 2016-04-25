@@ -18,11 +18,11 @@
     </div>
     <div class="sc-address-block rel" style="margin-top:10px; padding-top:10px;">
         <p class="add_list_p rel">
-            请选择参营日期：<select id="defined_issue" name="defined_issue" onchange="change_date(this);" style="width:auto;">
+            参营日期：<select id="defined_issue" name="defined_issue" onchange="change_date(this);" style="width:auto;">
             </select>
         </p>
         <p class="add_list_p rel" id="Departure_place">
-            　请选择出发地：<select id="defined_place" name="defined_place" onchange="change_place(this);"  style="width:auto;">
+            　出发地：<select id="defined_place" name="defined_place" onchange="change_place(this);"  style="width:auto;">
             </select>
         </p>
     </div>
