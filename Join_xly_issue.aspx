@@ -125,16 +125,6 @@
                 openid = Request["openid"].ToString();
         
         JavaScriptSerializer json = new JavaScriptSerializer();
-        if (openid != "")
-        {
-            string token = MyToken.ForceGetToken(Request["openid"].ToString());
-            string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3,1000";
-            string orderlist = HTTPHelper.Get_Http(getorderurl);
-            Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
-            object[] orderArr = (object[])dicBargain["orders"];
-            if (orderArr.Length > 0)
-                repeatCustomer = "1";
-        }
         
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
         {
@@ -243,10 +233,25 @@
                     {
                         discount += int.Parse(product._fields["discount_price"].ToString());
                     }
-                    if (repeatCustomer.Equals("1"))
+                    
+                    string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3,1000";
+                    string orderlist = HTTPHelper.Get_Http(getorderurl);
+                    Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
+                    object[] orderArr = (object[])dicBargain["orders"];
+                    if (orderArr.Length > 0)
                     {
-                        discount += int.Parse(product._fields["discount_oldcamp_price"].ToString());
+                        for (int i = 0; i < orderArr.Length; i++)
+                        {
+                            Dictionary<string, object> dicOrder = (Dictionary<string, object>)orderArr[i];
+                            if (dicOrder["memo"].ToString().IndexOf(Request.Form["childName"].ToString()) > -1)
+                            {
+                                discount += int.Parse(product._fields["discount_oldcamp_price"].ToString());
+                                break;
+                            }
+                        }
+
                     }
+                    
                     if (!discount.Equals(0))
                     {
                         string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + discount;
@@ -344,6 +349,32 @@
         so_fillProd_xly();
 
     });
+
+
+    function checkoldcamp() {
+        repeat = '0';
+        so_fillProd_xly();
+        $.ajax({
+            type: "get",
+            async: false,
+            url: domain + 'api/order_get_list.aspx',
+            data: { token: token, paid: 1, typeid: '3,1000', random: Math.random() },
+            success: function (data, textStatus) {
+                var obj = eval('(' + data + ')');
+                if (obj != null) {
+                    if (obj.orders.length > 0) {
+                        for (var i = 0; i < obj.orders.length; i++) {
+                            if (obj.orders[i].memo.indexOf($('#childName').val()) > -1) {
+                                repeat = '1';
+                                so_fillProd_xly();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     function so_fillProd_xly() {
         $('#prodlist').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
