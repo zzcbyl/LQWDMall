@@ -29,7 +29,7 @@
     <div class="sc-address-block rel" style="margin-top:10px; padding-top:10px;">
         <%--<a name="ATable"></a>--%>
         <p class="add_list_p rel">
-            <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" />
+            <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入孩子姓名" onblur="checkoldcamp();" />
         </p>
         <p class="add_list_p rel">
             <select id="childSex" name="childSex">
@@ -339,7 +339,7 @@
 </script>
 
 <script type="text/javascript">
-    var repeat = '<%=repeatCustomer %>';
+    var repeat = '0';
     var prodid = QueryString('productid');
     $(document).ready(function () {
         if (prodid == null) {
@@ -353,7 +353,7 @@
 
     function checkoldcamp() {
         repeat = '0';
-        so_fillProd_xly();
+        change_place($('#defined_place'));
         $.ajax({
             type: "get",
             async: false,
@@ -366,7 +366,8 @@
                         for (var i = 0; i < obj.orders.length; i++) {
                             if (obj.orders[i].memo.indexOf($('#childName').val()) > -1) {
                                 repeat = '1';
-                                so_fillProd_xly();
+                                //so_fillProd_xly();
+                                change_place($('#defined_place'));
                                 break;
                             }
                         }
