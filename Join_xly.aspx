@@ -324,8 +324,7 @@
                 if (obj != null) {
                     if (obj.orders.length > 0) {
                         for (var i = 0; i < obj.orders.length; i++) {
-                            if (obj.orders[i].memo.indexOf($('#childName').val()) > -1)
-                            {
+                            if ($('#childName').val().Trim() != "" && obj.orders[i].memo.indexOf($('#childName').val()) > -1) {
                                 repeat = '1';
                                 so_fillProd_xly();
                                 break;

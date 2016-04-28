@@ -17,7 +17,7 @@
             <div><%=showDate %>　<%=Location %></div></div>
     </div>
     <div class="sc-address-block rel" style="margin-top:10px; padding-top:10px;">
-        <p class="add_list_p rel">
+        <p class="add_list_p rel" style="display:none;">
             参营日期：<select id="defined_issue" name="defined_issue" onchange="change_date(this);" style="width:auto;">
             </select>
         </p>
@@ -364,7 +364,7 @@
                 if (obj != null) {
                     if (obj.orders.length > 0) {
                         for (var i = 0; i < obj.orders.length; i++) {
-                            if (obj.orders[i].memo.indexOf($('#childName').val()) > -1) {
+                            if ($('#childName').val().Trim() != "" && obj.orders[i].memo.indexOf($('#childName').val()) > -1) {
                                 repeat = '1';
                                 //so_fillProd_xly();
                                 change_place($('#defined_place'));
