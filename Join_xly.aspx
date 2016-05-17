@@ -78,6 +78,7 @@
                 <input type="hidden" name="myToken" id="myToken" value="" />
                 <input type="hidden" name="myOpenid" id="myOpenid" value="" />
                 <input type="hidden" name="myFrom" id="myFrom" value="" />
+                <input type="hidden" name="yingDate" id="yingDate" value="<%=showDate %>" />
                 <a href="javascript:SubOrder();" style="display:block; margin-top:5px;" ><button type="button" style="width:90%; padding:6px 0;" class="btn btn-danger" onclick="SubOrder();">微信安全支付</button></a>
                 <a style="float:right; margin-right:10px; display:none"><strong id="total_amount">应付总额: <span class="red">--</span></strong></a>
             </li>
@@ -151,7 +152,7 @@
     {
         string memo = "孩子姓名：" + Request.Form["childName"].ToString() + "，孩子性别：" + Request.Form["childSex"].ToString() + "，孩子年龄：" + Request.Form["childAge"].ToString() + "岁，孩子身份证：" + Request.Form["childIDcard"].ToString()
                     + "，家长姓名：" + Request.Form["parentName"].ToString() + "，手机号码：" + Request.Form["parentMobile"].ToString()
-                    + "，电子邮箱：" + Request.Form["parentEmail"].ToString();
+                    + "，电子邮箱：" + Request.Form["parentEmail"].ToString() + "，参营日期：" + Request.Form["yingDate"].ToString();
         string parms = "token=" + token + "&name=&cell=&province=&city=&address=&zip=&productid=" + Request["productid"].ToString() + "&count=1|1&memo=" + memo + "&wechatid=";
 
         string getUrl = Util.ApiDomainString + "api/order_place.aspx?" + parms;
