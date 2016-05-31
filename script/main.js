@@ -40,7 +40,7 @@ function GetOpenidToken() {
             }
             encodeDomain = encodeURIComponent(jumpurl);
         }
-        location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
+        location.href = "http://weixin.luqinwenda.com/authorize_final.aspx?callback=" + encodeDomain;
     }
     else {
         var jumpurl = document.URL;
@@ -424,7 +424,6 @@ function so_fillProvince() {
                     $("#province").append("<option value='" + obj.area[i].id + "'>" + obj.area[i].name + "</option>");
                 }
                 so_fillAddress();
-                totalFeight($("#province option:selected").text(), pcount);
             }
         }
     });
@@ -479,6 +478,7 @@ function so_fillAddress() {
                 });
                 //$("#province").find("option[text='天津市']").attr("selected", "selected");
                 city_js = data.addresses[data.addresses.length - 1].city;
+                totalFeight($("#province option:selected").text(), pcount);
             }
             so_fillCity($("#province").val(), city_js);
         }
@@ -574,3 +574,4 @@ function useCoupon() {
         }
     });
 }
+

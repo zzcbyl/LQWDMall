@@ -40,11 +40,20 @@
             <li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>
         </ul>
     </div>
-    <div style="background:#fff; margin:10px; padding:10px; position:relative;">
-        <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="优惠码" maxlength="20" value="<%=couponStr %>" />
-        <button type="button" class="btn" onclick="useCoupon();">使用</button>
-        <span id="conponErrorMsg" class="red right" style="padding-top: 5px;"></span>
-    </div>
+    <% if(DateTime.Now > Convert.ToDateTime("2016-6-1 00:00") && DateTime.Now < Convert.ToDateTime("2016-6-2 00:00")) { %>
+        <div style="background:#fff; margin:10px; padding:10px; position:relative;">
+            <div style="height:30px; line-height:30px; font-weight:bold;">使用积分优惠</div>
+            <input id="IntegralTxt" name="IntegralTxt" type="text" onblur="useIntegral();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="" maxlength="20" value="" />
+            <button type="button" class="btn" onclick="useIntegral();">使用</button>
+            <span id="IntegralErrorMsg" class="red right" style="padding-top: 5px;"></span>
+        </div>
+    <%} else { %>
+        <div style="background:#fff; margin:10px; padding:10px; position:relative;">
+            <input id="conponTxt" name="conponTxt" type="text" onblur="useCoupon();" style="width:40%; padding:5px; line-height:20px; margin-bottom:0;" placeholder="优惠码" maxlength="20" value="<%=couponStr %>" />
+            <button type="button" class="btn" onclick="useCoupon();">使用</button>
+            <span id="conponErrorMsg" class="red right" style="padding-top: 5px;"></span>
+        </div>
+    <%} %>
     <div style="background:#fff; margin:10px; padding:10px; height:100px; position:relative;">
         <div style="padding-right:10px; height:60px;" class="rel">   
             <textarea id="memo" name="memo" style="width:100%; padding:5px; height:40px; line-height:20px;" placeholder="（选填）留言"></textarea>
@@ -98,9 +107,10 @@
     }
     private void submitOrder(string token)
     {
+        int userid = Users.CheckToken(token);
         JavaScriptSerializer json = new JavaScriptSerializer();
         int couponAmount = 0;
-        if (!Request.Form["conponTxt"].ToString().Equals(string.Empty))
+        if (Request.Form["conponTxt"] != null && !Request.Form["conponTxt"].ToString().Trim().Equals(string.Empty))
         {
             string couponUrl = Util.ApiDomainString + "api/coupon_check.aspx?code=" + Request.Form["conponTxt"].ToString();
             string couponResult = HTTPHelper.Get_Http(couponUrl);
@@ -122,6 +132,22 @@
             }
             else
                 couponAmount = Convert.ToInt32(dicCoupon["amount"].ToString());
+        }
+
+        int integralAmount = 0;
+        if (Request.Form["IntegralTxt"] != null && !Request.Form["IntegralTxt"].ToString().Trim().Equals(string.Empty))
+        {
+            int inputIntegral = 0;
+            int.TryParse(Request.Form["IntegralTxt"].ToString(), out inputIntegral);
+            if (inputIntegral > 0)
+            {
+                Users user = new Users(userid);
+                int userIntegral = user.Integral;
+                if (userIntegral > 0 && inputIntegral <= userIntegral)
+                {
+                    integralAmount = inputIntegral * 100;
+                }
+            }
         }
         
         string parms = "token=" + token + "&name=" + Request.Form["consignee"].ToString() + "&cell=" + Request.Form["mobile"].ToString()
@@ -213,21 +239,35 @@
                 }
             }
 
-            int userid = Users.CheckToken(token);
+            if (integralAmount > 0)
+            {
+                string discountUrl = Util.ApiDomainString + "api/order_price_discount.aspx?oid=" + jsonorder.order_id + "&discountamount=" + integralAmount;
+                string discountResult = HTTPHelper.Get_Http(discountUrl);
+                Dictionary<string, object> dicDiscount = (Dictionary<string, object>)json.DeserializeObject(discountResult);
+                if (dicDiscount["status"].ToString() == "1")
+                {
+                    Response.Write("优惠金额错误,请重新支付");
+                    Response.End();
+                    return;
+                }
+
+                string type = "shopping";
+                Integral.AddIntegral(userid, (0 - (integralAmount / 100)), "购书：订单编号 " + jsonorder.order_id, type, int.Parse(jsonorder.order_id), 0);
+            }
+
             Order order = new Order(int.Parse(jsonorder.order_id));
             int total = (order.OrderPriceToPay < 0 ? 0 : order.OrderPriceToPay);
+            if (total == 0)
+            {
+                this.Response.Redirect("paySuccess.aspx?product_id=" + order._fields["oid"] + "&paymethod=Integral");
+            }
             string param = "?body=卢勤问答平台官方书城&detail=卢勤问答平台官方书城&userid=" + userid + "&product_id=" + order._fields["oid"] + "&total_fee=" + total.ToString();
             string payurl = "";
-            //if (Request.Form["myFrom"] != null && Request.Form["myFrom"].ToString() != "")
-            //{
-                //微信支付
-                payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
-            //}
-            //else
-            //{
-            //    //易宝支付
-            //    payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
-            //}
+            //微信支付
+            payurl = "http://weixin.luqinwenda.com/payment/payment.aspx";
+            
+            //易宝支付
+            //payurl = "http://yeepay.luqinwenda.com/weixin_payment.aspx";
             this.Response.Redirect(payurl + param);
         }
     }
@@ -252,6 +292,7 @@
     var t_prod_price = 0;
     var t_prePrice = 0;
     var freight_fee = "--";
+    var userIntegral = 0;
     $(document).ready(function () {
         so_fillProd();
 
@@ -270,6 +311,7 @@
         $("#myProvince").val($("#province option:selected").text());
         $("#myCity").val($("#city option:selected").text());
 
+        getUser_Info();
         useCoupon();
     });
 
@@ -316,6 +358,40 @@
         document.forms[0].submit();
     }
 
+    function getUser_Info() {
+        $.ajax({
+            type: "get",
+            async: true,
+            url: domain + 'api/user_get_info.aspx',
+            data: { token: token, random: Math.random() },
+            dataType: 'json',
+            success: function (data, textStatus) {
+                if (data.status == 0) {
+                    userIntegral = data.user_info.integral;
+                    $('#IntegralTxt').attr('placeholder', '您有' + userIntegral + '积分可用');
+                }
+            }
+        });
+    }
+
+    function useIntegral() {
+        if ($('#IntegralTxt').val().Trim() != '' && isint($('#IntegralTxt').val().Trim())) {
+            if (parseInt($('#IntegralTxt').val()) > userIntegral) {
+                $('#IntegralErrorMsg').html("你的积分不足");
+                $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
+            }
+            else {
+                $('#IntegralErrorMsg').html("<span style='color:#666;'>优惠:</span>￥" + $('#IntegralTxt').val());
+                var total_amount = t_prod_price + freight_fee + t_prePrice - parseInt($('#IntegralTxt').val()) * 100;
+                if (total_amount < 0) total_amount = 0;
+                $('#total_amount span').eq(0).html("￥" + (total_amount / 100).toString());
+            }
+        }
+        else {
+            $('#IntegralErrorMsg').html('请输入积分');
+            $('#total_amount span').eq(0).html("￥" + ((t_prod_price + freight_fee + t_prePrice) / 100).toString());
+        }
+    }
 </script>
 
 </asp:Content>

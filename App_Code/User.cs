@@ -37,6 +37,25 @@ public class Users
         }
     }
 
+
+    public int Integral
+    {
+        get
+        {
+            if (_fields != null)
+                return int.Parse(_fields["integral"].ToString().Trim());
+            else
+                return 0;
+        }
+        set
+        {
+            int integral = value;
+            string[,] updateParameters = { { "integral", "int", integral.ToString() } };
+            string[,] keyParameters = { { "uid", "int", ID.ToString() } };
+            DBHelper.UpdateData("m_user", updateParameters, keyParameters, Util.ConnectionString);
+        }
+    }
+
     public string CreateToken(DateTime expireDate)
     {
         string stringWillBeToken = _fields["uid"].ToString()+Util.GetLongTimeStamp(DateTime.Now)
@@ -59,7 +78,7 @@ public class Users
 
 
 
-    public int ID { get; set; }
+    public int ID { get { return int.Parse(_fields["uid"].ToString().Trim()); } }
     public string Name { get; set; }
     public string Sex { get; set; }
 
