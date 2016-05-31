@@ -40,8 +40,6 @@ function GetOpenidToken() {
             }
             encodeDomain = encodeURIComponent(jumpurl);
         }
-        alert(encodeDomain);
-        return;
         location.href = "http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + encodeDomain;
     }
     else {
