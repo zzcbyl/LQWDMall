@@ -311,6 +311,7 @@
             alert('商品参数有误');
             return;
         }
+        lineLink = 'http://mall.luqinwenda.com/Join_xly_usa.aspx?productid=' + prodid;
         so_fillProd_xly();
 
     });

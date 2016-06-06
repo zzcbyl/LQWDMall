@@ -9,6 +9,8 @@
     {
         if (this.Session["RepeatCustomer"] != null)
             repeatCustomer = this.Session["RepeatCustomer"].ToString();
+
+        Response.End();
     }
 </script>
 <div style="width:100%;">
