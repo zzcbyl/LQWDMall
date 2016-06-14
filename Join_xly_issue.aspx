@@ -534,7 +534,7 @@
         $("#myToken").val(token);
         $("#myOpenid").val(openid);
         $("#myFrom").val(from);
-        $('#DeparturePlace').val(DeparturePlace);
+        $('#DeparturePlace').val($('#defined_place').find("option:selected").text());
         document.forms[0].submit();
     }
 </script>
