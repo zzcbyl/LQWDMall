@@ -7,6 +7,9 @@
         string userName = Request["username"] == null ? "oqrMvt6yRAWFu3DmhGe4Td0nKZRo" : Request["username"].Trim();
         DateTime expireDate = DateTime.Now.AddHours(2);
         
+        if(userName.Trim()=="")
+            Response.Write("{\"status\": 1 }");
+        
         Users user;
         if (Users.IsExistsUser(type, userName))
         {
