@@ -193,7 +193,7 @@ public class Order
         {
             orderArray[i] = new Order();
             orderArray[i]._fields = dt.Rows[i];
-            orderArray[i].UpdatePaymentState();
+            //orderArray[i].UpdatePaymentState();
         }
         return orderArray;
     }
