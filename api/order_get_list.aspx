@@ -38,7 +38,7 @@
                 foreach (DataRow dr in order.GetOrderDetails().Rows)
                 {
                     Product product = new Product(int.Parse(dr["product_id"].ToString().Trim()));
-                    if (Array.IndexOf(typeId.ToString().Split(','), product._fields["prodtypeid"].ToString().Trim()) >= 0)
+                    if (product._fields != null && Array.IndexOf(typeId.ToString().Split(','), product._fields["prodtypeid"].ToString().Trim()) >= 0)
                     {
                         isTypeValid = true;
                         break;
