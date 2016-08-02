@@ -226,7 +226,10 @@
                     }
                 }
             }
-            catch { }
+            catch (Exception e)
+            {
+                throw e;
+            }
 
             int userid = Users.CheckToken(token);
             Order order = new Order(int.Parse(jsonorder.order_id));
