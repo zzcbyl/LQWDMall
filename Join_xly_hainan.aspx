@@ -91,6 +91,11 @@
     public int discount = 0;
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Request["openid"] == null || Request["openid"].ToString() == "")
+        {
+            Response.Redirect("http://weixin.luqinwenda.com/authorize_0603.aspx?callback=" + Request.Url.ToString());
+        }
+        
         if (this.Session["RepeatCustomer"] != null)
             repeatCustomer = this.Session["RepeatCustomer"].ToString();
         if (Request.Form["hidIndex"] != null && Request.Form["hidIndex"].ToString() == "1")
@@ -195,7 +200,7 @@
                         discount += int.Parse(product._fields["discount_price"].ToString());
                     }
 
-                    string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + token + "&paid=1&typeid=3,1000";
+                    string getorderurl = Util.ApiDomainString + "api/order_get_list.aspx?token=" + MyToken.ForceGetToken(Request.Form["myOpenid"].ToString()) + "&paid=1&typeid=3,1000";
                     string orderlist = HTTPHelper.Get_Http(getorderurl);
                     Dictionary<string, object> dicBargain = (Dictionary<string, object>)json.DeserializeObject(orderlist);
                     object[] orderArr = (object[])dicBargain["orders"];
