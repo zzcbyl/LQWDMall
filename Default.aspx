@@ -23,7 +23,7 @@
 <div style="background:#fff; padding:10px; margin-top:10px;">
     1、本店为卢勤问答平台官方书城，所有图书均有现货。2、本店的运费遵循市场规则，您可以自行拍下。
 </div>
-<div style="background:#fff; width:100%; margin-top:10px; ">
+<div id="bookNav" style="background:#fff; width:100%; margin-top:10px; ">
     <ul class="nav-default">
         <li id="type-suit">给家长看的书</li>
         <li id="type-single" style="position:relative;">
@@ -82,7 +82,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
         lineLink = "http://mall.luqinwenda.com/Default.aspx"; //链接
-        filllist(2);
+        var typeid = 2;
+        if (QueryString('typeid')) {
+            typeid = QueryString('typeid');
+            $('#bookNav').hide();
+        }
+        filllist(typeid);
         totalcart('my_cart_em');
         setCookie('source', 1);
 
@@ -122,6 +127,7 @@
         $("#type-suit").css("color", "#FDF8D2");
         $('.type_menu_list').hide();
         $('.type_toys_list').hide();
+        
 
         //$('#prodlistul').html('<li><div class="loading"><img src="images/loading.gif" /><br />加载中...</div></li>');
         $.ajax({
@@ -134,128 +140,147 @@
                 if (obj != null) {
                     var prodlist = obj.data;
                     var html = "";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 2) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
-                            }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
-                        }
-                    }
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xuelingqian' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄前</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 4) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
-                            }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
-                        }
-                    }
 
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xiaoxue' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄期</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 5) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                    if (QueryString('typeid')) {
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == QueryString('typeid')) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
                             }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
                         }
                     }
+                    else {
 
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='etaq' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>儿童安全</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 10) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 2) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
                             }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
                         }
-                    }
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ajxdz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>精细动作培养</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 6) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xuelingqian' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄前</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 4) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
                             }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
                         }
-                    }
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='aswcz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>思维创造训练</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 7) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
-                            }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
-                        }
-                    }
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='akjlj' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>空间逻辑训练</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 8) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
-                            }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
-                        }
-                    }
-                    html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ayzty' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>益智体验</a></li>";
-                    for (var i = 0; i < prodlist.length; i++) {
-                        if (prodlist[i].prodtypeid == 9) {
-                            var strprice = '';
-                            var iconjiu = '';
-                            if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
-                                strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                                iconjiu = ''; //'<span class="icon-jiu"></span>';
-                            }
-                            else {
-                                strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
-                            }
-                            html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
-                        }
-                    }
 
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='xiaoxue' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>学龄期</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 5) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                            }
+                        }
+
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='etaq' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>儿童安全</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 10) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                            }
+                        }
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ajxdz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>精细动作培养</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 6) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                            }
+                        }
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='aswcz' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>思维创造训练</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 7) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                            }
+                        }
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='akjlj' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>空间逻辑训练</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 8) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                            }
+                        }
+                        html += "<li style='clear:both; width:100%; height:40px; line-height:40px; background:#D83337; margin:5px 0; padding:0px 3px;'><a name='ayzty' style='color:#FDF8D2; margin-left:10px; font-weight:bold;'>益智体验</a></li>";
+                        for (var i = 0; i < prodlist.length; i++) {
+                            if (prodlist[i].prodtypeid == 9) {
+                                var strprice = '';
+                                var iconjiu = '';
+                                if (prodlist[i].originalprice != null && prodlist[i].originalprice != '') {
+                                    strprice = '<s class="gray">¥' + parseInt(prodlist[i].originalprice) / 100 + '</s><span class="red mgleft">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                    iconjiu = ''; //'<span class="icon-jiu"></span>';
+                                }
+                                else {
+                                    strprice = '<span class="red">¥' + parseInt(prodlist[i].price) / 100 + '</span>';
+                                }
+                                html += '<li class="m-li left rel"><a href="Detail.aspx?productid=' + prodlist[i].prodid + '"><div class="pd5"><img src="' + domain + prodlist[i].imgsrc + '" />' + iconjiu + '</div><div class="m-txt">' + prodlist[i].prodname + '</div><div class="m-price">' + strprice + '</div></a><div class="prod-list-btn"><!--<a id="addShopCart" onclick="detailAddCart(' + prodlist[i].prodid + ', 1);" class="btn btn-default">加入购物车</a>--><a id="buyProd" onclick="detailAddCart(' + prodlist[i].prodid + ', 0);" class="btn btn-danger">购买</a></div></li>';
+                            }
+                        }
+                    }
                     $('#prodlistul').html(html);
                 }
             }
