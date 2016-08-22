@@ -32,7 +32,7 @@ function GetOpenidToken() {
     //    from = null;
     //}
     if (openid == null || openid == '' || openid == 'undefined') {
-        var encodeDomain = encodeURIComponent(domain + 'default.aspx');
+        var encodeDomain = encodeURIComponent(document.URL);
         if (QueryString('productid') != null) {
             var jumpurl = document.URL;
             if (jumpurl.indexOf("#rd") > -1) {
