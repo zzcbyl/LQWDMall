@@ -18,7 +18,7 @@
     <div class="sc-address-block rel" style="margin-top:10px; padding-top:10px;">
         <a name="ATable"></a>
         <p class="add_list_p rel">
-            <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入姓名" />
+            <input type="text" id="childName" maxlength="50" name="childName" placeholder="请输入姓名" onblur="checkoldcamp();" />
         </p>
         <p class="add_list_p rel">
             <input type="text" id="parentMobile" maxlength="11" name="parentMobile" placeholder="请输入手机号码" />
@@ -271,6 +271,8 @@
 <script type="text/javascript">
     var prodid = QueryString('productid');
     var pCount;
+    var productObj = null;
+    var repeat = '0';
     $(document).ready(function () {
         if (prodid == null) {
             alert('商品参数有误');
@@ -292,9 +294,38 @@
                 if (obj != null) {
                     var prodhtml = '<a class="prod-img" ><img src="' + domain + obj.imgsrc + '" width="50px" height="50px" /></a><a class="prod-title">' + obj.prodname + '</a><a class="prod-count"></a>';
                     $('#prodLi').html(prodhtml);
+                    productObj = obj;
                 }
             }
         });
+    }
+
+    function checkoldcamp() {
+        //alert(token);
+        repeat = '0';
+        $.ajax({
+            type: "get",
+            async: false,
+            url: domain + 'api/order_get_list.aspx',
+            data: { token: token, paid: 1, typeid: '3,1000', random: Math.random() },
+            success: function (data, textStatus) {
+                //alert(data);
+                var obj = eval('(' + data + ')');
+                if (obj != null) {
+                    if (obj.orders.length > 0) {
+                        //alert(obj.orders.length);
+                        for (var i = 0; i < obj.orders.length; i++) {
+                            if ($('#childName').val().Trim() != "" && obj.orders[i].memo.indexOf($('#childName').val()) > -1) {
+                                //alert($('#childName').val().Trim());
+                                repeat = '1';
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        fillPrice();
     }
 
     function subANum(id) {
@@ -336,7 +367,20 @@
     }
 
     function fillPrice() {
-        $('#prod_price').html(parseInt($("#txtCount").val()) * 2900 + parseInt($("#txtCountchild").val()) * 1500 - parseInt('<%=discount/100 %>'));
+        //$('#prod_price').html(parseInt($("#txtCount").val()) * 2900 + parseInt($("#txtCountchild").val()) * 1500 - parseInt('<%=discount/100 %>'));
+
+        var price_1 = parseInt($("#txtCount").val()) * 290000 + parseInt($("#txtCountchild").val()) * 150000;
+        if (productObj != null) {
+            if (repeat == '1') {
+                //alert(productObj.discount_oldcamp_price);
+                price_1 -= parseInt(productObj.discount_oldcamp_price);
+            }
+            if (productObj.discount_deadline != '' && ((Date.parse(new Date())) / 1000) <= ((Date.parse(new Date(productObj.discount_deadline))) / 1000)) {
+                //alert(productObj.discount_price);
+                price_1 -= parseInt(productObj.discount_price);
+            }
+        }
+        $('#prod_price').html(price_1 / 100);
     }
 
     function SubOrder() {

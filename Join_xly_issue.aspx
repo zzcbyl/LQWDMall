@@ -249,7 +249,6 @@
                                 break;
                             }
                         }
-
                     }
                     
                     if (!discount.Equals(0))
