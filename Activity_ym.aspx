@@ -93,7 +93,7 @@
                     <div style="text-align:center; padding:5px;">
                         <a href='http://mall.luqinwenda.com/Detail.aspx?productid=5&openid=<%=Request["openid"] %>'><img src="http://mall.luqinwenda.com/upload/prodimg/act_yimai.jpg" width="500px" /></a>
                     </div>
-                    <div>2、点击<a href="javascript:void(0);" onclick="ActiveService();" style="color:#0B659D; text-decoration:underline; font-weight:bold;">“转发”</a>，成功转发当前活动页面后并截图，然后通过卢勤问答平台公众号把截图发给我们，您转发一次我们就为该活动捐助一元钱；</div>
+                    <div>2、点击<a href="javascript:void(0);" onclick="ActiveService();" style="color:#0B659D; text-decoration:underline; font-weight:bold;">“转发”</a>，成功转发当前活动页面后并截图，然后通过悦长大平台公众号把截图发给我们，您转发一次我们就为该活动捐助一元钱；</div>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
         <div style="background:#fff; padding:10px; margin-top:10px;">
             <h5>“助梦留守儿童”爱心义卖活动：</h5>
             <div style="margin-top:5px;">
-                　　由卢勤问答平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
+                　　由悦长大平台发起，号召全社会爱心人士积极参与，以“关爱留守儿童的精神世界，丰富留守儿童的精神生活”为宗旨。2015年11月24日，该项目的首场爱心接力捐助活动现已开启！<br />
                 　　<span style="color:#EC3E35; font-weight:bold;">一秒钟，一个点击，一份关注，帮助两名留守儿童实现参加“我要学演说”冬令营的梦想！</span><br />
                 　　知心姐姐卢勤欢迎你的加入！
             </div>
@@ -152,7 +152,7 @@
     <div id="showShare" style="display:none;" onclick="javascript:document.getElementById('showShare').style.display='none';">
         <div style="width:100%; height:100%; background:#ccc; color:#000; position:absolute; top:-10px; left:0px; text-align:center; filter:alpha(opacity=90); -moz-opacity:0.9;-khtml-opacity: 0.9; opacity: 0.9;  z-index:9;"></div>
         <div class="arrowDiv"></div>
-        <div class="promptDiv" style="margin-left:40pt; font-size:12pt; width:200px; top:20pt;">点击右上角“┇”<br />分享到朋友圈并截图<br />发送给卢勤问答平台公众号</div>
+        <div class="promptDiv" style="margin-left:40pt; font-size:12pt; width:200px; top:20pt;">点击右上角“┇”<br />分享到朋友圈并截图<br />发送给悦长大平台公众号</div>
 
     <script type="text/javascript">
         var shareTitle = "“助梦留守儿童”爱心义卖活动"; //标题

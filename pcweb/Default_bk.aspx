@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="悦长大平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
 
@@ -8,7 +8,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 <div style="background:#fff; padding:10px; line-height:22px;">
-    1、本店为卢勤问答平台官方书城，所有图书均有现货。<br />2、本店的运费遵循市场规则，您可以自行拍下。<br />3、如果有任何疑问，或者其他要求，可以在线咨询客服。
+    1、本店为悦长大平台官方书城，所有图书均有现货。<br />2、本店的运费遵循市场规则，您可以自行拍下。<br />3、如果有任何疑问，或者其他要求，可以在线咨询客服。
 </div>
 
 <div class="m-wrap">

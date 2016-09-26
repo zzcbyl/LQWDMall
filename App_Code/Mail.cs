@@ -26,7 +26,7 @@ public class Mail
         SendMail(parameter[0], parameter[1], parameter[2], parameter[3], parameter[4], parameter[5], parameter[6]);
     }
 
-    public static void SendMail(string strFrom, string strFromPass, string strTo, string strSubject, string strBody, string strSmtpServer, string strFileName = "", string displayName = "卢勤问答平台")
+    public static void SendMail(string strFrom, string strFromPass, string strTo, string strSubject, string strBody, string strSmtpServer, string strFileName = "", string displayName = "悦长大平台")
     {
         MailAddress from = new MailAddress(strFrom, displayName);
         MailAddress to = new MailAddress(strTo);

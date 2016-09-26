@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台官方商城" Language="C#" MasterPageFile="~/Master.master" %>
+﻿<%@ Page Title="悦长大平台官方商城" Language="C#" MasterPageFile="~/Master.master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
 </asp:Content>
