@@ -137,6 +137,7 @@
         <div class="clear" style="height:60px;"></div>
         <div class="m-bottom">
             <div id="footermenu">
+<% endState = 0; %>
                 <% if (endState == 0) {%>
                     <span class="barmaigin_btn leftbtn btnwith" onclick="ActiveService();">
                         我也要发起
