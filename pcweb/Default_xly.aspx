@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台冬令营" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="悦长大平台冬令营" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
     public string repeatCustomer = "0";

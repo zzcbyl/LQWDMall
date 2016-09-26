@@ -65,7 +65,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <title>“六一儿童节”卢勤问答平台官方书城</title>
+    <title>“六一儿童节”悦长大官方书城</title>
     <script src="script/config.js" type="text/javascript"></script>
     <link href="style/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="style/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -96,8 +96,8 @@
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
             <div style="margin-top:5px;">
-                儿童节就要到了，想好送给孩子什么了吗？送美食，吃过就消化了；送玩具，玩过就不稀奇了，不如送好书，好书会带来好的观念，好的观念会陪伴孩子一生！现为了庆祝“六.一”儿童节，卢勤问答平台特意开展“优惠券抵书款活动”，只要你的朋友够多，您就可以免费得到卢勤老师的著作！
-                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx?source=1'>卢勤问答平台官方书城>></a>
+                儿童节就要到了，想好送给孩子什么了吗？送美食，吃过就消化了；送玩具，玩过就不稀奇了，不如送好书，好书会带来好的观念，好的观念会陪伴孩子一生！现为了庆祝“六.一”儿童节，悦长大特意开展“优惠券抵书款活动”，只要你的朋友够多，您就可以免费得到卢勤老师的著作！
+                <a style="font-size:12px; color:#0B659D; padding:5px 0; text-decoration:underline; display:inline-block;" href='http://mall.luqinwenda.com/Default.aspx?source=1'>悦长大平台官方书城>></a>
             </div>
         </div>
         <div style="background:#fff; padding:10px; margin-top:10px;">
@@ -147,7 +147,7 @@
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按指纹关注卢勤问答，帮TA加一元
+                长按指纹关注悦长大，帮TA加一元
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
         <div style="padding:10px;">
             <img src='http://weixin.luqinwenda.com/get_promote_qrcode_with_background.aspx?openid=<%=Request["preopenid"] %>' style="width:100%" />
             <div style="margin-top:10px; color:#fff; font-size:16px;">
-                长按指纹关注卢勤问答，点击“商城”－“六一活动”发起活动
+                长按指纹关注悦长大，点击“商城”－“六一活动”发起活动
             </div>
         </div>
     </div>

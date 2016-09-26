@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="悦长大平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 
 <script runat="server">
 

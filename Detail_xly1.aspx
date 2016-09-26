@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台夏令营" Language="C#" MasterPageFile="~/Master.master"  %>
+﻿<%@ Page Title="悦长大平台夏令营" Language="C#" MasterPageFile="~/Master.master"  %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MasterHead" Runat="Server">
     <%--<link href="style/proddetail.css" rel="stylesheet" type="text/css" />

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="确认下单-卢勤问答平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
+﻿<%@ Page Title="确认下单-悦长大平台官方书城" Language="C#" MasterPageFile="~/pcweb/Master.master" %>
 <%@ Import Namespace="System.Web.Script.Serialization" %>
 <script runat="server">
 

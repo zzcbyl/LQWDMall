@@ -1,9 +1,9 @@
 ﻿var token = '';
 var openid = '';
 var from = '';
-var shareTitle = "卢勤问答平台官方商城"; //标题
+var shareTitle = "悦长大平台官方商城"; //标题
 var imgUrl = "http://mall.luqinwenda.com/images/index-left.jpg"; //图片
-var descContent = "卢勤问答平台官方认证商城，包括卢勤老师认证的正版书籍以及家庭教育相关产品。"; //简介
+var descContent = "悦长大平台官方认证商城，包括卢勤老师认证的正版书籍以及家庭教育相关产品。"; //简介
 var lineLink = "http://mall.luqinwenda.com/Default.aspx"; //链接
 var deadline_28 = (Date.parse(new Date("2015/12/1"))) / 1000;
 var deadline_30 = (Date.parse(new Date("2015/12/1"))) / 1000;

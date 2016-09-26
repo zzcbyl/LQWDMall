@@ -15,7 +15,7 @@
 </div>--%>
 <div style="background:#fff; padding:10px 20px; font-size:16px; margin-top:10px; line-height:22px; position:relative;">
     <p><b>活动时间：</b>2015年11月11日-13日</p>
-    <p><b>活动规则：</b>活动期间，凡在卢勤问答平台书城购买满50元，即送一套价值218元的《家庭教育专题讲座》课程。</p>
+    <p><b>活动规则：</b>活动期间，凡在悦长大平台书城购买满50元，即送一套价值218元的《家庭教育专题讲座》课程。</p>
     <div style="position:absolute; right:20px; bottom:5px; font-size:14px;"><a style="color:#E6186D; font-weight:bold;" href="Default.aspx">去购书>></a></div>
 </div>
 

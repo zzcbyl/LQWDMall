@@ -1,4 +1,4 @@
-﻿<%@ Page Title="卢勤问答平台官方书城" Language="C#" MasterPageFile="~/Master.master" %>
+﻿<%@ Page Title="悦长大平台官方书城" Language="C#" MasterPageFile="~/Master.master" %>
 
 <script runat="server">
     protected void Page_Load(object sender, EventArgs e)
@@ -21,7 +21,7 @@
     <div style="position:absolute; right:20px; bottom:5px; font-size:14px;"><a style="color:#bbb;" href="Activity11.aspx">活动详情>></a></div>
 </div>--%>
 <div style="background:#fff; padding:10px; margin-top:10px;">
-    1、本店为卢勤问答平台官方书城，所有图书均有现货。2、本店的运费遵循市场规则，您可以自行拍下。
+    1、本店为悦长大平台官方书城，所有图书均有现货。2、本店的运费遵循市场规则，您可以自行拍下。
 </div>
 <div id="bookNav" style="background:#fff; width:100%; margin-top:10px; ">
     <ul class="nav-default">
