@@ -41,7 +41,7 @@
 <div class="mainpage">
     <div class="titleNav">
         <a onclick="location.href = 'Default_xly.aspx';" class="returnA"> </a>
-        <span class="titleSpan">夏令营详情</span>
+        <span class="titleSpan">冬令营详情</span>
     </div>
     <div class="m-dcontent" style="margin-top:10px;">
         <div id="prodimg" style="border:1px solid #ccc;">
@@ -50,7 +50,7 @@
         <div id="prodtitle" style="line-height:22px; font-size:16pt; padding:10px 0;">
         </div>
         <div class="article_time">
-            <i></i><span><%=showDate %></span>
+            <i></i><span>1111<%=showDate %></span>
             
             <br style="clear:both;" />
         </div>
