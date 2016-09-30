@@ -41,7 +41,7 @@
 <div class="mainpage">
     <div class="titleNav">
         <a onclick="location.href = 'Default_xly.aspx';" class="returnA"> </a>
-        <span class="titleSpan">冬令营详情</span>
+        <span class="titleSpan">夏令营详情</span>
     </div>
     <div class="m-dcontent" style="margin-top:10px;">
         <div id="prodimg" style="border:1px solid #ccc;">
@@ -51,119 +51,12 @@
         </div>
         <div class="article_time">
             <i></i><span><%=showDate %></span>
-            <%--<span style="float:right; margin-right:20px; font-size:12pt;" onclick='dateChange();'>日期选择 ></span>--%>
+            
             <br style="clear:both;" />
         </div>
-        <%--<div class="m-dprice rel">
-            <s class="gray" id="originalprice" style="margin-right:10px;"></s><span class="red" id="prodprice"></span>
-            <a onclick="javascript:joinxly();" class="btn btn-danger" style="width:20%; position:absolute; right:0px; bottom:0px;">我要报名</a>
-        </div>--%>
+       
     </div>
-    <%--<div id="proddescription" class="m-ddescription">
-    </div>--%>
-
-    <%--<div style="margin:0; background:#fff; font-size:30px; padding-bottom:10px;">
-        <!-- 日历部分 -->		
-	    <div class="Calendar">
-          <div id="idCalendarPre">&lt;&lt;</div>
-          <div id="idCalendarNext">&gt;&gt;</div>
-          <span id="idCalendarYear"></span>年 <span id="idCalendarMonth"></span>月
-          <table cellspacing="0">
-            <thead>
-              <tr>
-                <td>日</td>
-                <td>一</td>
-                <td>二</td>
-                <td>三</td>
-                <td>四</td>
-                <td>五</td>
-                <td>六</td>
-              </tr>
-            </thead>
-            <tbody id="idCalendar">
-            </tbody>
-          </table>
-        </div>
-        <script language="JavaScript">
-            var startDate = '<%=StartDate %>';
-            var flag = [];
-
-            flag.push(startDate + "-775-<%=price%>-1000-10");
-
-            flag.sort();
-
-            var calendarDay = startDate;
-            var dtArr = calendarDay.split("-");
-            var stateDate = new Date(dtArr[0] + "/" + dtArr[1] + "/" + dtArr[2]);
-
-            var cale = new Calendar("idCalendar", {
-                Year: stateDate.getFullYear(),
-                Month: stateDate.getMonth() + 1,
-                SelectDay: stateDate,
-                //  onSelectDay: function(o){ o.className = "onSelect"; },
-                // onToday: function(o){ o.className = "onToday"; },
-                onFinish: function () {
-                    element("idCalendarYear").innerHTML = this.Year; element("idCalendarMonth").innerHTML = this.Month;
-                    
-                    for (var i = 0, len = flag.length; i < len; i++) {
-                        var y_select = parseInt(flag[i].split("-")[0]);
-                        var m_select = parseInt(flag[i].split("-")[1]);
-                        var d_select = parseInt(flag[i].split("-")[2]);
-                        var id = parseInt(flag[i].split("-")[3]);
-                        var price = parseFloat(flag[i].split("-")[4]);
-                        var inventory = parseInt(flag[i].split("-")[5]);
-                        
-                        var arr1 = flag[i].split("-");
-                        var dateNum = arr1[0] + arr1[1] + arr1[2];
-                        
-                        if (this.Year == y_select && this.Month == m_select) {
-                            this.Days[d_select].innerHTML = "<a href='javascript:void(0);'  style='color:#FFFFFF' onclick=\"selectDay('" + this.Month + "月" + d_select + "日','" + id + "',this,'" + dateNum + "','" + inventory + "');return false;\"><ul style=\"line-height:1rem;\"><li>" + d_select + "</li><li>" + price + "</li></ul></a>";
-
-                            //if (20160105 > dateNum || inventory <= 0) {
-                            //    this.Days[d_select].bgColor = "#D6D6D6";
-                            //} else {
-                            //    this.Days[d_select].bgColor = "#0897F2";
-                            //}
-
-                            if (inventory > 0 && flag[i].indexOf(calendarDay) > -1) {
-                                this.Days[d_select].bgColor = "#cc0000";
-                            }
-
-                            this.Days[d_select].width = " 14.4% ";
-                        }
-
-
-                    }
-                }
-            });
-
-            element("idCalendarPre").onclick = function () { cale.PreMonth(); }
-            element("idCalendarNext").onclick = function () { cale.NextMonth(); }
-
-            function selectDay(day, id, obj, dateNum, inventory) {
-                //if (20160105 > dateNum) {
-                //    alert("选择的日期无效-_-");
-                //} else if (inventory <= 0) {
-                //    alert("亲,商品售罄了，请换一天试试!");
-                //} else {
-                //    $('#nowTime').html(day);
-                //    $("#calendarId").val(id);
-                //    $(".Calendar").hide();
-                //    $("#idCalendar").find("[bgColor='#cc0000']")[0].bgColor = "#0897F2";
-                //    obj.parentNode.bgColor = "#cc0000";
-                //}
-                joinxly();
-            }
-
-            function dateChange() {
-                if ($(".Calendar").css('display') == 'none')
-                    $(".Calendar").show();
-                else
-                    $(".Calendar").hide();
-            }
-        </script>
-        <!-- 日历部分 -->	
-    </div>--%>
+   
     </div>
 
     <div class="m-description">
