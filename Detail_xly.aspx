@@ -97,7 +97,9 @@
                         &#12288;&#12288;<p><strong><b>·</b></strong>传授主持的基本技巧，通过角色表演、想象力训练等方法培养营员的观察力、模仿力和舞台表现力。</p>
                         &#12288;&#12288;<p><strong><b>·</b></strong>进行专门的仪态训练，通过对营员进行规范性的仪表、仪态的训练，纠正诸多营员在语言表达时习惯性的小动作，最终提升营员的气质。</p>
                         &#12288;&#12288;<p><strong><b>·</b></strong>采用分组学习、小组竞赛的方式，锻炼营员的自信及应变能力，克服在公开场合语言表达的心理障碍，为日后参与校内外朗读、演讲或入学面试，奠定良好的基础。</p>
-                    <br/>
+        <div style="text-align: center; margin: 10px 0;">
+                        <img width="80%" src="http://mall.luqinwenda.com/upload/prodimg/speech_winter_2017_pic2.jpg">
+                    </div>
                     <p style="color:red"><strong>活动课：</strong></p>
                
                         &#12288;&#12288;<p><strong><b>·</b></strong><b>梦想嘉年华：</b>这里所有的活动都由你设计，拿出你的创意，玩出你的水平。</p>
@@ -116,8 +118,19 @@
 </div>
                 </div>
             </li>
-            <li id="trip_li"><p><strong>活动时间：</strong>2016年 7月15日&mdash;7月21日</p><p><strong>活动地点：</strong>深圳</p><p><strong>主办单位：</strong>中国少年儿童新闻出版总社知心姐姐教育服务中心<br />&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;悦长大互动平台</p><p><strong>集训重点：</strong></p><div style="text-align: center; margin: 10px 0;"><img width="80%" src="http://mall.luqinwenda.com/upload/prodimg/yjy_pic2.jpg"></div><div style="padding-left:10px;"><p>&#12288;&#12288;学习演说先学习做人, 做好人才能说好话,  才能做正能量的传播者；</p><p>&#12288;&#12288;学习正确的演说语态、咬字发音及公众演说技巧；</p><p>&#12288;&#12288;学习少年演说技巧，训练声音控制与表达各种情绪的能力，以及模仿能力，掌握语言表达技巧；</p><p>&#12288;&#12288;传授主持的基本技巧，通过角色表演、想象力训练等方法培养孩子的观察力、模仿力和舞台表现力；</p><p>&#12288;&#12288;进行专门的仪态训练，通过对孩子进行规范性的仪表、仪态的训练，纠正诸多孩子在语言表达时习惯性的小动作，最终提升孩子的气质；</p><p>&#12288;&#12288;采用分组学习、小组竞赛的方式，锻炼孩子的自信及应变能力，克服在公开场合语言表达的心理障碍，为日后参与校内外朗读、演讲或入学面试，奠定良好的基础。</p></div><p><strong>活动安排：</strong></p><div style="text-align: center; margin: 10px 0;"><img width="80%" src="http://mall.luqinwenda.com/upload/prodimg/yjy_xingcheng.jpg"></div><p><strong>营员要求：</strong>8-16岁，身心健康，有一定的自理能力，能遵守营期的纪律和文明礼仪的在校少年儿童 。</p></li>
-            <li id="cost_li"><p><strong>费用说明：</strong>9800元/人。</p><%--<p><strong>优惠政策：</strong>12月1日前报名优惠300元，老营员优惠300元，老营员可以同时享受双重优惠。</p>--%><p><strong>报名方式：</strong></p><div style="padding-left:10px;"><p>悦长大互动平台电话报名：<br />&#12288;&#12288;18601016361（新老师）<br />&#12288;&#12288;18511998488（旭老师）</p></li>
+            <li id="trip_li"><p><strong>活动时间：</strong>2017年 1月18日&mdash;1月24日</p><p><strong>活动地点：</strong>深圳/香港</p>
+<p><strong>主办单位：</strong>
+<br />&#12288;&#12288;&#12288;&#12288;中国少年儿童新闻出版总社知心姐姐教育服务中心
+<br />&#12288;&#12288;&#12288;&#12288;北京阳光天女教育咨询有限公司
+<br />&#12288;&#12288;&#12288;&#12288;悦长大家庭教育专家问答平台</p><p><strong>集训重点：</strong></p><div style="text-align: center; margin: 10px 0;"><img width="80%" src="http://mall.luqinwenda.com/upload/prodimg/speech_winter_2017_pic3.jpg"></div><div style="padding-left:10px;"><p>&#12288;&#12288;学习演说先学习做人, 做好人才能说好话,  才能做正能量的传播者；</p><p>&#12288;&#12288;学习正确的演说语态、咬字发音及公众演说技巧；</p><p>&#12288;&#12288;学习少年演说技巧，训练声音控制与表达各种情绪的能力，以及模仿能力，掌握语言表达技巧；</p><p>&#12288;&#12288;传授主持的基本技巧，通过角色表演、想象力训练等方法培养孩子的观察力、模仿力和舞台表现力；</p><p>&#12288;&#12288;进行专门的仪态训练，通过对孩子进行规范性的仪表、仪态的训练，纠正诸多孩子在语言表达时习惯性的小动作，最终提升孩子的气质；</p><p>&#12288;&#12288;采用分组学习、小组竞赛的方式，锻炼孩子的自信及应变能力，克服在公开场合语言表达的心理障碍，为日后参与校内外朗读、演讲或入学面试，奠定良好的基础。</p></div><p><strong>活动安排：</strong></p><div style="text-align: center; margin: 10px 0;"><img width="80%" src="http://mall.luqinwenda.com/upload/prodimg/speech_winter_2017_pic3.png"></div><p><strong>营员要求：</strong>8-16岁，身心健康，有一定的自理能力，能遵守营期的纪律和文明礼仪的在校少年儿童 。</p></li>
+            <li id="cost_li"><p><strong>费用说明：</strong><br/><p align="center" ><img align="center" width="80%" src="http://mall.luqinwenda.com/upload/prodimg/speech_winter_2017_pic4.png"></p></p>
+<p align="center" ><font color="red" >限额50名！<br/>
+每人最多3个名额<br/>
+2016年12月15日之前接受无条件全额退款！</font></p>
+<p>费用包含：父母课堂、培训费、资料费、营服营帽、营期内食宿费、日程内所列活动门票及市内的交通费等。</p>
+<p>费用不含：外地往返深圳的大交通费、日程安排以外所发生的任何费用。​</p>
+
+<p><strong>报名方式：</strong></p><div style="padding-left:10px;"><p>悦长大互动平台电话报名：<br />&#12288;&#12288;13811962025（新老师）<br />&#12288;&#12288;18511998488（旭老师）</p></li>
         </ul>
         <div style="text-align:center;">
             <img src="images/dingyuehao.gif" width="80%" /></div>
