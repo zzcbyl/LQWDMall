@@ -107,7 +107,7 @@
         }
 
         lineLink = "http://mall.luqinwenda.com/Detail_xly.aspx?productid=" + prodid;
-        //filldetail(prodid);
+        filldetail(prodid);
 
         $('.description-menu li').click(function () {
             var i = $('.description-menu li').index(this);

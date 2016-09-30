@@ -127,7 +127,7 @@ function filldetail(pid) {
                 $('#proddescription').html(obj.description);
                 $('#prodimg').html('<img src="' + domain + obj.imgsrc + '" width="100%" />');
                 $('#prodprice').html('¥' + parseInt(obj.price) / 100);
-                if (pid >= 69) {
+                if (pid >= 69 && pid != 86) {
                     $('#point_li').html(obj.description);
                     $('#trip_li').html(obj.desc_trip);
                     $('#cost_li').html(obj.desc_cost);
