@@ -50,7 +50,7 @@
         <div id="prodtitle" style="line-height:22px; font-size:16pt; padding:10px 0;">
         </div>
         <div class="article_time">
-            <i></i><span>1111<%=showDate %></span>
+            <i></i><span><%=showDate %></span>
             
             <br style="clear:both;" />
         </div>
