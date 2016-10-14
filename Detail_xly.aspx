@@ -107,7 +107,7 @@
             <li id="cost_li"><p><strong>费用说明：</strong>9800元/人。</p><%--<p><strong>优惠政策：</strong>12月1日前报名优惠300元，老营员优惠300元，老营员可以同时享受双重优惠。</p>--%><p><strong>报名方式：</strong></p><div style="padding-left:10px;"><p>悦长大互动平台电话报名：<br />&#12288;&#12288;18601016361（新老师）<br />&#12288;&#12288;18511998488（旭老师）</p></li>
         </ul>
         <div style="text-align:center;">
-            <img src="images/dingyuehao.gif" width="80%" /></div>
+            <!--img src="images/dingyuehao.gif" width="80%" /--></div>
     </div>
     <%--<div style="background:#fff; padding:10px; text-align:center;">
         <a onclick="javascript:joinxly();" class="btn btn-danger" style="width:25%;" >我要报名</a>
