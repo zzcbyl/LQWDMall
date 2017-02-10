@@ -130,14 +130,14 @@ public class Util
 
         drShipFee = dtShipFee.NewRow();
         drShipFee["province"] = "新疆维吾尔自治区";
-        drShipFee["start_weight_fee"] = 2000;
-        drShipFee["addintional_weight_fee"] = 1500;
+        drShipFee["start_weight_fee"] = 2200;
+        drShipFee["addintional_weight_fee"] = 2000;
         dtShipFee.Rows.Add(drShipFee);
 
         drShipFee = dtShipFee.NewRow();
         drShipFee["province"] = "西藏自治区";
-        drShipFee["start_weight_fee"] = 2000;
-        drShipFee["addintional_weight_fee"] = 1500;
+        drShipFee["start_weight_fee"] = 2200;
+        drShipFee["addintional_weight_fee"] = 2000;
         dtShipFee.Rows.Add(drShipFee);
 
         drShipFee = dtShipFee.NewRow();
