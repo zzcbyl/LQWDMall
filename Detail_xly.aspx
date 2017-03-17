@@ -72,7 +72,10 @@
 <br/>
 课程安排</div>
 			<img src="/upload/prodimg/bj-5.jpg" />
-			<img src="/upload/prodimg/bj-6.jpg" />
+			<div style="text-align:center" >
+				<h3>报名方式：</h3>
+				<h3>朱老师：18611280611</h3>
+			</div>
 		</li>
 	</ul>
         <!--ul class="description-menu">
@@ -151,7 +154,8 @@
             <!--img src="images/dingyuehao.gif" width="80%" /--></div>
     </div>
     <%--<div style="background:#fff; padding:10px; text-align:center;">
-        <a onclick="javascript:joinxly();" class="btn btn-danger" style="width:25%;" >我要报名</a>
+        <!--a onclick="javascript:joinxly();" class="btn btn-danger" style="width:25%;" >我要报名</a-->
+	
     </div>--%>
     <div class="clear" style="height:60px;"></div>
     <div class="m-bottom">
@@ -165,9 +169,11 @@
             </li>
             <li id="ftm-cart" style="width:80%;">
                 <div>
-                    <a style="color:#fff;" id="my-cart" href="javascript:void(0);"  onclick="javascript:joinxly();">报名
-                    <em id="my_cart_em" class="abs" style="display: none; right:35%;"></em>
-                </a></div>
+                    <!--a style="color:#fff;" id="my-cart" href="javascript:void(0);"  onclick="javascript:joinxly();">报名
+                    <em id="my_cart_em" class="abs" style="display: none; right:35%;"></em></a-->
+		<a style="color:#fff;" id="my-cart" href="javascript:void(0);"  onclick="javascript:detailAddCart(90,0);">报名
+                    <em id="my_cart_em" class="abs" style="display: none; right:35%;"></em></a>
+		</div>
             </li>
         </ul>
         <div class="clear"></div>
