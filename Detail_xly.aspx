@@ -41,7 +41,7 @@
 <div class="mainpage">
     <div class="titleNav">
         <a onclick="location.href = 'Default_xly.aspx';" class="returnA"> </a>
-        <span class="titleSpan">冬令营详情</span>
+        <span class="titleSpan">活动详情</span>
     </div>
     <div class="m-dcontent" style="margin-top:10px;">
         <div id="prodimg" style="border:1px solid #ccc;">
@@ -60,7 +60,22 @@
     </div>
 
     <div class="m-description">
-        <ul class="description-menu">
+	<ul class="description-item" >
+		<li class="active-controller">
+			<img src="/upload/prodimg/bj-1.jpg" />
+			<img src="/upload/prodimg/bj-2.jpg" />
+			<img src="/upload/prodimg/bj-3.jpg" />
+			<img src="/upload/prodimg/bj-4.jpg" />
+			<div>&nbsp; &nbsp; &nbsp; &nbsp;中国教育学会家庭教育专业委员会副理事长，中国少年儿童新闻出版总社首席教育专家，原总编辑，著名家庭教育专家卢勤老师倾心传授40年的家庭教育精华，帮您开启孩子心灵智慧，挖掘孩子内在潜能；以生动真实的家庭教育事例，全面、深入、科学地助您做孩子喜爱、敬佩的父母，把孩子培养成财富！
+
+      <br/>&nbsp; &nbsp; &nbsp; &nbsp;在这里，您将有机会和卢勤老师深度沟通，实时互动，帮您系统全面地分析您在养育孩子过程中存在的实际问题，为您提供切实有效的解决方案。
+<br/>
+课程安排</div>
+			<img src="/upload/prodimg/bj-5.jpg" />
+			<img src="/upload/prodimg/bj-6.jpg" />
+		</li>
+	</ul>
+        <!--ul class="description-menu">
             <li class="active-controller">亮点</li>
             <li>行程</li>
             <li style="width:34%;">费用</li>
@@ -131,7 +146,7 @@
 <p>费用不含：外地往返深圳的大交通费、日程安排以外所发生的任何费用。​</p>
 
 <p><strong>报名方式：</strong></p><div style="padding-left:10px;"><p>悦长大互动平台电话报名：<br />&#12288;&#12288;13811962025（新老师）<br />&#12288;&#12288;18511998488（旭老师）</p></li>
-        </ul>
+        </ul-->
         <div style="text-align:center;">
             <!--img src="images/dingyuehao.gif" width="80%" /--></div>
     </div>
